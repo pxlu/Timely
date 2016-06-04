@@ -218,7 +218,7 @@ header {
         margin: 20px auto 0;
     }
     p {
-        margin-bottom: 0;
+        margin-bottom: 10;
     }
 }
 
@@ -282,6 +282,14 @@ header {
     h2 {
         margin: 0 auto 20px;
     }
+}
+
+// Team
+
+.img-profile-picture {
+    border-radius: 50%;
+    height: 130px;
+    width: 120px;
 }
 
 // Bootstrap Overrides

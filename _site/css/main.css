@@ -172,7 +172,7 @@ header {
     .service-box {
       margin: 20px auto 0; } }
   .service-box p {
-    margin-bottom: 0; }
+    margin-bottom: 10; }
 
 .portfolio-box {
   position: relative;
@@ -218,6 +218,11 @@ header {
 
 .call-to-action h2 {
   margin: 0 auto 20px; }
+
+.img-profile-picture {
+  border-radius: 50%;
+  height: 130px;
+  width: 120px; }
 
 .text-primary {
   color: #F05F40; }
