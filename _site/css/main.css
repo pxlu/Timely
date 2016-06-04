@@ -172,7 +172,7 @@ header {
     .service-box {
       margin: 20px auto 0; } }
   .service-box p {
-    margin-bottom: 10; }
+    margin-bottom: 0; }
 
 .portfolio-box {
   position: relative;
