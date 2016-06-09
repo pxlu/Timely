@@ -359,18 +359,23 @@ body {
 
 .col-lg-offset-problem-1 {
     margin-left: 4.6%;
-    position: relative;
 }
 
 .col-lg-offset-problem-2 {
     margin-left: 4.2%;
     margin-right: 4.5%;
-    position: relative;
 }
 
 .col-lg-offset-problem-3 {
     margin-right: 5%;
+}
+
+.col-leg-offset-problem-1, .col-lg-offset-problem-2, .col-lg-offset-problem-3 {
     position: relative;
+    float: left;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .bg-white {
