@@ -292,6 +292,13 @@ header {
     width: 120px;
 }
 
+.img-profile-picture-peter {
+    border-radius: 50%;
+    height: 130px;
+    width: 120px;
+    background-image: url('../img/profile-pictures/.jpg');
+}
+
 // Bootstrap Overrides
 .text-primary {
     color: $theme-primary;

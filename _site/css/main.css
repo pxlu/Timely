@@ -224,6 +224,12 @@ header {
   height: 130px;
   width: 120px; }
 
+.img-profile-picture-peter {
+  border-radius: 50%;
+  height: 130px;
+  width: 120px;
+  background-image: url("../img/profile-pictures/.jpg"); }
+
 .text-primary {
   color: #F05F40; }
 
