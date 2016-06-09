@@ -306,22 +306,13 @@ img::-moz-selection {
 body {
   -webkit-tap-highlight-color: #222; }
 
-.col-lg-offset-problem-1 {
-  margin-left: 4.5%; }
-
-.col-lg-offset-problem-2 {
-  margin-left: 4.5%;
-  margin-right: 4.5%; }
-
-.col-lg-offset-problem-3 {
-  margin-right: 4.5%; }
-
-.col-leg-offset-problem-1, .col-lg-offset-problem-2, .col-lg-offset-problem-3 {
-  position: relative;
-  float: left;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px; }
-
 .bg-white {
   background-color: white; }
+
+@media (min-width: 1200px) {
+  .col-lg-offset-problem-1 {
+    margin-left: 8.3333333%; }
+
+  .col-lg-offset-problem-2 {
+    margin-left: 4.5%;
+    margin-right: 4.5%; } }
