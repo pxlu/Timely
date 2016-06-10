@@ -239,7 +239,7 @@ header {
 
 .img-banner {
   height: 200px;
-  width: 550px;
+  width: 82%;
   margin-left: 15%;
   border: 1px solid black;
   margin-bottom: 15px;
@@ -247,7 +247,6 @@ header {
   @media (min-width: 1200px) {
     .img-banner {
       height: 400px;
-      width: 82%;
       margin-left: 8%; } }
 
 .img-profile-picture {

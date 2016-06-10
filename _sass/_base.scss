@@ -310,7 +310,7 @@ header {
 
 .img-banner {
     height: 200px;
-    width: 550px;
+    width: 82%;
     margin-left: 15%;
     border: 1px solid black;
     margin-bottom: 15px;
@@ -318,7 +318,6 @@ header {
     // Desktop View
     @media (min-width: 1200px) {
         height: 400px;
-        width: 82%;
         margin-left: 8%;
     }
 }
