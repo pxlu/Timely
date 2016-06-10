@@ -308,6 +308,10 @@ header {
   color: #222;
   font-size: 4em; }
 
+@media (min-width: 768px) {
+  .email-text-margin {
+    margin-left: -26px; } }
+
 ::-moz-selection {
   color: white;
   text-shadow: none;

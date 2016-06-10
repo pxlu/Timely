@@ -359,6 +359,12 @@ header {
     font-size: 4em;
 }
 
+.email-text-margin {
+    @media (min-width: 768px) {
+        margin-left: -26px;
+    }
+}
+
 // Extras
 // -- Highlight Color Customization
 ::-moz-selection {
