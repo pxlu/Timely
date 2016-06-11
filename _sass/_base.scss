@@ -311,13 +311,14 @@ header {
 .img-banner {
     height: 200px;
     width: 82%;
-    margin-left: 15%;
+    margin-left: 10%;
     border: 1px solid black;
     margin-bottom: 15px;
     border-radius: 25px; 
     // Desktop View
     @media (min-width: 1200px) {
         height: 400px;
+        width: 1080px;
         margin-left: 8%;
     }
 }
