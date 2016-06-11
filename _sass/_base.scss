@@ -309,7 +309,7 @@ header {
 // Solution
 
 .img-banner {
-    height: 200px;
+    height: 300px;
     width: 82%;
     margin-left: 10%;
     border: 1px solid black;
@@ -320,6 +320,9 @@ header {
         height: 400px;
         width: 1080px;
         margin-left: 8%;
+    }
+    @media (min-width: 2000px) {
+        margin-left: 35%;
     }
 }
 
