@@ -247,8 +247,8 @@ header {
   @media (min-width: 1200px) {
     .img-banner {
       height: 400px;
-      width: 1080px;
-      margin-left: 8%; } }
+      width: 1100px;
+      margin-left: 7%; } }
   @media (min-width: 2000px) {
     .img-banner {
       margin-left: 35%; } }
