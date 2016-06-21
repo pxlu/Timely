@@ -6,6 +6,7 @@ import sys
 import re
 import parser
 import uuid
+import math
 from classes import *
 
 SEVERITY_MAPPING = "../json/severity.json"
@@ -41,8 +42,8 @@ def _disorder_confidence(user_profile):
                 disorder_confidence += 1
         disorder_confidence /= len(DISORDERS)
 
-        confidence_value = disorder.base_rate + disorder_confidence * CONFIDENCE_WEIGHT_FACTOR
-        confidence_list.append((disorder.name, str(confidence_value) + '%'))
+        confidence_value = float(disorder.base_rate) + float(disorder.base_rate) * disorder_confidence * CONFIDENCE_WEIGHT_FACTOR
+        confidence_list.append((disorder.name, str(math.ceil(confidence_value * 100))  + '%'))
 
     return confidence_list
 
@@ -57,7 +58,7 @@ def _get_severity(user_profile):
 def _parse_bio(in_file, out_file, profile_name):
 
     word_dict = parser.parse_text(in_file, out_file)
-    user_profile = UserProfile(username=str.capitalize(profile_name))
+    user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
