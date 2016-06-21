@@ -10,6 +10,7 @@ from classes import *
 
 SEVERITY_MAPPING = "../json/severity.json"
 DISORDERS_MAPPING = "../json/disorders.json"
+CONFIDENCE_WEIGHT_FACTOR = 1.0
 
 def _init_severity():
 
@@ -24,7 +25,7 @@ def _init_disorders_list():
 
     disorders_file = open(DISORDERS_MAPPING)
     disorders_list = json.loads(disorders_file.read())['results']['disorders']
-    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=disorder['symptoms']) for disorder in disorders_list]
+    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=disorder['symptoms'],base_rate=disorder['base_rate']) for disorder in disorders_list]
     return disorders
 
 DISORDERS = _init_disorders_list()
@@ -39,7 +40,9 @@ def _disorder_confidence(user_profile):
             if symptom in disorder_list:
                 disorder_confidence += 1
         disorder_confidence /= len(DISORDERS)
-        confidence_list.append((disorder.name, str(disorder_confidence * 100) + '%'))
+
+        confidence_value = disorder.base_rate + disorder_confidence * CONFIDENCE_WEIGHT_FACTOR
+        confidence_list.append((disorder.name, str(confidence_value) + '%'))
 
     return confidence_list
 

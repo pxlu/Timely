@@ -4,12 +4,14 @@
 		{
 			"name": "Generalized Anxiety Disorder",
 			"id": "1",
-			"symptoms": "stress"
+			"symptoms": "stress",
+			"base_rate": "0.3"
 		},
 		{
 			"name": "Sleep Disorder",
 			"id": "2",
-			"symptoms": "stress, anxiety"
+			"symptoms": "stress, anxiety",
+			"base_rate": "0.4"
 		}
 	],
 		"count": 2
