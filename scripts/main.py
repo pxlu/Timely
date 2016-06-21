@@ -5,6 +5,7 @@ import json
 import sys
 import re
 import parser
+import uuid
 from classes import *
 
 SEVERITY_MAPPING = "../json/severity.json"
@@ -55,8 +56,11 @@ def _parse_bio(in_file, out_file, profile_name):
     word_dict = parser.parse_text(in_file, out_file)
     user_profile = UserProfile(username=str.capitalize(profile_name))
 
-    # Fill in fields of user_profile
+    # Filter by keywords only
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
+
+    # Fill in fields of user_profile
+    user_profile.userid = uuid.uuid4()
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)

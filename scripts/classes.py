@@ -1,8 +1,8 @@
 class UserProfile:
 
-    def __init__(self, userid=-1, username="", keywords={}, severity=-1, confidence=[]):
-        self.userid = userid
-        self.username = username
+    def __init__(self, uid=-1, name="", keywords={}, severity=-1, confidence=[]):
+        self.uid = uid
+        self.name = name
         self.keywords = keywords
         self.severity = severity
         self.confidence = confidence
