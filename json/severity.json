@@ -1,16 +1,19 @@
 {
-	"keywords": {
-		"0": {
+	"results": {
+		"keywords": [
+		{
 			"name": "anxiety",
 			"rating": "1"
 		},
-		"1": {
+		{
 			"name": "stress",
 			"rating": "1"
 		},
-		"2": {
+		{
 			"name": "suicide",
 			"rating": "1"
 		}
+	],
+		"count": 3
 	}
 }

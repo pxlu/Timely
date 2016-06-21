@@ -1,0 +1,17 @@
+{
+	"results": {
+		"disorders": [
+		{
+			"name": "Generalized Anxiety Disorder",
+			"id": "1",
+			"symptoms": "stress"
+		},
+		{
+			"name": "Sleep Disorder",
+			"id": "2",
+			"symptoms": "stress, anxiety"
+		}
+	],
+		"count": 2
+	}
+}
