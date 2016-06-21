@@ -5,30 +5,42 @@ import json
 import sys
 import re
 import parser
+from classes import *
 
 SEVERITY_MAPPING = "../json/severity.json"
-
-class UserProfile:
-
-    def __init__(self, userid=-1, username="", keywords={}, severity=-1, symptoms=[]):
-        self.userid = userid
-        self.username = username
-        self.keywords = keywords
-        self.severity = severity
-        self.symptoms = symptoms
-
-    def __str__(self):
-        return "UserID: {}\nUsername: {}\nKeywords: {}\nSeverity: {}\nSymptoms: {}".format(
-            self.userid, self.username, self.keywords, self.severity, self.symptoms)
+DISORDERS_MAPPING = "../json/disorders.json"
 
 def _init_severity():
 
     sev_file = open(SEVERITY_MAPPING)
-    sev_dict = json.loads(sev_file.read())['keywords']
-    sev_ratings = {sev_element['name']: sev_element['rating'] for sev_element in sev_dict.values()}
+    sev_list = json.loads(sev_file.read())['results']['keywords']
+    sev_ratings = {sev_element['name']: sev_element['rating'] for sev_element in sev_list}
     return sev_ratings
 
 SEVERITY = _init_severity()
+
+def _init_disorders_list():
+
+    disorders_file = open(DISORDERS_MAPPING)
+    disorders_list = json.loads(disorders_file.read())['results']['disorders']
+    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=disorder['symptoms']) for disorder in disorders_list]
+    return disorders
+
+DISORDERS = _init_disorders_list()
+
+def _disorder_confidence(user_profile):
+
+    confidence_list = []
+    for disorder in DISORDERS:
+        disorder_confidence = 0
+        disorder_list = disorder.symptoms.replace(' ', '').split(',')
+        for symptom in user_profile.keywords.keys():
+            if symptom in disorder_list:
+                disorder_confidence += 1
+        disorder_confidence /= len(DISORDERS)
+        confidence_list.append((disorder.name, str(disorder_confidence * 100) + '%'))
+
+    return confidence_list
 
 def _get_severity(user_profile):
 
@@ -47,6 +59,7 @@ def _parse_bio(in_file, out_file, profile_name):
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile)
+    user_profile.confidence = _disorder_confidence(user_profile)
 
     print(user_profile)
 
