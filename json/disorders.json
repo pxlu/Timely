@@ -10,7 +10,7 @@
 		{
 			"name": "Sleep Disorder",
 			"id": "2",
-			"symptoms": "stress, anxiety",
+			"symptoms": "stress,anxiety",
 			"base_rate": "0.4"
 		}
 	],
