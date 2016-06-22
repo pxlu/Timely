@@ -13,13 +13,14 @@ class UserProfile:
 
 class Disorder:
 
-    def __init__(self, name="", disid=-1, symptoms=[], base_rate=-1):
+    def __init__(self, name="", disid=-1, symptoms=[], base_rate=-1, severity=-1):
         self.name = name
         self.id = disid
         self.symptoms = symptoms
         self.base_rate = base_rate
+        self.severity = severity
 
     def __str__(self):
-        return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}.".format(
-			self.name, self.symptoms)
+        return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}, with a base rate of {}. Currently, it's severity rating is {}.".format(
+			self.name, self.symptoms, self.base_rate, self.severity)
 		

@@ -26,26 +26,50 @@ def _init_disorders_list():
 
     disorders_file = open(DISORDERS_MAPPING)
     disorders_list = json.loads(disorders_file.read())['results']['disorders']
-    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=disorder['symptoms'],base_rate=disorder['base_rate']) for disorder in disorders_list]
+    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=[symptom for symptom in disorder['symptoms'].split(',')],base_rate=disorder['base_rate']) for disorder in disorders_list]
+
     return disorders
 
 DISORDERS = _init_disorders_list()
+
+def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
+
+    confidence_value = -1
+    # If greater, adjust down from base rate
+    if base_rate >= disorder_confidence:
+        confidence_value = base_rate - (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
+    # Otherwise adjust up
+    else:
+        confidence_value = base_rate + (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
+
+    return confidence_value
 
 def _disorder_confidence(user_profile):
 
     confidence_list = []
     for disorder in DISORDERS:
         disorder_confidence = 0
-        disorder_list = disorder.symptoms.replace(' ', '').split(',')
+        disorder_list = disorder.symptoms
         for symptom in user_profile.keywords.keys():
             if symptom in disorder_list:
                 disorder_confidence += 1
         disorder_confidence /= len(DISORDERS)
 
-        confidence_value = float(disorder.base_rate) + float(disorder.base_rate) * disorder_confidence * CONFIDENCE_WEIGHT_FACTOR
+        # Start with base rate and adjust from there
+        base_rate = float(disorder.base_rate)
+        rate_difference = math.fabs(base_rate - disorder_confidence)
+        confidence_value = _calculate_adjustment(base_rate, disorder_confidence, rate_difference, CONFIDENCE_WEIGHT_FACTOR)
         confidence_list.append((disorder.name, str(math.ceil(confidence_value * 100))  + '%'))
 
     return confidence_list
+
+def _disorder_severities():
+
+    for disorder in DISORDERS:
+        disorder_severity = 0
+        for symptom in disorder.symptoms:
+            disorder_severity += float(SEVERITY[symptom])
+        disorder.severity = disorder_severity
 
 def _get_severity(user_profile):
 
@@ -58,18 +82,22 @@ def _get_severity(user_profile):
 def _parse_bio(in_file, out_file, profile_name):
 
     word_dict = parser.parse_text(in_file, out_file)
+    _disorder_severities()
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
 
     # Fill in fields of user_profile
-    user_profile.userid = uuid.uuid4()
+    user_profile.uid = uuid.uuid4()
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)
 
     print(user_profile)
+    for disorder in DISORDERS:
+        print(disorder)
+    #out_file.write(str(user_profile))
 
 if __name__ == '__main__':
     try:
