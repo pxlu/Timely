@@ -65,7 +65,8 @@ def _split_punctuation(text):
     :param text: a tweet
     :return: string of processed tweet
     """
-    return re.sub(r'(\w+)([,:;.?!](?![\w|\|]))', r'\1 \2', text)
+    # return re.sub(r'(\w+)([,:;.?!](?![\w|\|]))', r'\1 \2', text)
+    return re.sub(r'(\w+)([`,:;.?!&#<>|+\-=%\(\)\[\]](?![\w|\|]))', r'\1 \2', text)
 
 def _space_possessives(text):
     """
@@ -106,18 +107,6 @@ def _fix_sentences(text):
         sentences[i] = _space_possessives(sentences[i])
         sentences[i] = _space_contractions(sentences[i])
     return sentences
-
-def _merge_words(words):
-    """
-    Merges the list of words together in a single string separated by a space between each word.
-
-    :param words: list of words
-    :return: string of the words
-    """
-    merged = ""
-    for word in words:
-        merged = merged + word + " "
-    return merged[:-1]
 
 def parse_text(in_file, out_file):
     """

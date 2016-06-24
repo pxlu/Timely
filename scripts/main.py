@@ -82,6 +82,7 @@ def _get_severity(user_profile):
 def _parse_bio(in_file, out_file, profile_name):
 
     word_dict = parser.parse_text(in_file, out_file)
+    print(word_dict)
     _disorder_severities()
     user_profile = UserProfile(name=str.capitalize(profile_name))
 

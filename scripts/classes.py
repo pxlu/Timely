@@ -13,11 +13,12 @@ class UserProfile:
 
 class Disorder:
 
-    def __init__(self, name="", disid=-1, symptoms=[], base_rate=-1, severity=-1):
+    def __init__(self, name="", disid=-1, symptoms=[], base_rate=-1, risk_factors = [], severity=-1):
         self.name = name
         self.id = disid
         self.symptoms = symptoms
         self.base_rate = base_rate
+        self.risk_factors = risk_factors
         self.severity = severity
 
     def __str__(self):
