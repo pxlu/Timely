@@ -3,7 +3,9 @@
 
 import sys
 import re
-import itertools
+import requests
+import json
+from collections import OrderedDict 
 
 ABBREVIATIONS = "../assets/wordlists/abbrev.english"
 CONTRACTIONS = {
@@ -25,8 +27,8 @@ ABBREVS = _get_abbreviations()
 
 def _clean_text(text):
     """
-    Removes all unnecessary marks from tweets.
-    :param text: a tweet
+    Removes all unnecessary marks from paragraphs.
+    :param text: a paragraph
     :return: cleaned text
     """
 
@@ -38,13 +40,13 @@ def _clean_text(text):
 
 def _break_to_sentences(text):
     """
-    Breaks up the tweet into sentences.
-    :param text: a tweet
+    Breaks up the paragraph into sentences.
+    :param text: a paragraph
     :return: list of sentences
     """
     # Find all words that end with a period
     last_words = set(re.findall(r'\s\w+\.[\s|\n]+\w', text))
-    # Goes through the whole tweet and mark all end of sentences with the END tag
+    # Goes through the whole paragraph and mark all end of sentences with the END tag
     for word in last_words:
         # mark end of sentence when one the following do not happen:
         # 1. it is an abbreviation
@@ -62,17 +64,19 @@ def _break_to_sentences(text):
 def _split_punctuation(text):
     """
     Split all the punctuation from the words
-    :param text: a tweet
-    :return: string of processed tweet
+    :param text: a paragraph
+    :return: string of processed paragraph
     """
     # return re.sub(r'(\w+)([,:;.?!](?![\w|\|]))', r'\1 \2', text)
-    return re.sub(r'(\w+)([`,:;.?!&#<>|+\-=%\(\)\[\]](?![\w|\|]))', r'\1 \2', text)
+    result = re.sub(r'(\w+)([`,:;.?!&#<>|+\-=%\(\)\[\]](?![\w|\|]))', r'\1 \2', text)
+    result2 = re.sub(r'(\B[`,:;.?!&#<>|+\-=%\(\)\[\]])(\w+)', r'\1 \2', result)
+    return result2
 
 def _space_possessives(text):
     """
     Add space between base word and 's
-    :param text: a tweet
-    :return: string of processed tweet
+    :param text: a paragraph
+    :return: string of processed paragraph
     """
     # Add spaces between the possessives, [x]'s or [xs]'
     text = re.sub(r'([A-z]+[s|S])(\')', r'\1 \2', text)
@@ -81,8 +85,8 @@ def _space_possessives(text):
 def _space_contractions(text):
     """
     Add space between contraction base word and contraction
-    :param text: a tweet
-    :return: string of processed tweet
+    :param text: a paragraph
+    :return: string of processed paragraph
     """
     found_contradictions = set(re.findall(r'[A-z]+\'[A-z]+', text))
     for word in found_contradictions:
@@ -98,54 +102,72 @@ def _space_contractions(text):
 def _fix_sentences(text):
     """
     Processes the text by splitting up by sentences, adding space for possessives and contractions.
-    :param text: tweet given
-    :return: list of sentences in the tweet
+    :param text: paragraph given
+    :return: list of sentences in the paragraph
     """
     sentences = _break_to_sentences(text)
     for i in range(len(sentences)):
         sentences[i] = _split_punctuation(sentences[i])
         sentences[i] = _space_possessives(sentences[i])
         sentences[i] = _space_contractions(sentences[i])
-    return sentences
+    fixed_sentences = _remove_nonwords(sentences)
+    return fixed_sentences
 
-def parse_text(in_file, out_file):
+def _remove_nonwords(sentence_list):
+
+    fixed = []
+    for sentence in sentence_list:
+        words = sentence.split(' ')
+        for word in words:
+            if re.search(r'\B[\\\/`,:;.?!&#<>|+\-=%\(\)\[\]]', word) or re.search(r'(\'s|s\')', word):
+                words.remove(word)
+        fixed.append(words)
+
+    return fixed
+
+def _match_conjunctions(parsed_words):
+
+    # NEED NLP TAGGER TO GET THE POST OF THE WORDS, ONLY WANT WORDS TO BE USED FOR THIS SERVICE IF IT'S A ADJECTIVE TO BEGIN WITH.
+
+    for word in parsed_words.keys():
+        requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word + '&part_of_speech=adjective'
+        print(requestURL)
+        request = requests.get(requestURL)
+        numresults = request.json()['count']
+        conjugations_list = []
+        for i in range(numresults):
+            conjugations_list.append(request.json()['results'][i]['headword'])
+        
+        word_conjugations = { word for word in conjugations_list}
+        print(word_conjugations)
+
+def parse_text(in_file):
     """
-    Parse, tokenize, and tag inFile, removing all HTML tags, attributes, links, # from the hashtags and the @ from
-    twitter usernames. Each sentence of the tweet is on it's own line and each token is tagged with the appropriate
-    part-of-speech and seperated by spaces. Places the result in outFile with a demarcation before each tweet.
+    Parse and tokenize in_file, and return a OrderedDict of words with their keys being their number of occurences in in_file.
 
     :param in_file: input file
     :param out_file: output file
     :return: None
     """
 
-    # Reminder: need to strip brackets around words
-
     abbrev = _get_abbreviations()
-    word_dict = {}
 
     # Clean the text and break it down into sentences
     bio_text = in_file.read()
     cleaned_text = _clean_text(bio_text)
-    sentences = _fix_sentences(cleaned_text)
+    paragraph = _fix_sentences(cleaned_text)
 
-    # Break down each sentence into individual words and record their frequency in the word_dict
-    for sentence in sentences:
-        sentence = sentence.split(" ")
-        for word in sentence:
-            word = word.lower()
-            # Hasn't been seen yet in the word_dict:
-            if word not in word_dict:
-                word_dict[word] = 1
-            # Add one to the total count of the word    
-            else:
-                word_dict[word] += 1
+    # Flatten the list of lists of sentences representing the paragraph
+    flat_list = [item.lower() for sublist in paragraph for item in sublist]
+    # For each unique word in the paragraph, insert it into an OrderedDict with the key being the word and the value being the number of occurences of that word within the paragraph
+    word_dict = {item: flat_list.count(item) for item in flat_list}
+    sorted_words = OrderedDict(sorted(word_dict.items(), key=lambda name: name[0]))
 
-    return word_dict
+    _match_conjunctions(sorted_words)
+
+    return sorted_words
 
 if __name__ == "__main__":
     in_file_name = sys.argv[1]
-    out_file_name = sys.argv[2]
     in_file = open(in_file_name, 'r')
-    with open(out_file_name, 'w') as out_file: 
-        parse_text(in_file, out_file)
+    parse_text(in_file)
