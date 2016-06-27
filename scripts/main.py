@@ -63,12 +63,12 @@ def _disorder_confidence(user_profile):
 
     return confidence_list
 
-def _disorder_severities():
+def _disorder_severities(disorders_dict, severity_dict):
 
-    for disorder in DISORDERS:
+    for disorder in disorders_dict:
         disorder_severity = 0
         for symptom in disorder.symptoms:
-            disorder_severity += float(SEVERITY[symptom])
+            disorder_severity += float(severity_dict[symptom])
         disorder.severity = disorder_severity
 
 def _get_severity(user_profile):
@@ -82,8 +82,7 @@ def _get_severity(user_profile):
 def _parse_bio(in_file, out_file, profile_name):
 
     word_dict = parser.parse_text(in_file, out_file)
-    print(word_dict)
-    _disorder_severities()
+    _disorder_severities(DISORDERS, SEVERITY)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
@@ -94,11 +93,6 @@ def _parse_bio(in_file, out_file, profile_name):
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)
-
-    print(user_profile)
-    for disorder in DISORDERS:
-        print(disorder)
-    #out_file.write(str(user_profile))
 
 if __name__ == '__main__':
     try:

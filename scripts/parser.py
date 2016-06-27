@@ -129,17 +129,28 @@ def _match_conjunctions(parsed_words):
 
     # NEED NLP TAGGER TO GET THE POST OF THE WORDS, ONLY WANT WORDS TO BE USED FOR THIS SERVICE IF IT'S A ADJECTIVE TO BEGIN WITH.
 
+    remove_list = []
     for word in parsed_words.keys():
         requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word + '&part_of_speech=adjective'
-        print(requestURL)
         request = requests.get(requestURL)
         numresults = request.json()['count']
+        
         conjugations_list = []
         for i in range(numresults):
             conjugations_list.append(request.json()['results'][i]['headword'])
-        
-        word_conjugations = { word for word in conjugations_list}
-        print(word_conjugations)
+        word_conjugations = { word for word in conjugations_list }
+
+        conjugate_count = 0
+        for conjugate in word_conjugations:
+            if conjugate != word and conjugate in parsed_words.keys():
+                conjugate_count += parsed_words[conjugate]
+                remove_list.append(conjugate)
+
+        parsed_words[word] += conjugate_count
+
+    for word in remove_list:
+        del parsed_words[word]
+    return parsed_words
 
 def parse_text(in_file):
     """
@@ -150,8 +161,6 @@ def parse_text(in_file):
     :return: None
     """
 
-    abbrev = _get_abbreviations()
-
     # Clean the text and break it down into sentences
     bio_text = in_file.read()
     cleaned_text = _clean_text(bio_text)
@@ -161,12 +170,10 @@ def parse_text(in_file):
     flat_list = [item.lower() for sublist in paragraph for item in sublist]
     # For each unique word in the paragraph, insert it into an OrderedDict with the key being the word and the value being the number of occurences of that word within the paragraph
     word_dict = {item: flat_list.count(item) for item in flat_list}
-    sorted_words = OrderedDict(sorted(word_dict.items(), key=lambda name: name[0]))
-
-    _match_conjunctions(sorted_words)
-
-    return sorted_words
-
+    
+    matched_words = _match_conjunctions(word_dict)
+    sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
+    
 if __name__ == "__main__":
     in_file_name = sys.argv[1]
     in_file = open(in_file_name, 'r')
