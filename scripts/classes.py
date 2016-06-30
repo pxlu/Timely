@@ -1,3 +1,5 @@
+import json
+
 class UserProfile:
 
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, confidence=[]):
@@ -24,4 +26,6 @@ class Disorder:
     def __str__(self):
         return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}, with a base rate of {}. Currently, it's severity rating is {}.".format(
 			self.name, self.symptoms, self.base_rate, self.severity)
-		
+	
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
