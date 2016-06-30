@@ -79,9 +79,10 @@ def _get_severity(user_profile):
 
     return user_severity
 
-def _parse_bio(in_file, out_file, profile_name):
+def _parse_bio(in_file, profile_name):
 
-    word_dict = parser.parse_text(in_file, out_file)
+    '''
+    word_dict = parser.parse_text(in_file)
     _disorder_severities(DISORDERS, SEVERITY)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
@@ -94,13 +95,17 @@ def _parse_bio(in_file, out_file, profile_name):
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)
 
+    '''
+
+    for d in DISORDERS:
+        print(d)
+    print(DISORDERS)
+
 if __name__ == '__main__':
     try:
         in_file_name = sys.argv[1]
-        out_file_name = sys.argv[2]
         profile_name = re.search('[A-Za-z]+\.md', in_file_name).group(0).split('.')[0]
         in_file = open(in_file_name, 'r')
-        with open(out_file_name, 'w') as out_file: 
-            _parse_bio(in_file, out_file, profile_name)
+        _parse_bio(in_file, profile_name)
     except IndexError:
         print("Usage: `python main.py [inFile] [outFile]`")

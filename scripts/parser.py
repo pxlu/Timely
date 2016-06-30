@@ -174,6 +174,8 @@ def parse_text(in_file):
     matched_words = _match_conjunctions(word_dict)
     sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
     
+    return sorted_words
+    
 if __name__ == "__main__":
     in_file_name = sys.argv[1]
     in_file = open(in_file_name, 'r')
