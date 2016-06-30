@@ -3,17 +3,21 @@
 
 import json
 import sys
-import pprint
 from screen import _init_disorders_list
 
 def _convert_objects(disorder_list, out_file):
 
+	# Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
 	results = {}
 	disorders_count = len(disorder_list)
 	results['disorders'] = disorder_list
 	results['count'] = disorders_count
 
 	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+def _convert_csv(csv_file, out_file):
+
+	pass
 
 def main(out_file):
 

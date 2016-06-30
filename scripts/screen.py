@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 # main.py
 
+# Native libraries
 import json
 import sys
 import re
-import parser
 import uuid
 import math
+# Custom libraries
 from classes import *
+import parser
+import JSONify
 
 SEVERITY_MAPPING = "../json/severity.json"
 DISORDERS_MAPPING = "../json/disorders.json"
@@ -81,7 +84,6 @@ def _get_severity(user_profile):
 
 def _parse_bio(in_file, profile_name):
 
-    '''
     word_dict = parser.parse_text(in_file)
     _disorder_severities(DISORDERS, SEVERITY)
     user_profile = UserProfile(name=str.capitalize(profile_name))
@@ -94,12 +96,6 @@ def _parse_bio(in_file, profile_name):
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)
-
-    '''
-
-    for d in DISORDERS:
-        print(d)
-    print(DISORDERS)
 
 if __name__ == '__main__':
     try:
