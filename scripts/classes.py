@@ -1,4 +1,17 @@
+# -*- coding: utf-8 -*-
+# classes.py
+
 import json
+
+### Custom Exceptions
+
+class InvalidInputException(Exception):
+    pass
+
+class QuitException(Exception):
+    pass
+
+### Custom Classes
 
 class UserProfile:
 
@@ -24,8 +37,9 @@ class Disorder:
         self.severity = severity
 
     def __str__(self):
-        return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}, with a base rate of {}. Currently, it's severity rating is {}.".format(
+        return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}, with a base rate of {}. Currently, its severity rating is {}.".format(
 			self.name, self.symptoms, self.base_rate, self.severity)
 	
+    # Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
     def to_JSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

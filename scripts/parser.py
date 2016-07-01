@@ -132,7 +132,7 @@ def _match_conjunctions(parsed_words):
     remove_list = []
     for word in parsed_words.keys():
         requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word + '&part_of_speech=adjective'
-        request = requests.get(requestURL)
+        request = requests.get(requestURL)        
         numresults = request.json()['count']
         
         conjugations_list = []

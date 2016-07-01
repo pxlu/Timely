@@ -3,7 +3,6 @@
 
 import json
 import sys
-from screen import _init_disorders_list
 
 def _convert_objects(disorder_list, out_file):
 
@@ -21,8 +20,7 @@ def _convert_csv(csv_file, out_file):
 
 def main(out_file):
 
-	DISORDERS = _init_disorders_list()
-	_convert_object(DISORDERS, out_file)
+	pass
 
 if __name__ == '__main__':
 	out_file_name = sys.argv[1]

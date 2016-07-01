@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# main.py
+# screen.py
 
 # Native libraries
 import json
@@ -7,10 +7,11 @@ import sys
 import re
 import uuid
 import math
+import multiprocessing as mp
 # Custom libraries
-from classes import *
-import parser
 import JSONify
+import parser
+from classes import *
 
 SEVERITY_MAPPING = "../json/severity.json"
 DISORDERS_MAPPING = "../json/disorders.json"
@@ -64,7 +65,7 @@ def _disorder_confidence(user_profile):
         confidence_value = _calculate_adjustment(base_rate, disorder_confidence, rate_difference, CONFIDENCE_WEIGHT_FACTOR)
         confidence_list.append((disorder.name, str(math.ceil(confidence_value * 100))  + '%'))
 
-    return confidence_list
+    return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
 
 def _disorder_severities(disorders_dict, severity_dict):
 
@@ -89,6 +90,7 @@ def _parse_bio(in_file, profile_name):
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
+    # Use filter function here!
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
 
     # Fill in fields of user_profile
@@ -97,11 +99,79 @@ def _parse_bio(in_file, profile_name):
     user_profile.severity = _get_severity(user_profile)
     user_profile.confidence = _disorder_confidence(user_profile)
 
+    in_file.close()
+
+    return user_profile
+
+### User testing helpers ###
+
+def _begin_prompt():
+
+    print('-- Hello! You are using Timely-[Screen], an interactive screening tool for assessing potential mental health disorders.')
+    print('-- To begin, could you please tell me your name?')
+    user_name = input('==> ')
+    if not re.match(r'[A-Za-z]+', user_name):
+        raise InvalidInputException('Sorry! Only names with alphabetical characters are accepted.')
+    welcome_msg = '-- Welcome {}!'.format(user_name.capitalize())
+    print(welcome_msg)
+
+    return user_name
+
+def _selection_prompt():
+
+    print('-- Please select an option from below: \n======================================= \
+                \n-> [New] to perform a screening from the beginning, with your input. \
+                \n-> [Existing] to specify an existing persona file to be screened.\
+                \n-> [Quit] to quit this program.')
+    user_option = input('==> ').capitalize()
+    if not re.match(r'New|Existing|Quit', user_option):
+        print('[!] Sorry, you chose an invalid option.')
+        user_option = -1
+
+    return user_option
+
+def _execute_options(user_option):
+
+    if user_option == 'Quit':
+        raise QuitException('User has selected to quit.')
+    elif user_option == 'New':
+        print('-- Please enter your persona below: ')
+        persona = input('==> ')
+        user_persona_file = open(user_name + '.md', 'r+')
+        user_persona_file.write(persona)
+    else:
+        print('-- Please enter the pre-existing persona file to screen: ')
+        user_persona_file_name = input('==> ')
+        user_persona_file = open(user_persona_file_name, 'r')
+
+    return user_persona_file
+
+def main():
+
+    try:
+        user_name = _begin_prompt()
+        user_option = -1
+        while user_option is -1:
+            user_option = _selection_prompt()
+        user_persona_file = _execute_options(user_option)
+        user_profile = _parse_bio(user_persona_file, user_name)
+        print('================================================== \
+            \n[!] Your results: \n' + str(user_profile) + '\
+            \n==================================================')
+    except InvalidInputException:
+        sys.exit()
+    except QuitException:
+        sys.exit()
+
 if __name__ == '__main__':
+    '''
     try:
         in_file_name = sys.argv[1]
         profile_name = re.search('[A-Za-z]+\.md', in_file_name).group(0).split('.')[0]
         in_file = open(in_file_name, 'r')
         _parse_bio(in_file, profile_name)
     except IndexError:
-        print("Usage: `python main.py [inFile] [outFile]`")
+        print("Usage: `python main.py [inFile]`")
+    '''
+    main()
+    # '''
