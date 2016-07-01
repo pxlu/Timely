@@ -13,18 +13,18 @@ import JSONify
 import parser
 from classes import *
 
-SEVERITY_MAPPING = "../json/severity.json"
+KEYWORDS_MAPPING = "../json/keywords.json"
 DISORDERS_MAPPING = "../json/disorders.json"
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-def _init_severity():
+def _init_keywords():
 
-    sev_file = open(SEVERITY_MAPPING)
-    sev_list = json.loads(sev_file.read())['results']['keywords']
-    sev_ratings = {sev_element['name']: sev_element['rating'] for sev_element in sev_list}
-    return sev_ratings
+    keyw_file = open(KEYWORDS_MAPPING)
+    keyw_list = json.loads(keyw_file.read())['results']['keywords']
+    keyw_ratings = {keyw_element['name']: keyw_element['rating'] for keyw_element in keyw_list}
+    return keyw_ratings
 
-SEVERITY = _init_severity()
+KEYWORDS = _init_keywords()
 
 def _init_disorders_list():
 
@@ -79,19 +79,19 @@ def _get_severity(user_profile):
 
     user_severity = 0
     for keyword, num_occurence in user_profile.keywords.items():
-        user_severity += num_occurence * int(SEVERITY[keyword])
+        user_severity += num_occurence * int(KEYWORDS[keyword])
 
     return user_severity
 
 def _parse_bio(in_file, profile_name):
 
     word_dict = parser.parse_text(in_file)
-    _disorder_severities(DISORDERS, SEVERITY)
+    _disorder_severities(DISORDERS, KEYWORDS)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
     # Use filter function here!
-    user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in SEVERITY}
+    user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS}
 
     # Fill in fields of user_profile
     user_profile.uid = uuid.uuid4()
@@ -130,15 +130,17 @@ def _selection_prompt():
 
     return user_option
 
-def _execute_options(user_option):
+def _execute_options(user_option, user_name):
 
     if user_option == 'Quit':
         raise QuitException('User has selected to quit.')
     elif user_option == 'New':
         print('-- Please enter your persona below: ')
         persona = input('==> ')
-        user_persona_file = open(user_name + '.md', 'r+')
+        user_persona_file = open(user_name + '.md', 'w')
         user_persona_file.write(persona)
+        user_persona_file.close()
+        user_persona_file = open(user_name + '.md', 'r')
     else:
         print('-- Please enter the pre-existing persona file to screen: ')
         user_persona_file_name = input('==> ')
@@ -151,13 +153,15 @@ def main():
     try:
         user_name = _begin_prompt()
         user_option = -1
-        while user_option is -1:
-            user_option = _selection_prompt()
-        user_persona_file = _execute_options(user_option)
-        user_profile = _parse_bio(user_persona_file, user_name)
-        print('================================================== \
-            \n[!] Your results: \n' + str(user_profile) + '\
-            \n==================================================')
+        while 1:
+            while user_option is -1:
+                user_option = _selection_prompt()
+            user_persona_file = _execute_options(user_option, user_name)
+            user_profile = _parse_bio(user_persona_file, user_name)
+            print('================================================== \
+                \n[!] Your results: \n' + str(user_profile) + '\
+                \n==================================================')
+            user_option = -1
     except InvalidInputException:
         sys.exit()
     except QuitException:
