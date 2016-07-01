@@ -11,30 +11,15 @@ import multiprocessing as mp
 # Custom libraries
 import JSONify
 import parser
+import common
 from classes import *
 
-KEYWORDS_MAPPING = "../json/keywords.json"
-DISORDERS_MAPPING = "../json/disorders.json"
+# KEYWORDS_MAPPING = "../json/keywords.json"
+# DISORDERS_MAPPING = "../json/disorders.json"
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-def _init_keywords():
-
-    keyw_file = open(KEYWORDS_MAPPING)
-    keyw_list = json.loads(keyw_file.read())['results']['keywords']
-    keyw_ratings = {keyw_element['name']: keyw_element['rating'] for keyw_element in keyw_list}
-    return keyw_ratings
-
-KEYWORDS = _init_keywords()
-
-def _init_disorders_list():
-
-    disorders_file = open(DISORDERS_MAPPING)
-    disorders_list = json.loads(disorders_file.read())['results']['disorders']
-    disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=[symptom for symptom in disorder['symptoms'].split(',')],base_rate=disorder['base_rate']) for disorder in disorders_list]
-
-    return disorders
-
-DISORDERS = _init_disorders_list()
+KEYWORDS = common._init_keywords()
+DISORDERS = common._init_disorders_list()
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
 

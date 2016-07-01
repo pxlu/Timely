@@ -5,13 +5,16 @@ import sys
 import re
 import requests
 import json
-from collections import OrderedDict 
+import common
+from collections import OrderedDict
 
 ABBREVIATIONS = "../assets/wordlists/abbrev.english"
 CONTRACTIONS = {
     "'m", "'ll", "'d", "'ve", "'re"
 }
 END= "/END"
+
+KEYWORDS = common._init_keywords()
 
 def _get_abbreviations():
     """
@@ -125,31 +128,60 @@ def _remove_nonwords(sentence_list):
 
     return fixed
 
-def _match_conjunctions(parsed_words):
+def _match_conjunctions(parsed_words, base_match=True):
 
     # NEED NLP TAGGER TO GET THE POST OF THE WORDS, ONLY WANT WORDS TO BE USED FOR THIS SERVICE IF IT'S A ADJECTIVE TO BEGIN WITH.
 
-    remove_list = []
-    for word in parsed_words.keys():
-        requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word + '&part_of_speech=adjective'
-        request = requests.get(requestURL)        
-        numresults = request.json()['count']
-        
-        conjugations_list = []
-        for i in range(numresults):
-            conjugations_list.append(request.json()['results'][i]['headword'])
-        word_conjugations = { word for word in conjugations_list }
+    add_dict = {}
+    replace_set = set()
+    keep_set = set()
+    remove_set = set()
 
+    for word in parsed_words.keys():
+        # For each word in parsed words, look up words that are similar to it
+        requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word
+        request = requests.get(requestURL)
+        numresults = request.json()['count']
+
+        # For each word that is similar, add it to the conjugations_set, including itself
+        conjugations_set = set()
+        for i in range(numresults):
+            headword = request.json()['results'][i]['headword']
+            conjugations_set.add(headword) 
+
+        # If the word is not in KEYWORDS but it's conjugation is, means that the word is actually a conjugation of the base word
+        for conjugation in conjugations_set:
+            # If conjugation in KEYWORDS, add it to keep_set
+            if conjugation in KEYWORDS:
+                keep_set.add(conjugation)
+            # If word !in KEYWORDS but a conjugation is, add replace word with conjugation, impossible if same word
+            if conjugation in KEYWORDS and word not in KEYWORDS:
+                replace_set.add((word, conjugation))
+            # If neither in KEYWORDS, remove the latter one
+            if word not in KEYWORDS and conjugation in parsed_words.keys() and word != conjugation and word not in remove_set:
+                remove_set.add(conjugation)
+
+        # Now, collect like terms and group all their counts together
         conjugate_count = 0
-        for conjugate in word_conjugations:
+        for conjugate in conjugations_set:
+            # If the conjugate exists in parsed_words, means that they should be grouped together
             if conjugate != word and conjugate in parsed_words.keys():
                 conjugate_count += parsed_words[conjugate]
-                remove_list.append(conjugate)
 
-        parsed_words[word] += conjugate_count
+        # Add it to add_dict so it can be added to the count in parsed_words later
+        add_dict[word] = conjugate_count
 
-    for word in remove_list:
-        del parsed_words[word]
+    for word in parsed_words.keys():
+        parsed_words[word] += add_dict[word]
+
+    for pair in replace_set:
+        parsed_words[pair[1]] = parsed_words[pair[0]]
+        del parsed_words[pair[0]]
+
+    for word in remove_set:
+        if word in parsed_words and word not in keep_set:
+            del parsed_words[word]
+
     return parsed_words
 
 def parse_text(in_file):
@@ -173,7 +205,8 @@ def parse_text(in_file):
     
     matched_words = _match_conjunctions(word_dict)
     sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
-    
+    print(sorted_words)
+
     return sorted_words
     
 if __name__ == "__main__":
