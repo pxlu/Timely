@@ -2,6 +2,7 @@
 # classes.py
 
 import json
+import datetime
 
 ### Custom Exceptions
 
@@ -43,3 +44,18 @@ class Disorder:
     # Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
     def to_JSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+class Resource:
+
+    def __init__(self, name="", rid=-1, capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
+        # Availbility should be a datetime object
+        # Capacity should be whether the resource accepts new patients or not
+        self.name = name
+        self.id = rid
+        self.capacity = capacity
+        self.location = location
+        self.address = address
+        self.contact = contact
+        self.services = services
+        self.cost = cost
+        self.hours = hours
