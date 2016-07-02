@@ -19,23 +19,15 @@ def _disorders_to_json(disorder_list, out_file):
 
 def _disorders_csv_to_json(csv_file_name, out_file):
 
-	results = {}
 	disorders_reader = csv.DictReader(open(csv_file_name))
 	disorders_list = [KeyWord(name=row['Keyword'], description=row['Description']) for row in disorders_reader]
-	results['disorders'] = disorders_list
-	results['count'] = len(disorders_list)
-
-	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+	_disorders_to_json(disorders_list, out_file)
 
 def _resources_to_json():
 	
 	pass
 
 def _resources_csv_to_json():
-
-	pass
-
-def main(out_file):
 
 	pass
 

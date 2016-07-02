@@ -7,15 +7,12 @@ import sys
 import re
 import uuid
 import math
-import multiprocessing as mp
 # Custom libraries
 import JSONify
 import parser
 import common
 from classes import *
 
-# KEYWORDS_MAPPING = "../json/keywords.json"
-# DISORDERS_MAPPING = "../json/disorders.json"
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
 KEYWORDS = common._init_keywords()
@@ -138,7 +135,7 @@ def main():
     try:
         user_name = _begin_prompt()
         user_option = -1
-        while 1:
+        while True:
             while user_option is -1:
                 user_option = _selection_prompt()
             user_persona_file = _execute_options(user_option, user_name)
