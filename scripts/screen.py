@@ -11,7 +11,7 @@ import math
 import JSONify
 import parser
 import common
-from classes import *
+import classes
 
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 

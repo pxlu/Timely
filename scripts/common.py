@@ -5,6 +5,7 @@ import json
 
 KEYWORDS_MAPPING = "../json/keywords.json"
 DISORDERS_MAPPING = "../json/disorders.json"
+RESOUCES_MAPPING = "../json/resources.json"
 
 def _init_keywords():
 
@@ -18,6 +19,17 @@ def _init_disorders_list():
 
     disorders_file = open(DISORDERS_MAPPING)
     disorders_list = json.loads(disorders_file.read())['results']['disorders']
+
     disorders = [Disorder(name=disorder['name'],disid=disorder['id'],symptoms=[symptom for symptom in disorder['symptoms'].split(',')],base_rate=disorder['base_rate']) for disorder in disorders_list]
 
     return disorders
+
+def _init_resources_list():
+
+	resources_file = open(RESOUCES_MAPPING)
+	resources_list = json.loads(resources_file.read())['results']['resources']
+
+	# Availibility is None until I figure out how to make a correct datetime object list
+	resources = [Resource(name=resource['name'], rid=resource['rid'], capacity=resource['capacity'], location=resource['location'], address=resource['address'] if resource['address'] != '' else None, contact=resource['contact'], services=resource['services'], cost=resource['cost'] if resource['cost'] != ''else None, availibility=None) for resource in resources_list]
+
+	return resources
