@@ -14,15 +14,6 @@ class QuitException(Exception):
 
 ### Custom Classes
 
-class KeyWord:
-
-    def __init__(self, name="", description=""):
-        self.name = name
-        self.description = description
-        
-    def __str__(self):
-        return "{} is a keyword, described as {}".format(self.name, self.description)
-
 class UserProfile:
 
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, confidence=[]):
@@ -35,6 +26,15 @@ class UserProfile:
     def __str__(self):
         return "UserID: {}\nUsername: {}\nKeywords: {}\nSeverity: {}\nDisorders: {}".format(
             self.uid, self.name, self.keywords, self.severity, self.confidence)
+
+class KeyWord:
+
+    def __init__(self, name="", description=""):
+        self.name = name
+        self.description = description
+        
+    def __str__(self):
+        return "{} is a keyword, described as {}".format(self.name, self.description)
 
 class Disorder:
 

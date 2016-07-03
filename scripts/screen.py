@@ -65,7 +65,7 @@ def _get_severity(user_profile):
 
     return user_severity
 
-def _parse_bio(in_file, profile_name):
+def _get_profile(in_file, profile_name):
 
     word_dict = parser.parse_text(in_file)
     _disorder_severities(DISORDERS, KEYWORDS)
@@ -139,7 +139,7 @@ def main():
             while user_option is -1:
                 user_option = _selection_prompt()
             user_persona_file = _execute_options(user_option, user_name)
-            user_profile = _parse_bio(user_persona_file, user_name)
+            user_profile = _get_profile(user_persona_file, user_name)
             print('================================================== \
                 \n[!] Your results: \n' + str(user_profile) + '\
                 \n==================================================')
@@ -155,7 +155,7 @@ if __name__ == '__main__':
         in_file_name = sys.argv[1]
         profile_name = re.search('[A-Za-z]+\.md', in_file_name).group(0).split('.')[0]
         in_file = open(in_file_name, 'r')
-        _parse_bio(in_file, profile_name)
+        _get_profile(in_file, profile_name)
     except IndexError:
         print("Usage: `python main.py [inFile]`")
     '''

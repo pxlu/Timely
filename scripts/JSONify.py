@@ -4,7 +4,7 @@
 import json
 import sys
 import csv
-from classes import KeyWord
+from classes import KeyWord, Disorder, Resource
 
 # Disorders => JSON <= CSV
 
@@ -19,9 +19,21 @@ def _disorders_to_json(disorder_list, out_file):
 
 def _disorders_csv_to_json(csv_file_name, out_file):
 
-	disorders_reader = csv.DictReader(open(csv_file_name))
-	disorders_list = [KeyWord(name=row['Keyword'], description=row['Description']) for row in disorders_reader]
-	_disorders_to_json(disorders_list, out_file)
+	pass
+
+def _keywords_to_json(keywords_list, out_file)
+
+def _keywords_csv_to_json(csv_file_name, out_file):
+
+	results = {}
+
+	keywords_reader = csv.DictReader(open(csv_file_name))
+	keywords_list = [KeyWord(name=row['Keyword'], description=row['Description']) for row in keywords_reader]
+
+	results['keywords'] = keywords_list
+	results['count'] = len(keywords_list)
+
+	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 def _resources_to_json():
 	
