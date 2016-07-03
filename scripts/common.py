@@ -37,6 +37,6 @@ def _init_resource_list():
 	resources_list = json.loads(resources_file.read())['results']['resources']
 
 	# Availibility is None until I figure out how to make a correct datetime object list
-	resources = [Resource(name=resource['name'], rID=resource['id'], capacity=resource['capacity'], location=resource['location'], address=resource['address'] if resource['address'] != '' else None, contact=resource['contact'], services=resource['services'], cost=resource['cost'] if resource['cost'] != ''else None, availibility=None) for resource in resources_list]
+	resources = [Resource(name=resource['name'], rID=resource['id'], type=resource['type'],capacity=resource['capacity'], location=resource['location'], address=resource['address'] if resource['address'] != '' else None, contact=resource['contact'], services=resource['services'], cost=resource['cost'] if resource['cost'] != ''else None, availibility=None) for resource in resources_list]
 
 	return resources

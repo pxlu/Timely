@@ -67,11 +67,13 @@ class Disorder:
 
 class Resource:
 
-    def __init__(self, name="", rID=-1, capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
+    def __init__(self, name="", rID=-1, type="", capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
         # Availbility should be a datetime object
+        # Type should be hotline, specialist, etc
         # Capacity should be whether the resource accepts new patients or not
         self.name = name
         self.rID = rID
+        self.type = type
         self.capacity = capacity
         self.location = location
         self.address = address
@@ -84,6 +86,7 @@ class Resource:
         return "############################################ \
         \nName: {}\
         \nrID: {}\
+        \nType: {}\
         \nCapacity: {}\
         \nLocation: {}\
         \nAddress: {}\

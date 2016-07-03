@@ -40,15 +40,48 @@ def _calculate_compatibility(resource, resource_list, user_profile):
 		if resource in treatment_places:
 			compatibility_value += 1
 
-	compatibility_value = str((compatibility_value / len(user_profile.disorders)) * 100) + '%'
+	compatibility_value = (compatibility_value / len(user_profile.disorders)) * 100
 
 	return compatibility_value
+
+def _get_total_compatibility(resource_list, user_profile):
+
+	'''
+	Return the total additive compatibility value of all resources in resource_list.
+	:param resource: a resource to be checked
+	:param resource_list: a list of resources
+	:user_profile: a profile of a user to be checked
+	:return: the compatibility of the user with all resources, expressed as a percentage
+	'''
+
+	total_compatibility_value = 0
+	for resource in resource_list:
+		resource_compatibility_value = _calculate_compatibility(resource, resource_list, user_profile)
+		total_compatibility_value += resource_compatibility_value
+
+	total_compatibility_value /= len(resource_list)
+
+def _recommend_resource(resource, resource_list, user_profile):
+
+	'''
+	Return a boolean value of whether the resource for the given user_profile should be recommended or not.
+	:param resource: a resource to be recommended
+	:param resource_list: a list of resources to be recommended
+	:user_profile: a profile of a user to be checked against
+	:return: a tuple of (bool, value) indicating whether the resource is recommended or not and it's compatibility value with the user_profile
+	'''
+
+	# Currently, value is up in the air on what the threshold is to be recommended
+	comp_value = _calculate_compatibility(resource, resource_list, user_profile)
+	recommendation = True if comp_value > 0.33 else False
+
+	return (recommendation, comp_value)
 
 def _get_resources(in_file):
 
 	user_profile = screen._get_profile(in_file, 'peter')
-	cv = _calculate_compatibility(RESOURCES[0], RESOURCES, user_profile)
-	print(cv)
+	rr = _recommend_resource(RESOURCES[0], RESOURCES, user_profile)
+	print(rr)
 
 if __name__ == '__main__':
 	in_file_name = sys.argv[1]
