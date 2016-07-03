@@ -4,6 +4,7 @@
 		{
 			"name": "Counseline",
 	        "id": "1",
+	        "type": "hotline",
 	        "capacity": "available",
 	        "location": "Factor-Inwentash Faculty of Social Work",
 	        "address": "246 Bloor Street W, Toronto, Ontario",
