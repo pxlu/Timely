@@ -21,7 +21,11 @@ def _disorders_csv_to_json(csv_file_name, out_file):
 
 	pass
 
-def _keywords_to_json(keywords_list, out_file)
+# KeyWords => JSON <= CSV
+
+def _keywords_to_json(keywords_list, out_file):
+
+	pass
 
 def _keywords_csv_to_json(csv_file_name, out_file):
 
@@ -34,6 +38,8 @@ def _keywords_csv_to_json(csv_file_name, out_file):
 	results['count'] = len(keywords_list)
 
 	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+# Resources => JSON <= CSV
 
 def _resources_to_json():
 	
