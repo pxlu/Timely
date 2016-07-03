@@ -26,8 +26,9 @@ class UserProfile:
         self.disorders = disorders
 
     def __str__(self):
+        disorders_return = [(disorder[0].name, disorder[1]) for disorder in self.disorders]
         return "UserID: {}\nUsername: {}\nKeywords: {}\nSeverity: {}\nDisorders: {}".format(
-            self.uid, self.name, self.keywords, self.severity, self.disorders)
+            self.uid, self.name, self.keywords, self.severity, disorders_return)
 
     def _generate_uid(self):
 

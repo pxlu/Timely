@@ -14,7 +14,7 @@ CONTRACTIONS = {
 }
 END= "/END"
 
-KEYWORDS = common._init_keywords_list()
+KEYWORDS = common._init_keyword_list()
 KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
 
 def _get_abbreviations():

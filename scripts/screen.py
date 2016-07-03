@@ -7,6 +7,7 @@ import sys
 import re
 import uuid
 import math
+from collections import OrderedDict
 # Custom libraries
 from classes import *
 import JSONify
@@ -15,9 +16,9 @@ import common
 
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-KEYWORDS = common._init_keywords_list()
+KEYWORDS = common._init_keyword_list()
 KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
-DISORDERS = common._init_disorders_list()
+DISORDERS = common._init_disorder_list()
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
 
@@ -78,10 +79,11 @@ def _get_profile(in_file, profile_name):
     # Filter by keywords only
     # Use filter function here!
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS_NAMES}
+    sorted_user_words = OrderedDict(sorted(user_keywords.items(), key=lambda element: element[0]))
 
     # Fill in fields of user_profile
     user_profile.uid = user_profile._generate_uid()
-    user_profile.keywords = user_keywords
+    user_profile.keywords = sorted_user_words
     user_profile.severity = _get_severity(user_profile, KEYWORDS)
     user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
 
@@ -128,6 +130,7 @@ def _execute_options(user_option, user_name):
         user_persona_file.write(persona)
         user_persona_file.close()
         user_persona_file = open(user_name + '.md', 'r')
+        print('Please wait while your profile is being created...')
     else:
         file_found = False
         while file_found is False:
@@ -138,7 +141,7 @@ def _execute_options(user_option, user_name):
                 file_found = True
             except FileNotFoundError:
                 print("That is not a valid file name! Please enter a valid file name.")
-
+        print('Please wait while your profile is being created...')
     return user_persona_file
 
 def main():
