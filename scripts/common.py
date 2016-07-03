@@ -8,14 +8,20 @@ KEYWORDS_MAPPING = "../json/keywords.json"
 DISORDERS_MAPPING = "../json/disorders.json"
 RESOUCES_MAPPING = "../json/resources.json"
 
-def _init_keywords():
+def _init_keywords_list():
 
     keyw_file = open(KEYWORDS_MAPPING)
     keyw_list = json.loads(keyw_file.read())['results']['keywords']
-    keyw_ratings = {KeyWord(name=keyw_element['name'],description=keyw_element['description'], for keyw_element in keyw_list}
+    keyw_ratings = [KeyWord(name=keyw_element['name'],description=keyw_element['description'],rating=keyw_element['rating']) for keyw_element in keyw_list]
     
     return keyw_ratings
 
+def _get_keywords(keywords_list):
+
+	keyword_names = [keyword.name for keyword in keywords_list]
+
+	return keyword_names
+	
 def _init_disorders_list():
 
     disorders_file = open(DISORDERS_MAPPING)

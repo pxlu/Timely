@@ -8,14 +8,15 @@ import re
 import uuid
 import math
 # Custom libraries
+from classes import *
 import JSONify
 import parser
 import common
-import classes
 
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-KEYWORDS = common._init_keywords()
+KEYWORDS = common._init_keywords_list()
+KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
 DISORDERS = common._init_disorders_list()
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
@@ -49,19 +50,21 @@ def _disorder_confidence(user_profile):
 
     return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
 
-def _disorder_severities(disorders_dict, severity_dict):
+def _disorder_severities(disorders_dict, keywords_list):
 
     for disorder in disorders_dict:
         disorder_severity = 0
         for symptom in disorder.symptoms:
-            disorder_severity += float(severity_dict[symptom])
+            keyword_sev = next((x.rating for x in keywords_list if x.name == symptom), 0)
+            disorder_severity += int(keyword_sev)
         disorder.severity = disorder_severity
 
-def _get_severity(user_profile):
+def _get_severity(user_profile, keywords_list):
 
     user_severity = 0
     for keyword, num_occurence in user_profile.keywords.items():
-        user_severity += num_occurence * int(KEYWORDS[keyword])
+        keyword_sev = next((x.rating for x in keywords_list if x.name == keyword), 0)
+        user_severity += num_occurence * int(keyword_sev)
 
     return user_severity
 
@@ -73,12 +76,12 @@ def _get_profile(in_file, profile_name):
 
     # Filter by keywords only
     # Use filter function here!
-    user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS}
+    user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS_NAMES}
 
     # Fill in fields of user_profile
     user_profile.uid = uuid.uuid4()
     user_profile.keywords = user_keywords
-    user_profile.severity = _get_severity(user_profile)
+    user_profile.severity = _get_severity(user_profile, KEYWORDS)
     user_profile.confidence = _disorder_confidence(user_profile)
 
     in_file.close()
@@ -115,7 +118,8 @@ def _selection_prompt():
 def _execute_options(user_option, user_name):
 
     if user_option == 'Quit':
-        raise QuitException('User has selected to quit.')
+        print('Thanks for using Timely-[Screen]!')
+        raise QuitException
     elif user_option == 'New':
         print('-- Please enter your persona below: ')
         persona = input('==> ')
@@ -124,9 +128,15 @@ def _execute_options(user_option, user_name):
         user_persona_file.close()
         user_persona_file = open(user_name + '.md', 'r')
     else:
-        print('-- Please enter the pre-existing persona file to screen: ')
-        user_persona_file_name = input('==> ')
-        user_persona_file = open(user_persona_file_name, 'r')
+        file_found = False
+        while file_found is False:
+            print('-- Please enter the pre-existing persona file to screen: ')
+            try:
+                user_persona_file_name = input('==> ')
+                user_persona_file = open(user_persona_file_name, 'r')
+                file_found = True
+            except FileNotFoundError:
+                print("That is not a valid file name! Please enter a valid file name.")
 
     return user_persona_file
 

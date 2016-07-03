@@ -1,0 +1,37 @@
+{
+	"results": {
+		"resources": [
+		{
+			"name": "Counseline",
+	        "id": "1",
+	        "capacity": "available",
+	        "location": "Factor-Inwentash Faculty of Social Work",
+	        "address": "246 Bloor Street W, Toronto, Ontario",
+	        "contact": {
+	        	"phone": "4169786314",
+	        	"website": ""
+	        },
+	        "services": [
+	        	"Anxiety",
+	        	"Depression",
+	        	"Family Problems",
+	        	"School Issues",
+	        	"Interpersonal Difficulties",
+	        	"Relationships",
+	        	"Substance / Alcohol / Drug Use",
+	        	"LGBTQ Counselling"
+	        ],
+	        "cost": "free",
+	        "availibility": {
+	        	"Monday": "",
+	        	"Tuesday": "",
+	        	"Wednesday": "9:00AM-5:00PM",
+	        	"Thursday": "9:00AM-5:00PM",
+	        	"Friday": "9:00AM-5:00PM",
+	        	"Saturday": "",
+	        	"Sunday": ""
+	        }
+		}],
+		"count": 1
+	}
+}

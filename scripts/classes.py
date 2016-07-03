@@ -64,8 +64,7 @@ class Disorder:
     def _generate_dID(self):
 
         pass
-        # self.diD = 
-
+        
 class Resource:
 
     def __init__(self, name="", rID=-1, capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):

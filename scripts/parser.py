@@ -14,7 +14,8 @@ CONTRACTIONS = {
 }
 END= "/END"
 
-KEYWORDS = common._init_keywords()
+KEYWORDS = common._init_keywords_list()
+KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
 
 def _get_abbreviations():
     """
@@ -152,13 +153,13 @@ def _match_conjunctions(parsed_words, base_match=True):
         # If the word is not in KEYWORDS but it's conjugation is, means that the word is actually a conjugation of the base word
         for conjugation in conjugations_set:
             # If conjugation in KEYWORDS, add it to keep_set
-            if conjugation in KEYWORDS:
+            if conjugation in KEYWORDS_NAMES:
                 keep_set.add(conjugation)
             # If word !in KEYWORDS but a conjugation is, add replace word with conjugation, impossible if same word
-            if conjugation in KEYWORDS and word not in KEYWORDS:
+            if conjugation in KEYWORDS_NAMES and word not in KEYWORDS_NAMES:
                 replace_set.add((word, conjugation))
             # If neither in KEYWORDS, remove the latter one
-            if word not in KEYWORDS and conjugation in parsed_words.keys() and word != conjugation and word not in remove_set:
+            if word not in KEYWORDS_NAMES and conjugation in parsed_words.keys() and word != conjugation and word not in remove_set:
                 remove_set.add(conjugation)
 
         # Now, collect like terms and group all their counts together
@@ -205,7 +206,6 @@ def parse_text(in_file):
     
     matched_words = _match_conjunctions(word_dict)
     sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
-    print(sorted_words)
 
     return sorted_words
     
