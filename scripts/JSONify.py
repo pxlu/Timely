@@ -8,36 +8,38 @@ from classes import KeyWord, Disorder, Resource
 
 # Disorders => JSON <= CSV
 
-def _disorders_to_json(disorder_list, out_file):
+def _disorders_to_json(disorders_list, out_file):
 
 	# Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
 	results = {}
-	results['disorders'] = disorder_list
-	results['count'] = len(disorder_list)
+	results['disorders'] = disorders_list
+	results['count'] = len(disorders_list)
 
 	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 def _disorders_csv_to_json(csv_file_name, out_file):
 
-	pass
+	disorders_reader = csv.DictReader(open(csv_file_name))
+	disorders_list = [Disorder(name=row['name'], symptoms=row['symptoms'], base_rate=row['base_rate'], risk_factors=row['risk_factors'], severity=row['severity']) for row in disorders_reader]
+
+	_disorders_to_json(disorders_list, out_file)
 
 # KeyWords => JSON <= CSV
 
 def _keywords_to_json(keywords_list, out_file):
 
-	pass
-
-def _keywords_csv_to_json(csv_file_name, out_file):
-
 	results = {}
-
-	keywords_reader = csv.DictReader(open(csv_file_name))
-	keywords_list = [KeyWord(name=row['Keyword'], description=row['Description']) for row in keywords_reader]
-
 	results['keywords'] = keywords_list
 	results['count'] = len(keywords_list)
 
 	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+def _keywords_csv_to_json(csv_file_name, out_file):
+
+	keywords_reader = csv.DictReader(open(csv_file_name))
+	keywords_list = [KeyWord(name=row['Keyword'], description=row['Description']) for row in keywords_reader]
+
+	_keywords_to_json(keywords_list, out_file)
 
 # Resources => JSON <= CSV
 
