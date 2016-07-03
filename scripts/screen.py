@@ -31,14 +31,14 @@ def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weigh
 
     return confidence_value
 
-def _disorder_confidence(user_profile):
+def _disorder_confidence(user_profile, disorder_list):
 
     confidence_list = []
-    for disorder in DISORDERS:
+    for disorder in disorder_list:
         disorder_confidence = 0
-        disorder_list = disorder.symptoms
+        symptoms_list = disorder.symptoms
         for symptom in user_profile.keywords.keys():
-            if symptom in disorder_list:
+            if symptom in symptoms_list:
                 disorder_confidence += 1
         disorder_confidence /= len(DISORDERS)
 
@@ -46,7 +46,8 @@ def _disorder_confidence(user_profile):
         base_rate = float(disorder.base_rate)
         rate_difference = math.fabs(base_rate - disorder_confidence)
         confidence_value = _calculate_adjustment(base_rate, disorder_confidence, rate_difference, CONFIDENCE_WEIGHT_FACTOR)
-        confidence_list.append((disorder.name, str(math.ceil(confidence_value * 100))  + '%'))
+        disorder_name = next((list_disorder for list_disorder in disorder_list if list_disorder.name == disorder.name), None)
+        confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100))  + '%'))
 
     return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
 
@@ -79,10 +80,10 @@ def _get_profile(in_file, profile_name):
     user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS_NAMES}
 
     # Fill in fields of user_profile
-    user_profile.uid = uuid.uuid4()
+    user_profile.uid = user_profile._generate_uid()
     user_profile.keywords = user_keywords
     user_profile.severity = _get_severity(user_profile, KEYWORDS)
-    user_profile.confidence = _disorder_confidence(user_profile)
+    user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
 
     in_file.close()
 
@@ -160,14 +161,4 @@ def main():
         sys.exit()
 
 if __name__ == '__main__':
-    '''
-    try:
-        in_file_name = sys.argv[1]
-        profile_name = re.search('[A-Za-z]+\.md', in_file_name).group(0).split('.')[0]
-        in_file = open(in_file_name, 'r')
-        _get_profile(in_file, profile_name)
-    except IndexError:
-        print("Usage: `python main.py [inFile]`")
-    '''
     main()
-    # '''

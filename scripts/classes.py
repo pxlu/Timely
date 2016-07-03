@@ -18,20 +18,20 @@ class QuitException(Exception):
 
 class UserProfile:
 
-    def __init__(self, uid=-1, name="", keywords={}, severity=-1, confidence=[]):
+    def __init__(self, uid=-1, name="", keywords={}, severity=-1, disorders=[]):
         self.uid = uid
         self.name = name
         self.keywords = keywords
         self.severity = severity
-        self.confidence = confidence
+        self.disorders = disorders
 
     def __str__(self):
         return "UserID: {}\nUsername: {}\nKeywords: {}\nSeverity: {}\nDisorders: {}".format(
-            self.uid, self.name, self.keywords, self.severity, self.confidence)
+            self.uid, self.name, self.keywords, self.severity, self.disorders)
 
     def _generate_uid(self):
 
-        self.uid = uuid.uuid4()
+        return uuid.uuid4()
 
 class KeyWord:
 
@@ -64,7 +64,7 @@ class Disorder:
     def _generate_dID(self):
 
         pass
-        
+
 class Resource:
 
     def __init__(self, name="", rID=-1, capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
@@ -76,7 +76,7 @@ class Resource:
         self.location = location
         self.address = address
         self.contact = contact
-        self.services = services
+        self.services = [service.lower() for service in services]
         self.cost = cost
         self.availibility = availibility
 
