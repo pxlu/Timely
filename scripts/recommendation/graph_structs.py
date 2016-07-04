@@ -1,9 +1,9 @@
-class DecisionTree:
+class DecisionGraph:
 
 	def __init__(self):
 		pass
 
-class TreeNode:
+class DecisionNode:
 
 	def __init__(self):
 		pass
