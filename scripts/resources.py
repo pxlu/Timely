@@ -3,10 +3,8 @@
 
 # Native libraries
 import sys
-import json
 # Custom libraries
 import common 
-import JSONify
 import classes
 import screen
 
@@ -77,11 +75,42 @@ def _recommend_resource(resource, resource_list, user_profile):
 
 	return (recommendation, comp_value)
 
+def _generate_resource_list(user_profile, resource_list):
+
+	'''
+	Return a list of resources based on disorders found in given user_profile.
+	:param user_profile: a profile of a user to be checked against for disorders
+	:param resource_list a list of resources to be filted against
+	:return: a list of tuples, with each element containing a resource, a list of disorders that resource treats for, and the compatibility value of that resource with the given user_profile
+	'''
+
+	return sorted([(resource, _check_resource_disorders(user_profile, resource), _recommend_resource(resource, resource_list, user_profile)[1]) for resource in resource_list if _recommend_resource(resource, resource_list, user_profile)[0] is True],  key=lambda l_value: l_value[2])
+
+def _check_resource_disorders(user_profile, resource):
+
+	'''
+	Return a list of disorders that the given resource treats for from the given user_profile.
+	:param user_profile: a profile of a user to be checked against for disorders
+	:param resource: a resource to be checked against
+	:return a list of disorder names that the given resource treats for
+	'''
+
+	return [disorder[0].name for disorder in user_profile.disorders if disorder[0].name.lower() in resource.services]
+
 def _get_resources(in_file):
 
 	user_profile = screen._get_profile(in_file, 'peter')
-	rr = _recommend_resource(RESOURCES[0], RESOURCES, user_profile)
+	rr = _generate_resource_list(user_profile, RESOURCES)
 	print(rr)
+
+	# TODO: 
+	# Get list of all resources recommended - DONE
+	# For each resource recommend, show what it was recommended for - DONE
+	# Have the resources displayed in a ranking by compatibility - DONE
+	# Aggregate cost? -- IDK --
+
+	# GET STARTED ON MAPPING USER PREFENCES => RESOURCE AVAILIBILITY & SERVICES
+	# GOOD JOKE LMFAO
 
 if __name__ == '__main__':
 	in_file_name = sys.argv[1]
