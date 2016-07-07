@@ -103,15 +103,6 @@ def _get_resources(in_file):
 	rr = _generate_resource_list(user_profile, RESOURCES)
 	print(rr)
 
-	# TODO: 
-	# Get list of all resources recommended - DONE
-	# For each resource recommend, show what it was recommended for - DONE
-	# Have the resources displayed in a ranking by compatibility - DONE
-	# Aggregate cost? -- IDK --
-
-	# GET STARTED ON MAPPING USER PREFENCES => RESOURCE AVAILIBILITY & SERVICES
-	# GOOD JOKE LMFAO
-
 if __name__ == '__main__':
 	in_file_name = sys.argv[1]
 	with open(in_file_name, 'r') as in_file:

@@ -2,10 +2,8 @@
 # screen.py
 
 # Native libraries
-import json
 import sys
 import re
-import uuid
 import math
 from collections import OrderedDict
 # Custom libraries
@@ -124,7 +122,7 @@ def _execute_options(user_option, user_name):
         print('Thanks for using Timely-[Screen]!')
         raise QuitException
     elif user_option == 'New':
-        print('-- Please enter your persona below: ')
+        print('-- Please tell me a little bit about your condition...')
         persona = input('==> ')
         user_persona_file = open(user_name + '.md', 'w')
         user_persona_file.write(persona)
