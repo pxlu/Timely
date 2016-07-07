@@ -99,9 +99,10 @@ def _check_resource_disorders(user_profile, resource):
 
 def _get_resources(in_file):
 
-	user_profile = screen._get_profile(in_file, 'peter')
+	user_profile = screen._get_profile(in_file, 'alexandra')
 	rr = _generate_resource_list(user_profile, RESOURCES)
-	print(rr)
+	print(str(rr[0][0]))
+	print(rr[0][1:])
 
 if __name__ == '__main__':
 	in_file_name = sys.argv[1]

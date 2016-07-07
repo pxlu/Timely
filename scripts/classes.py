@@ -73,7 +73,7 @@ class Resource:
         # Capacity should be whether the resource accepts new patients or not
         self.name = name
         self.rID = rID
-        self.type = resourcetype
+        self.resourcetype = resourcetype
         self.capacity = capacity
         self.location = location
         self.address = address
