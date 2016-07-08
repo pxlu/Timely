@@ -20,7 +20,7 @@ class UserProfile(object):
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, disorders=[]):
         self.uid = uid
         self.name = name
-        self.keywords = keywords
+        self.keywords = keywords #not equivalent keywords that are symptoms. is instead parsed words from user bio
         self.severity = severity
         self.disorders = disorders
 
