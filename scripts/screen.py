@@ -21,6 +21,16 @@ DISORDERS = timely_common._init_disorder_list()
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
 
+    '''
+    Calculates the adjustment from the base_rate, based on observed (anecdotal) confidence from the user provided by disorder_confidence, with consideration to the difference between the base_rate and disorder_confidence, provided by rate_difference, and with final adjustment with weight_factor.
+
+    :param: base_rate: the base rate of the disorder
+    :param: disorder_confidence: the observed rate of the disorder from the user
+    :param: rate_difference: the absolute difference between the base_rate and the disorder_confidence
+    :param weight_factor: a factor to allow for final tuning of the confidence_value
+    :return: the adjusted confidence_value for the disorder for the user, adjusted from the base_rate with consideration for observed user data
+    '''
+
     confidence_value = -1
     # If greater, adjust down from base rate
     if base_rate >= disorder_confidence:
@@ -32,6 +42,14 @@ def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weigh
     return confidence_value
 
 def _disorder_confidence(user_profile, disorder_list):
+
+    '''
+    Outputs a list of disorders with their confidence values for the given user_profile, sorted in descending order of confidence_value.
+
+    :param: user_profile: a given user profile to calculate disorder confidence from
+    :disorder_list: a list of possible disorders
+    :return a list of possible disorder from the given user_profile, in descending order of confidence_value
+    '''
 
     confidence_list = []
     for disorder in disorder_list:
@@ -53,6 +71,14 @@ def _disorder_confidence(user_profile, disorder_list):
 
 def _disorder_severities(disorders_dict, keywords_list):
 
+    '''
+    Initilize the severity rating of disorders from the disorders_dict, given a list of keywords provided by keywords_list.
+
+    :param disorders_dict: a dictionary of disorders to calculate the serverity for
+    :param keywords_list: a list of keywords used to calculate disorder serverities
+    :return void (Doesn't return anything)
+    '''
+
     for disorder in disorders_dict:
         disorder_severity = 0
         for symptom in disorder.symptoms:
@@ -62,6 +88,14 @@ def _disorder_severities(disorders_dict, keywords_list):
 
 def _get_severity(user_profile, keywords_list):
 
+    '''
+    Output the severity of the user_profile, given the keywords_list.
+
+    :param user_profile: the user profile to calculate the serverity for
+    :param keywords_list: a list of keywords used to calculate the serverity
+    :return the severity of the user_profile
+    '''
+
     user_severity = 0
     for keyword, num_occurence in user_profile.keywords.items():
         keyword_sev = next((x.rating for x in keywords_list if x.name == keyword), 0)
@@ -70,6 +104,14 @@ def _get_severity(user_profile, keywords_list):
     return user_severity
 
 def _get_profile(in_file, profile_name):
+
+    '''
+    Initilize and output a user profile for the given in_file, with user_profile.name represented by profile_name.
+
+    :param in_file: a bio of a user to be parsed to generate the user_profile
+    :param profile_name: the name of the user
+    :return a user profile based on the information given in in_file
+    '''
 
     word_dict = timely_parser.parse_text(in_file)
     _disorder_severities(DISORDERS, KEYWORDS)
