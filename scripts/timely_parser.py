@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# parser.py
+# bio_parser.py
 
 import sys
 import re
 import requests
 import json
-import common
+import timely_common
 from collections import OrderedDict
 
 ABBREVIATIONS = "../assets/wordlists/abbrev.english"

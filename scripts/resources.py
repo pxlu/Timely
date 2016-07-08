@@ -4,9 +4,9 @@
 # Native libraries
 import sys
 # Custom libraries
-import common 
-import classes
-import screen
+import timely_common 
+import timely_classes
+import timely_screen
 
 RESOURCES = common._init_resource_list()
 DISORDERS = common._init_disorder_list()

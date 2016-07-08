@@ -4,7 +4,7 @@
 import json
 import sys
 import csv
-from classes import KeyWord, Disorder, Resource
+from timely_classes import KeyWord, Disorder, Resource
 
 # Disorders => JSON <= CSV
 

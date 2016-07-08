@@ -7,10 +7,10 @@ import re
 import math
 from collections import OrderedDict
 # Custom libraries
-from classes import *
+import timely_classes
 import JSONify
-import parser
-import common
+import timely_parser
+import timely_common
 
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 

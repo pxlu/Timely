@@ -2,7 +2,7 @@
 # common.py
 
 import json
-from classes import *
+import timely_classes
 
 KEYWORDS_MAPPING = "../json/keywords.json"
 DISORDERS_MAPPING = "../json/disorders.json"
