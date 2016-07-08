@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 # common.py
 
+# Native
 import json
-import timely_classes
+
+# Local
+from timely_classes import *
 
 KEYWORDS_MAPPING = "../json/keywords.json"
 DISORDERS_MAPPING = "../json/disorders.json"

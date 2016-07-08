@@ -4,12 +4,12 @@
 # Native libraries
 import sys
 # Custom libraries
-import timely_common 
-import timely_classes
-import timely_screen
+from timely_classes import *
+import timely_parser
+import timely_common
 
-RESOURCES = common._init_resource_list()
-DISORDERS = common._init_disorder_list()
+RESOURCES = timely_common._init_resource_list()
+DISORDERS = timely_common._init_disorder_list()
 
 def _map_disorder_to_resources(disorder_name, resource_list):
 
@@ -99,7 +99,7 @@ def _check_resource_disorders(user_profile, resource):
 
 def _get_resources(in_file):
 
-	user_profile = screen._get_profile(in_file, 'alexandra')
+	user_profile = timely_screen._get_profile(in_file, 'alexandra')
 	rr = _generate_resource_list(user_profile, RESOURCES)
 	print(str(rr[0][0]))
 	print(rr[0][1:])

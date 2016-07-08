@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# classes.py
+# timely_classes.py
 
 import json
 import datetime
@@ -16,7 +15,7 @@ class QuitException(Exception):
 
 ### Custom Classes
 
-class UserProfile:
+class UserProfile(object):
 
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, disorders=[]):
         self.uid = uid
@@ -34,7 +33,7 @@ class UserProfile:
 
         return uuid.uuid4()
 
-class KeyWord:
+class KeyWord(object):
 
     def __init__(self, name="", description="", rating=-1):
         self.name = name
@@ -44,7 +43,7 @@ class KeyWord:
     def __str__(self):
         return "{} is a keyword, described as {}, with a serverity rating of {}.".format(self.name, self.description, self.rating)
 
-class Disorder:
+class Disorder(object):
 
     def __init__(self, name="", dID=-1, symptoms=[], base_rate=-1, risk_factors = [], severity=-1):
         self.name = name
@@ -65,7 +64,7 @@ class Disorder:
 
         pass
 
-class Resource:
+class Resource(object):
 
     def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
         # Availbility should be a datetime object

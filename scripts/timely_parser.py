@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-# bio_parser.py
+# timely_parser.py
 
+# Native
 import sys
 import re
 import requests
 import json
-import timely_common
 from collections import OrderedDict
+
+# Local
+import timely_common
 
 ABBREVIATIONS = "../assets/wordlists/abbrev.english"
 CONTRACTIONS = {
@@ -14,8 +17,8 @@ CONTRACTIONS = {
 }
 END= "/END"
 
-KEYWORDS = common._init_keyword_list()
-KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
+KEYWORDS = timely_common._init_keyword_list()
+KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
 
 def _get_abbreviations():
     """

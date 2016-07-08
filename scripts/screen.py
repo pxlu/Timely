@@ -6,17 +6,18 @@ import sys
 import re
 import math
 from collections import OrderedDict
+
 # Custom libraries
-import timely_classes
 import JSONify
+from timely_classes import *
 import timely_parser
 import timely_common
 
 CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-KEYWORDS = common._init_keyword_list()
-KEYWORDS_NAMES = common._get_keywords(KEYWORDS)
-DISORDERS = common._init_disorder_list()
+KEYWORDS = timely_common._init_keyword_list()
+KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
+DISORDERS = timely_common._init_disorder_list()
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
 
@@ -70,7 +71,7 @@ def _get_severity(user_profile, keywords_list):
 
 def _get_profile(in_file, profile_name):
 
-    word_dict = parser.parse_text(in_file)
+    word_dict = timely_parser.parse_text(in_file)
     _disorder_severities(DISORDERS, KEYWORDS)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
