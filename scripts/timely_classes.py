@@ -105,36 +105,28 @@ class Resource(object):
 
 class OperatingHours:
 
-    def __init__(self, day_of_the_week_dict={}):
+    def __init__(self, oph_dict={}):
 
-        self.day_of_the_week_dict = day_of_the_week_dict
+        # oph stands for (Op)erating (H)ours
+        self.oph_dict = oph_dict
 
     def __str__(self):
 
+        # Need to sort output from Monday-Sunday, right now it's just kind of in an arbitary order...
+
         output = ""
 
-        for key, value in self.day_of_the_week_dict.items():
-            output += key + " "
-            time1 = int(value[0].tm_hour + value[0].tm_min)
-            time2 = int(value[1].tm_hour + value[1].tm_min)
+        for day, hours in self.oph_dict.items():
 
-            if ((time2 - time1) == 0):
-                output += "Closed\n"
-            elif ((time2-time1) == 2359):
-                output += "24 hours\n"
+            opening_time_int = int(hours[0].tm_hour + hours[0].tm_min)
+            closing_time_int = int(hours[1].tm_hour + hours[1].tm_min)
+
+            if ((closing_time_int - opening_time_int) == 0):
+                output += day + ": Closed\n"
+            elif ((closing_time_int - opening_time_int) == 2359):
+                output += day + ": 24 hours\n"
             else:
-                timestring = value[0].tm_hour + ":" + value[0].tm_min + "-" + value[1].tm_hour + ":" + value[1].tm_min + "\n"
-                output += timestring
+                timestring = str(hours[0].tm_hour) + ":" + str(hours[0].tm_min).rjust(2, '0') + "-" + str(hours[1].tm_hour) + ":" + str(hours[1].tm_min).rjust(2, '0')  + "\n"
+                output += day + ": " + timestring
 
         return output
-"""
-            "availibility": {
-                "Monday": "24 hours",
-                "Tuesday": "",
-                "Wednesday": "9:00-16:00",
-                "Thursday": "9:00-16:00",
-                "Friday": "9:00-16:00",
-                "Saturday": "",
-                "Sunday": ""
-            }
-"""
