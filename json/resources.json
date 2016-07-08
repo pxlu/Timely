@@ -24,15 +24,15 @@
 	        	"LGBTQ Counselling"
 	        ],
 	        "cost": "free",
-	        "availibility": {
-	        	"Monday": "",
-	        	"Tuesday": "",
-	        	"Wednesday": "9:00AM-5:00PM",
-	        	"Thursday": "9:00AM-5:00PM",
-	        	"Friday": "9:00AM-5:00PM",
-	        	"Saturday": "",
-	        	"Sunday": ""
-	        }
+		    "availibility": {
+		        "Monday": "24 hours",
+		        "Tuesday": "",
+		        "Wednesday": "9:00-16:00",
+		        "Thursday": "9:00-16:00",
+		        "Friday": "9:00-16:00",
+		        "Saturday": "",
+		        "Sunday": ""
+		    }
 		}],
 		"count": 1
 	}

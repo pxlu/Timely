@@ -20,9 +20,11 @@ class UserProfile(object):
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, disorders=[]):
         self.uid = uid
         self.name = name
-        self.keywords = keywords #not equivalent keywords that are symptoms. is instead parsed words from user bio
+        self.keywords = keywords #not equivalent to keywords that are symptoms. is instead parsed words from user bio
+        # Severity rating to be used for graph
         self.severity = severity
-        self.disorders = disorders
+        # List of disorders and the probability of the user having it
+        self.disorders = disorders 
 
     def __str__(self):
         disorders_return = [(disorder[0].name, disorder[1]) for disorder in self.disorders]
@@ -51,6 +53,7 @@ class Disorder(object):
         self.symptoms = symptoms
         self.base_rate = base_rate
         self.risk_factors = risk_factors
+        # Severity rating as a constraint for graph algo
         self.severity = severity
 
     def __str__(self):
@@ -79,6 +82,7 @@ class Resource(object):
         self.contact = contact
         self.services = [service.lower() for service in services]
         self.cost = cost
+        # Custom object that tells operating hours of such a resource(clinic)
         self.availibility = availibility
 
     def __str__(self):
@@ -98,3 +102,39 @@ class Resource(object):
     def _generate_rID(self):
 
         pass
+
+class OperatingHours:
+
+    def __init__(self, day_of_the_week_dict={}):
+
+        self.day_of_the_week_dict = day_of_the_week_dict
+
+    def __str__(self):
+
+        output = ""
+
+        for key, value in self.day_of_the_week_dict.items():
+            output += key + " "
+            time1 = int(value[0].tm_hour + value[0].tm_min)
+            time2 = int(value[1].tm_hour + value[1].tm_min)
+
+            if ((time2 - time1) == 0):
+                output += "Closed\n"
+            elif ((time2-time1) == 2359):
+                output += "24 hours\n"
+            else:
+                timestring = value[0].tm_hour + ":" + value[0].tm_min + "-" + value[1].tm_hour + ":" + value[1].tm_min + "\n"
+                output += timestring
+
+        return output
+"""
+            "availibility": {
+                "Monday": "24 hours",
+                "Tuesday": "",
+                "Wednesday": "9:00-16:00",
+                "Thursday": "9:00-16:00",
+                "Friday": "9:00-16:00",
+                "Saturday": "",
+                "Sunday": ""
+            }
+"""

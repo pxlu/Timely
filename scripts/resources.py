@@ -5,6 +5,7 @@
 import sys
 # Custom libraries
 from timely_classes import *
+import screen
 import timely_parser
 import timely_common
 
@@ -99,7 +100,7 @@ def _check_resource_disorders(user_profile, resource):
 
 def _get_resources(in_file):
 
-	user_profile = timely_screen._get_profile(in_file, 'alexandra')
+	user_profile = screen._get_profile(in_file, 'alexandra')
 	rr = _generate_resource_list(user_profile, RESOURCES)
 	print(str(rr[0][0]))
 	print(rr[0][1:])
