@@ -6,12 +6,15 @@ import sys
 import re
 import requests
 import json
+import os
 from collections import OrderedDict
 
 # Local
 import timely_common
 
-ABBREVIATIONS = "../assets/wordlists/abbrev.english"
+# Current working directory
+_cwd = os.path.dirname(os.path.realpath(__file__))
+
 CONTRACTIONS = {
     "'m", "'ll", "'d", "'ve", "'re"
 }
@@ -26,7 +29,7 @@ def _get_abbreviations():
     :return: set of abbreviations
     """
 
-    f = open(ABBREVIATIONS)
+    f = open(_cwd + "/../assets/wordlists/abbrev.english")
     abbrev = [x.lower() for x in f.readlines()]
     return set(abbrev)
 
