@@ -66,7 +66,7 @@ class Disorder(object):
 
     def _generate_dID(self):
 
-        pass
+        return uuid.uuid4()
 
 class Resource(object):
 
@@ -87,7 +87,7 @@ class Resource(object):
         self.availibility = availibility
 
     def __str__(self):
-        return "############################################ \
+        return "============================================= \
         \nName: {}\
         \nrID: {}\
         \nType: {}\
@@ -98,11 +98,11 @@ class Resource(object):
         \nServices: {}\
         \nCost: {}\
         \nAvailibility: {}\
-        \n############################################".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.availibility)
+        \n=============================================".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.availibility)
 
     def _generate_rID(self):
 
-        pass
+        return uuid.uuid4()
 
 class OperatingHours:
 
@@ -114,8 +114,6 @@ class OperatingHours:
 
     def __str__(self):
 
-        print(self.oph_dict)
-
         output = "\n==============================\n"
 
         for day, hours in self.oph_dict.items():
@@ -126,11 +124,9 @@ class OperatingHours:
             if ((closing_time_int - opening_time_int) == 0):
                 output += day + ": Closed\n"
             elif ((closing_time_int - opening_time_int) == 2359):
-                output += day + ": 24 hours\n"
+                output += day + ": Open 24 Hours\n"
             else:
                 timestring = str(hours[0].tm_hour) + ":" + str(hours[0].tm_min).rjust(2, '0') + "-" + str(hours[1].tm_hour) + ":" + str(hours[1].tm_min).rjust(2, '0')  + "\n"
                 output += day + ": " + timestring
 
-        output += "=============================="
-
-        return output
+        return output[:-1]
