@@ -8,6 +8,7 @@ import requests
 import json
 import os
 from collections import OrderedDict
+from nltk.stem.snowball import SnowballStemmer
 
 # Local
 import timely_common
@@ -135,6 +136,23 @@ def _remove_nonwords(sentence_list):
 
     return fixed
 
+def _stem_conjugations(parsed_words):
+
+    stemmer = SnowballStemmer("english")
+    conjugations_list = [[stemmer.stem(word[0]), [word[1], "PRE;" + word[0]]] for word in parsed_words.items()]
+    conjugated_words = [word[0] for word in conjugations_list]
+
+    for conjugation in conjugations_list:
+        # Conjugations exist in the list
+        if conjugated_words.count(conjugation[0]) > 1:
+            conjugate_count = 0
+            conjugate_indicies = [i for i, j in enumerate(conjugations_list) if j[0] == conjugation[0] and i != conjugations_list.index(conjugation)]
+            for conjugate_index in conjugate_indicies:
+                conjugate_count += conjugations_list.pop(conjugate_index)[1][0]
+            conjugation[1][0] += conjugate_count
+
+    return conjugations_list
+
 def _match_conjunctions(parsed_words, base_match=True):
 
     # NEED NLP TAGGER TO GET THE POST OF THE WORDS, ONLY WANT WORDS TO BE USED FOR THIS SERVICE IF IT'S A ADJECTIVE TO BEGIN WITH.
@@ -210,8 +228,10 @@ def parse_text(in_file):
     # For each unique word in the paragraph, insert it into an OrderedDict with the key being the word and the value being the number of occurences of that word within the paragraph
     word_dict = {item: flat_list.count(item) for item in flat_list}
     
-    matched_words = _match_conjunctions(word_dict)
-    sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
+    # matched_words = _match_conjunctions(word_dict)
+    matched_words = _stem_conjugations(word_dict)
+    sorted_words = sorted(matched_words, key=lambda item: item[0])
+    # sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
 
     return sorted_words
     

@@ -6,6 +6,7 @@ import sys
 import re
 import math
 from collections import OrderedDict
+from nltk.stem.snowball import SnowballStemmer
 
 # Custom libraries
 import JSONify
@@ -51,10 +52,12 @@ def _disorder_confidence(user_profile, disorder_list):
     :return a list of possible disorder from the given user_profile, in descending order of confidence_value
     '''
 
+    disorders_stemmer = SnowballStemmer("english")
+
     confidence_list = []
     for disorder in disorder_list:
         disorder_confidence = 0
-        symptoms_list = disorder.symptoms
+        symptoms_list = [disorders_stemmer.stem(symptom) for symptom in disorder.symptoms]
         for symptom in user_profile.keywords.keys():
             if symptom in symptoms_list:
                 disorder_confidence += 1
@@ -113,13 +116,17 @@ def _get_profile(in_file, profile_name):
     :return a user profile based on the information given in in_file
     '''
 
-    word_dict = timely_parser.parse_text(in_file)
+    # Init stemmer
+    stemmer = SnowballStemmer("english")
+    keywords_stem = [stemmer.stem(word) for word in KEYWORDS_NAMES]
+
+    # Parse words from user profile and init severities & user profile
+    word_list = timely_parser.parse_text(in_file)
     _disorder_severities(DISORDERS, KEYWORDS)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
-    # Use filter function here!
-    user_keywords = {element[0]: element[1] for element in word_dict.items() if element[0] in KEYWORDS_NAMES}
+    user_keywords = {word[0]: word[1][0] for word in word_list if word[0] in keywords_stem}
     sorted_user_words = OrderedDict(sorted(user_keywords.items(), key=lambda element: element[0]))
 
     # Fill in fields of user_profile
