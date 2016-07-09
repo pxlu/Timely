@@ -58,7 +58,7 @@ def _init_resource_list():
         address=resource['address'] if resource['address'] != '' else None,
         contact=resource['contact'], 
         services=resource['services'], 
-        cost=resource['cost'] if resource['cost'] != ''else None,
+        cost=resource['cost'] if resource['cost'] != '' else None,
         availibility=OperatingHours(oph_dict=_init_OperatingHours_dict(resource['availibility']))
         ) for resource in resources_list]
 
@@ -76,12 +76,11 @@ def _init_OperatingHours_dict(availibility_dict):
     op_hours_dict_out = {}
     for op_hours in availibility_dict.items():
         if op_hours[1] == "24 Hours".lower():
-            #incomplete. need to convert to time objects
             op_hours_dict_out[op_hours[0]] = (time.strptime("0", "%H"), time.strptime("23 59", "%H %M"))
         elif op_hours[1] == "":
             op_hours_dict_out[op_hours[0]] = (time.strptime("0", "%H"), time.strptime("0", "%H"))
         else:
-            splitstring = op_hours[1].replace(":"," ").split('-')
-            op_hours_dict_out[op_hours[0]] = (time.strptime(splitstring[0], "%H %M"), time.strptime(splitstring[1], "%H %M"))
+            timetuple = op_hours[1].replace(":"," ").split('-')
+            op_hours_dict_out[op_hours[0]] = (time.strptime(timetuple[0], "%H %M"), time.strptime(timetuple[1], "%H %M"))
 
     return op_hours_dict_out

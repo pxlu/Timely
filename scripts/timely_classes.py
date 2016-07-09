@@ -4,6 +4,7 @@ import json
 import datetime
 import uuid
 import random
+from collections import OrderedDict
 
 ### Custom Exceptions
 
@@ -107,19 +108,20 @@ class OperatingHours:
 
     def __init__(self, oph_dict={}):
 
+        self.day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         # oph stands for (Op)erating (H)ours
-        self.oph_dict = oph_dict
+        self.oph_dict = OrderedDict(sorted(oph_dict.items(), key=lambda item: self.day_order.index(item[0])))
 
     def __str__(self):
 
-        # Need to sort output from Monday-Sunday, right now it's just kind of in an arbitary order...
+        print(self.oph_dict)
 
-        output = ""
+        output = "\n==============================\n"
 
         for day, hours in self.oph_dict.items():
 
-            opening_time_int = int(hours[0].tm_hour + hours[0].tm_min)
-            closing_time_int = int(hours[1].tm_hour + hours[1].tm_min)
+            opening_time_int = int(str(hours[0].tm_hour) + str(hours[0].tm_min))
+            closing_time_int = int(str(hours[1].tm_hour) + str(hours[1].tm_min))
 
             if ((closing_time_int - opening_time_int) == 0):
                 output += day + ": Closed\n"
@@ -128,5 +130,7 @@ class OperatingHours:
             else:
                 timestring = str(hours[0].tm_hour) + ":" + str(hours[0].tm_min).rjust(2, '0') + "-" + str(hours[1].tm_hour) + ":" + str(hours[1].tm_min).rjust(2, '0')  + "\n"
                 output += day + ": " + timestring
+
+        output += "=============================="
 
         return output
