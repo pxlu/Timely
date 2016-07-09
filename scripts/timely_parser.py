@@ -153,62 +153,6 @@ def _stem_conjugations(parsed_words):
 
     return conjugations_list
 
-def _match_conjunctions(parsed_words, base_match=True):
-
-    # NEED NLP TAGGER TO GET THE POST OF THE WORDS, ONLY WANT WORDS TO BE USED FOR THIS SERVICE IF IT'S A ADJECTIVE TO BEGIN WITH.
-
-    add_dict = {}
-    replace_set = set()
-    keep_set = set()
-    remove_set = set()
-
-    for word in parsed_words.keys():
-        # For each word in parsed words, look up words that are similar to it
-        requestURL = 'http://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + word
-        request = requests.get(requestURL)
-        numresults = request.json()['count']
-
-        # For each word that is similar, add it to the conjugations_set, including itself
-        conjugations_set = set()
-        for i in range(numresults):
-            headword = request.json()['results'][i]['headword']
-            conjugations_set.add(headword) 
-
-        # If the word is not in KEYWORDS but it's conjugation is, means that the word is actually a conjugation of the base word
-        for conjugation in conjugations_set:
-            # If conjugation in KEYWORDS, add it to keep_set
-            if conjugation in KEYWORDS_NAMES:
-                keep_set.add(conjugation)
-            # If word !in KEYWORDS but a conjugation is, add replace word with conjugation, impossible if same word
-            if conjugation in KEYWORDS_NAMES and word not in KEYWORDS_NAMES:
-                replace_set.add((word, conjugation))
-            # If neither in KEYWORDS, remove the latter one
-            if word not in KEYWORDS_NAMES and conjugation in parsed_words.keys() and word != conjugation and word not in remove_set:
-                remove_set.add(conjugation)
-
-        # Now, collect like terms and group all their counts together
-        conjugate_count = 0
-        for conjugate in conjugations_set:
-            # If the conjugate exists in parsed_words, means that they should be grouped together
-            if conjugate != word and conjugate in parsed_words.keys():
-                conjugate_count += parsed_words[conjugate]
-
-        # Add it to add_dict so it can be added to the count in parsed_words later
-        add_dict[word] = conjugate_count
-
-    for word in parsed_words.keys():
-        parsed_words[word] += add_dict[word]
-
-    for pair in replace_set:
-        parsed_words[pair[1]] = parsed_words[pair[0]]
-        del parsed_words[pair[0]]
-
-    for word in remove_set:
-        if word in parsed_words and word not in keep_set:
-            del parsed_words[word]
-
-    return parsed_words
-
 def parse_text(in_file):
     """
     Parse and tokenize in_file, and return a OrderedDict of words with their keys being their number of occurences in in_file.
@@ -228,10 +172,8 @@ def parse_text(in_file):
     # For each unique word in the paragraph, insert it into an OrderedDict with the key being the word and the value being the number of occurences of that word within the paragraph
     word_dict = {item: flat_list.count(item) for item in flat_list}
     
-    # matched_words = _match_conjunctions(word_dict)
     matched_words = _stem_conjugations(word_dict)
     sorted_words = sorted(matched_words, key=lambda item: item[0])
-    # sorted_words = OrderedDict(sorted(matched_words.items(), key=lambda name: name[0]))
 
     return sorted_words
     
