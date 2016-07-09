@@ -72,7 +72,7 @@ def _disorder_confidence(user_profile, disorder_list):
 
     return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
 
-def _disorder_severities(disorders_dict, keywords_list):
+def _init_disorder_severities(disorders_dict, keywords_list):
 
     '''
     Initilize the severity rating of disorders from the disorders_dict, given a list of keywords provided by keywords_list.
@@ -122,7 +122,7 @@ def _get_profile(in_file, profile_name):
 
     # Parse words from user profile and init severities & user profile
     word_list = timely_parser.parse_text(in_file)
-    _disorder_severities(DISORDERS, KEYWORDS)
+    _init_disorder_severities(DISORDERS, KEYWORDS)
     user_profile = UserProfile(name=str.capitalize(profile_name))
 
     # Filter by keywords only
