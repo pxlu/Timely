@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
 # screen.py
 
-# Native libraries
+# Native Python Libraries
 import sys
 import re
 import math
 from collections import OrderedDict
+# Third Party Libraries
 from nltk.stem.snowball import SnowballStemmer
-
-# Custom libraries
+# Local Libraries
 import JSONify
 from timely_classes import *
 import timely_parser
 import timely_common
 
-CONFIDENCE_WEIGHT_FACTOR = 1.0
-
 KEYWORDS = timely_common._init_keyword_list()
 KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
 DISORDERS = timely_common._init_disorder_list()
 
-def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weight_factor):
+def _calculate_adjustment(base_rate, disorder_confidence, rate_difference):
 
     '''
     Calculates the adjustment from the base_rate, based on observed (anecdotal) confidence from the user provided by disorder_confidence, with consideration to the difference between the base_rate and disorder_confidence, provided by rate_difference, and with final adjustment with weight_factor.
@@ -28,17 +26,15 @@ def _calculate_adjustment(base_rate, disorder_confidence, rate_difference, weigh
     :param: base_rate: the base rate of the disorder
     :param: disorder_confidence: the observed rate of the disorder from the user
     :param: rate_difference: the absolute difference between the base_rate and the disorder_confidence
-    :param weight_factor: a factor to allow for final tuning of the confidence_value
     :return: the adjusted confidence_value for the disorder for the user, adjusted from the base_rate with consideration for observed user data
     '''
 
     confidence_value = -1
+    CONFIDENCE_WEIGHT_FACTOR = 1.0
+
+    adjustment = (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
     # If greater, adjust down from base rate
-    if base_rate >= disorder_confidence:
-        confidence_value = base_rate - (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
-    # Otherwise adjust up
-    else:
-        confidence_value = base_rate + (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
+    confidence_value = base_rate - adjustment if base_rate >= disorder_confidence else base_rate + adjustment
 
     return confidence_value
 
@@ -53,20 +49,24 @@ def _disorder_confidence(user_profile, disorder_list):
     '''
 
     disorders_stemmer = SnowballStemmer("english")
-
     confidence_list = []
+
     for disorder in disorder_list:
-        disorder_confidence = 0
+        user_disorder_confidence = 0
         symptoms_list = [disorders_stemmer.stem(symptom) for symptom in disorder.symptoms]
+
+        # Get the confidence rate of the disorder based on the user_profile
         for symptom in user_profile.keywords.keys():
             if symptom in symptoms_list:
-                disorder_confidence += 1
-        disorder_confidence /= len(DISORDERS)
+                user_disorder_confidence += 1
+        user_disorder_confidence /= len(DISORDERS)
 
-        # Start with base rate and adjust from there
+        # Start with base rate and adjust based on user_disorder_confidence
         base_rate = float(disorder.base_rate)
-        rate_difference = math.fabs(base_rate - disorder_confidence)
-        confidence_value = _calculate_adjustment(base_rate, disorder_confidence, rate_difference, CONFIDENCE_WEIGHT_FACTOR)
+        rate_difference = math.fabs(base_rate - user_disorder_confidence)
+        confidence_value = _calculate_adjustment(base_rate, user_disorder_confidence, rate_difference)
+
+        # Get the name of the disorder and append the confidence value and the name into the return list as a tuple
         disorder_name = next((list_disorder for list_disorder in disorder_list if list_disorder.name == disorder.name), None)
         confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100))  + '%'))
 
@@ -192,7 +192,7 @@ def _execute_options(user_option, user_name):
         print('Please wait while your profile is being created...')
     return user_persona_file
 
-def main():
+def start_screen():
 
     try:
         user_name = _begin_prompt()
@@ -212,4 +212,4 @@ def main():
         sys.exit()
 
 if __name__ == '__main__':
-    main()
+    start_screen()

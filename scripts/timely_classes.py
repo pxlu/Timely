@@ -1,9 +1,6 @@
 # timely_classes.py
 
-import json
-import datetime
 import uuid
-import random
 from collections import OrderedDict
 
 ### Custom Exceptions
@@ -59,10 +56,6 @@ class Disorder(object):
 
     def __str__(self):
         return "{} is a mental health disorder described in the DSM-5. It has symptoms of {}, with a base rate of {}. It has risk factors of {} and has severity rating of {}.".format(self.name, self.symptoms, self.base_rate, self.risk_factors, self.severity)
-	
-    # Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
-    def _to_JSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
     def _generate_dID(self):
 

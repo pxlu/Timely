@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 # timely_parser.py
 
-# Native
+# Native Python Libraries
 import sys
 import re
-import requests
-import json
 import os
 from collections import OrderedDict
+# Third Party Libraries
 from nltk.stem.snowball import SnowballStemmer
-
-# Local
+# Local Libraries
 import timely_common
 
 # Current working directory
