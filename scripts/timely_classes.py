@@ -1,7 +1,10 @@
 # timely_classes.py
 
+# Native Python Libraries
 import uuid
+# Third Party Libraries
 from collections import OrderedDict
+# Local Libraries
 
 ### Custom Exceptions
 
@@ -15,10 +18,21 @@ class QuitException(Exception):
 
 class UserProfile(object):
 
+    """
+    A profile of a user, with a unique userid, a unique username, a collection of keywords parsed from the user's bio, the severity rating of the user, and collection of possible disorders that the user may have, along with the confidence.
+
+    :field uid:         (type: `str`) the user id of the profile
+    :field name:        (type: `str`) the user name of the profile
+    :field keywords:    (type: `dict`) a collection of keywords parsed from the user's bio 
+    :field severity:    (type: `int`) a severity rating based off of the user's keywords
+    :field disorders:   (type: `list`) a collection of possible disorders and their confidence values
+    """
+
     def __init__(self, uid=-1, name="", keywords={}, severity=-1, disorders=[]):
         self.uid = uid
         self.name = name
-        self.keywords = keywords #not equivalent to keywords that are symptoms. is instead parsed words from user bio
+        #not equivalent to keywords that are symptoms. is instead parsed words from user bio
+        self.keywords = keywords 
         # Severity rating to be used for graph
         self.severity = severity
         # List of disorders and the probability of the user having it
@@ -31,9 +45,23 @@ class UserProfile(object):
 
     def _generate_uid(self):
 
+        """
+        Returns a unique uuid, to be used as the user id.
+
+        :return (type: `str`) an unique user id
+        """
+
         return uuid.uuid4()
 
 class KeyWord(object):
+
+    """
+    A keyword object representing a symptom or condition, with a unique name, description, and a rating.
+
+    :field name:        (type: `str`) the name of the keyword
+    :field description: (type: `str`) the description for the keyword
+    :field rating:      (type: `int`) the severity rating for the keyword
+    """
 
     def __init__(self, name="", description="", rating=-1):
         self.name = name
@@ -45,7 +73,18 @@ class KeyWord(object):
 
 class Disorder(object):
 
-    def __init__(self, name="", dID=-1, symptoms=[], base_rate=-1, risk_factors = [], severity=-1):
+    """
+    A disorder object representing a mental health disorder, with an unique name, an unique disorder id, a collection of symptoms, a base rate, a collection of risk factors, and a severity rating.
+
+    :field name:            (type: `str`) the name of the disorder
+    :field dID:             (type: `str`) the id of the disorder
+    :field symptoms:        (type: `list`) the symptoms of the disorder
+    :field base_rate:       (type: `float`) the base rate of the disorder
+    :field risk_factors:    (type: `list`) the risk factors of the disorder
+    :field severity:        (type: `int`) the severity rating of the disorder
+    """
+
+    def __init__(self, name="", dID=-1, symptoms=[], base_rate=0.0, risk_factors = [], severity=-1):
         self.name = name
         self.dID = dID
         self.symptoms = symptoms
@@ -59,9 +98,30 @@ class Disorder(object):
 
     def _generate_dID(self):
 
+        """
+        Returns a unique uuid, to be used as the disorder id.
+
+        :return (type: `str`) an unique disorder id
+        """
+
         return uuid.uuid4()
 
 class Resource(object):
+
+    """
+    A resource object representing a mental health resource, with an unique name, an unique rID, a resource type, a capacity, a location, an address, a contact, a collection of services, a cost, and availibility as an OperatingHours object.
+
+    :field name:            type(`str`) the name of the resource
+    :field rID:             type(`str`) the id of the resource
+    :field resourcetype:    type(`str`) the type of the resource
+    :field capacity:        type(`str`) the capacity of the resource
+    :field location:        type(`str`) the location of the resource
+    :field address:         type(`str`) the address of the resource
+    :field contact:         type(`str`) the contact information of the resource
+    :field services:        type(`list`) the services provided by the resource
+    :field cost:            type(`str`) the cost of the resource
+    :field availibility:    type(`OperatingHours`) the availibility of the resource
+    """
 
     def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
         # Availbility should be a datetime object
@@ -95,9 +155,22 @@ class Resource(object):
 
     def _generate_rID(self):
 
+        """
+        Returns a unique uuid, to be used as the resource id.
+
+        :return (type: `str`) an unique resourcd id
+        """
+
         return uuid.uuid4()
 
 class OperatingHours:
+
+    """
+    A operating hours object representing the operating hours of a resource, with a dictionary of time objects.
+
+    :field day_order:   type(`list`) the order of the days
+    :field oph_dict:    type(`OrderedDict`) the dict of time objects
+    """
 
     def __init__(self, oph_dict={}):
 

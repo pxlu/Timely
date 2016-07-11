@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # common.py
 
-# Native
+# Native Python Libraries
 import json
 import time
 import os
-
-# Local
+# Third Party Libraries
+# Local Libraries
 from timely_classes import *
 
 # Current working directory
