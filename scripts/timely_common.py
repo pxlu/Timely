@@ -59,7 +59,7 @@ def _init_resource_list():
         contact=resource["contact"], 
         services=resource["services"], 
         cost=resource["cost"] if resource["cost"] != "" else None,
-        availibility=OperatingHours(oph_dict=_init_OperatingHours_dict(resource["availibility"]))
+        availability=OperatingHours(oph_dict=_init_OperatingHours_dict(resource["availability"]))
         ) for resource in resources_list]
 
     return resources

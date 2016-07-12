@@ -109,7 +109,7 @@ class Disorder(object):
 class Resource(object):
 
     """
-    A resource object representing a mental health resource, with an unique name, an unique rID, a resource type, a capacity, a location, an address, a contact, a collection of services, a cost, and availibility as an OperatingHours object.
+    A resource object representing a mental health resource, with an unique name, an unique rID, a resource type, a capacity, a location, an address, a contact, a collection of services, a cost, and availability as an OperatingHours object.
 
     :field name:            type(`str`) the name of the resource
     :field rID:             type(`str`) the id of the resource
@@ -120,10 +120,10 @@ class Resource(object):
     :field contact:         type(`str`) the contact information of the resource
     :field services:        type(`list`) the services provided by the resource
     :field cost:            type(`str`) the cost of the resource
-    :field availibility:    type(`OperatingHours`) the availibility of the resource
+    :field availability:    type(`OperatingHours`) the availability of the resource
     """
 
-    def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availibility=None):
+    def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availability=None):
         # Availbility should be a datetime object
         # Type should be hotline, specialist, etc
         # Capacity should be whether the resource accepts new patients or not
@@ -137,7 +137,7 @@ class Resource(object):
         self.services = [service.lower() for service in services]
         self.cost = cost
         # Custom object that tells operating hours of such a resource(clinic)
-        self.availibility = availibility
+        self.availability = availability
 
     def __str__(self):
         return "============================================= \
