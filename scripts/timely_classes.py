@@ -151,7 +151,7 @@ class Resource(object):
         \nServices: {}\
         \nCost: {}\
         \nAvailibility: {}\
-        \n=============================================".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.availibility)
+        \n=============================================".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.availability)
 
     def _generate_rID(self):
 
