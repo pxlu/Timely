@@ -12,9 +12,9 @@ from timely_classes import *
 # Current working directory
 _cwd = os.path.dirname(os.path.realpath(__file__))
 
-def _init_keyword_list():
+def _init_keyword_list(path="/../json/keywords.json"):
 
-    keyw_file = open(_cwd + "/../json/keywords.json")
+    keyw_file = open(_cwd + path)
     keyw_list = json.loads(keyw_file.read())["results"]["keywords"]
     keyw_ratings = [KeyWord(
         name=keyw_element["name"],
@@ -30,9 +30,9 @@ def _get_keywords(keywords_list):
 
 	return keyword_names
 
-def _init_disorder_list():
+def _init_disorder_list(path="/../json/disorders.json"):
 
-    disorders_file = open(_cwd + "/../json/disorders.json")
+    disorders_file = open(_cwd + path)
     disorders_list = json.loads(disorders_file.read())["results"]["disorders"]
 
     disorders = [Disorder(
@@ -44,9 +44,9 @@ def _init_disorder_list():
 
     return disorders
 
-def _init_resource_list():
+def _init_resource_list(path="/../json/resources.json"):
 
-    resources_file = open(_cwd + "/../json/resources.json")
+    resources_file = open(_cwd + path)
     resources_list = json.loads(resources_file.read())["results"]["resources"]
 
     resources = [Resource(

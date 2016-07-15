@@ -99,7 +99,7 @@ def _get_severity(user_profile, keywords_list):
     :return the severity of the user_profile
     '''
 
-    user_severity = 0
+    user_severity = 0 # Fix for default value
     for keyword, num_occurence in user_profile.keywords.items():
         keyword_sev = next((x.rating for x in keywords_list if x.name == keyword), 0)
         user_severity += num_occurence * int(keyword_sev)

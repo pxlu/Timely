@@ -1,3 +1,5 @@
+# Assume it works.
+
 # -*- coding: utf-8 -*-
 # timely_parser.py
 
@@ -22,13 +24,13 @@ END= "/END"
 KEYWORDS = timely_common._init_keyword_list()
 KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
 
-def _get_abbreviations():
+def _get_abbreviations(abbrev_path="/../assets/wordlists/abbrev.english"):
     """
     Gets a list of abbreviations from a file.
     :return: set of abbreviations
     """
 
-    f = open(_cwd + "/../assets/wordlists/abbrev.english")
+    f = open(_cwd + abbrev_path)
     abbrev = [x.lower() for x in f.readlines()]
     return set(abbrev)
 

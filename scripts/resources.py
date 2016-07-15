@@ -19,6 +19,8 @@ def _map_disorder_to_resources(disorder_name, resource_list):
 	:return: a list of resources from resource_list that treat disorder_name
 	"""
 
+	#If invalid input need case for it
+	#If empty return empty
 	return [resource for resource in resource_list if disorder_name.lower() in resource.services]
 
 def _calculate_compatibility(resource, resource_list, user_profile):
@@ -31,6 +33,7 @@ def _calculate_compatibility(resource, resource_list, user_profile):
 	:return: the compatibility of the user with that resource, expressed as a percentage
 	"""
 
+	#if empty return 0
 	compatibility_value = 0
 	for disorder in user_profile.disorders:
 		treatment_places = _map_disorder_to_resources(disorder[0].name, resource_list)
@@ -82,6 +85,8 @@ def _generate_resource_list(user_profile, resource_list):
 	:param resource_list a list of resources to be filted against
 	:return: a list of tuples, with each element containing a resource, a list of disorders that resource treats for, and the compatibility value of that resource with the given user_profile
 	"""
+
+	#Fix readibility
 
 	return sorted([(resource, _check_resource_disorders(user_profile, resource), _recommend_resource(resource, resource_list, user_profile)[1]) for resource in resource_list if _recommend_resource(resource, resource_list, user_profile)[0] is True],  key=lambda l_value: l_value[2])
 
