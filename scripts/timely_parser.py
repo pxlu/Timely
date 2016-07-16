@@ -154,6 +154,13 @@ def _fix_sentences(text):
 
 def _remove_nonwords(sentence_list):
 
+    """
+    Remove nonwords from a list of sentences, and return a list of lists containing all the words that were in the list of sentences.
+
+    :param sentence_list: a list of sentences to be parsed and fixed
+    :return a list of sentences that were stripped of all nonwords such as punctuation and leftover possessives
+    """
+
     try:
         fixed = []
         for sentence in sentence_list:
@@ -167,6 +174,13 @@ def _remove_nonwords(sentence_list):
         raise
 
 def _stem_conjugations(parsed_words):
+
+    """
+    Conjugate and aggregate occurences of words based on their conjugations, and return a list of words with their aggregated occurence counts.
+
+    :param parsed_words: a dictionary of words to be parsed for conjugations
+    :return: a list of conjugated words, and their occurences
+    """
 
     try:
         stemmer = SnowballStemmer("english")

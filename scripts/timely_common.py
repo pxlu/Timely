@@ -14,6 +14,13 @@ _cwd = os.path.dirname(os.path.realpath(__file__))
 
 def _init_keyword_list(path="/../json/keywords.json"):
 
+    """
+    Initialize a list of keyword objects from the given json file.
+
+    :param path: the path to the json file
+    :return the list of keyword objects represented in the json file
+    """
+
     keyw_file = open(_cwd + path)
     keyw_list = json.loads(keyw_file.read())["results"]["keywords"]
     keyw_ratings = [KeyWord(
@@ -26,11 +33,25 @@ def _init_keyword_list(path="/../json/keywords.json"):
 
 def _get_keywords(keywords_list):
 
+    """
+    Return the names of the keyword objects in keywords_list.
+
+    :param keywords_list: a list of keyword objects to be parsed
+    :return a list of keyword names corresponding to the keywords in keywords_list
+    """
+
 	keyword_names = [keyword.name for keyword in keywords_list]
 
 	return keyword_names
 
 def _init_disorder_list(path="/../json/disorders.json"):
+
+    """
+    Initialize a list of disorder objects from the given json file.
+
+    :param path: the path to the json file
+    :return the list of disorder objects represented in the json file
+    """
 
     disorders_file = open(_cwd + path)
     disorders_list = json.loads(disorders_file.read())["results"]["disorders"]
@@ -45,6 +66,13 @@ def _init_disorder_list(path="/../json/disorders.json"):
     return disorders
 
 def _init_resource_list(path="/../json/resources.json"):
+
+    """
+    Initialize a list of resource objects from the given json file.
+
+    :param path: the path to the json file
+    :return the list of resource objects represented in the json file
+    """
 
     resources_file = open(_cwd + path)
     resources_list = json.loads(resources_file.read())["results"]["resources"]
@@ -69,8 +97,8 @@ def _init_OperatingHours_dict(availibility_dict):
     """
     Returns an intialized dictionary of converted json to time objects. Intended for the OperatingHours class.
 
-    :param availibility_dict: 
-    :return a dictionary of {String: time}
+    :param availibility_dict: a dictionary of strings to be parsed into time objects
+    :return a dictionary of {String: (time, time)}
     """
 
     op_hours_dict_out = {}
