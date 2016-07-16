@@ -28,7 +28,7 @@ def _init_keyword_list(path="/../json/keywords.json"):
         description=keyw_element["description"],
         rating=keyw_element["rating"]
         ) for keyw_element in keyw_list]
-    
+
     return keyw_ratings
 
 def _get_keywords(keywords_list):
@@ -41,7 +41,6 @@ def _get_keywords(keywords_list):
     """
 
     keyword_names = [keyword.name for keyword in keywords_list]
-
     return keyword_names
 
 def _init_disorder_list(path="/../json/disorders.json"):
@@ -78,14 +77,14 @@ def _init_resource_list(path="/../json/resources.json"):
     resources_list = json.loads(resources_file.read())["results"]["resources"]
 
     resources = [Resource(
-        name=resource["name"], 
-        rID=resource["id"], 
-        resourcetype=resource["type"], 
-        capacity=resource["capacity"], 
-        location=resource["location"], 
+        name=resource["name"],
+        rID=resource["id"],
+        resourcetype=resource["type"],
+        capacity=resource["capacity"],
+        location=resource["location"],
         address=resource["address"] if resource["address"] != "" else None,
-        contact=resource["contact"], 
-        services=resource["services"], 
+        contact=resource["contact"],
+        services=resource["services"],
         cost=resource["cost"] if resource["cost"] != "" else None,
         availability=OperatingHours(oph_dict=_init_OperatingHours_dict(resource["availability"]))
         ) for resource in resources_list]
