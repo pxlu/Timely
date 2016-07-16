@@ -29,14 +29,17 @@ def _calculate_adjustment(base_rate, disorder_confidence, rate_difference):
     :return: the adjusted confidence_value for the disorder for the user, adjusted from the base_rate with consideration for observed user data
     '''
 
-    confidence_value = -1
-    CONFIDENCE_WEIGHT_FACTOR = 1.0
+    try:
+        confidence_value = -1
+        CONFIDENCE_WEIGHT_FACTOR = 1.0
 
-    adjustment = (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
-    # If greater, adjust down from base rate
-    confidence_value = base_rate - adjustment if base_rate >= disorder_confidence else base_rate + adjustment
+        adjustment = (1 - base_rate) * rate_difference * CONFIDENCE_WEIGHT_FACTOR
+        # If greater, adjust down from base rate
+        confidence_value = base_rate - adjustment if base_rate >= disorder_confidence else base_rate + adjustment
 
-    return confidence_value
+        return confidence_value
+    except TypeError:
+        raise
 
 def _disorder_confidence(user_profile, disorder_list):
 
@@ -48,29 +51,32 @@ def _disorder_confidence(user_profile, disorder_list):
     :return a list of possible disorder from the given user_profile, in descending order of confidence_value
     '''
 
-    disorders_stemmer = SnowballStemmer("english")
-    confidence_list = []
+    try:
+        disorders_stemmer = SnowballStemmer("english")
+        confidence_list = []
 
-    for disorder in disorder_list:
-        user_disorder_confidence = 0
-        symptoms_list = [disorders_stemmer.stem(symptom) for symptom in disorder.symptoms]
+        for disorder in disorder_list:
+            user_disorder_confidence = 0
+            symptoms_list = [disorders_stemmer.stem(symptom) for symptom in disorder.symptoms]
 
-        # Get the confidence rate of the disorder based on the user_profile
-        for symptom in user_profile.keywords.keys():
-            if symptom in symptoms_list:
-                user_disorder_confidence += 1
-        user_disorder_confidence /= len(DISORDERS)
+            # Get the confidence rate of the disorder based on the user_profile
+            for symptom in user_profile.keywords.keys():
+                if symptom in symptoms_list:
+                    user_disorder_confidence += 1
+            user_disorder_confidence /= len(DISORDERS)
 
-        # Start with base rate and adjust based on user_disorder_confidence
-        base_rate = float(disorder.base_rate)
-        rate_difference = math.fabs(base_rate - user_disorder_confidence)
-        confidence_value = _calculate_adjustment(base_rate, user_disorder_confidence, rate_difference)
+            # Start with base rate and adjust based on user_disorder_confidence
+            base_rate = float(disorder.base_rate)
+            rate_difference = math.fabs(base_rate - user_disorder_confidence)
+            confidence_value = _calculate_adjustment(base_rate, user_disorder_confidence, rate_difference)
 
-        # Get the name of the disorder and append the confidence value and the name into the return list as a tuple
-        disorder_name = next((list_disorder for list_disorder in disorder_list if list_disorder.name == disorder.name), None)
-        confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100))  + '%'))
+            # Get the name of the disorder and append the confidence value and the name into the return list as a tuple
+            disorder_name = next((list_disorder for list_disorder in disorder_list if list_disorder.name == disorder.name), None)
+            confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100))  + '%'))
 
-    return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
+        return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
+    except TypeError:
+        raise
 
 def _init_disorder_severities(disorders_dict, keywords_list):
 
@@ -82,12 +88,15 @@ def _init_disorder_severities(disorders_dict, keywords_list):
     :return void (Doesn't return anything)
     '''
 
-    for disorder in disorders_dict:
-        disorder_severity = 0
-        for symptom in disorder.symptoms:
-            keyword_sev = next((x.rating for x in keywords_list if x.name == symptom), 0)
-            disorder_severity += int(keyword_sev)
-        disorder.severity = disorder_severity
+    try:
+        for disorder in disorders_dict:
+            disorder_severity = 0
+            for symptom in disorder.symptoms:
+                keyword_sev = next((x.rating for x in keywords_list if x.name == symptom), 0)
+                disorder_severity += int(keyword_sev)
+            disorder.severity = disorder_severity
+    except TypeError:
+        raise
 
 def _get_severity(user_profile, keywords_list):
 
@@ -99,12 +108,15 @@ def _get_severity(user_profile, keywords_list):
     :return the severity of the user_profile
     '''
 
-    user_severity = 0 # Fix for default value
-    for keyword, num_occurence in user_profile.keywords.items():
-        keyword_sev = next((x.rating for x in keywords_list if x.name == keyword), 0)
-        user_severity += num_occurence * int(keyword_sev)
+    try:
+        user_severity = 0
+        for keyword, num_occurence in user_profile.keywords.items():
+            keyword_sev = next((x.rating for x in keywords_list if x.name == keyword), 0)
+            user_severity += num_occurence * int(keyword_sev)
 
-    return user_severity
+        return user_severity
+    except TypeError:
+        raise
 
 def _get_profile(in_file, profile_name):
 
@@ -116,28 +128,31 @@ def _get_profile(in_file, profile_name):
     :return a user profile based on the information given in in_file
     '''
 
-    # Init stemmer
-    stemmer = SnowballStemmer("english")
-    keywords_stem = [stemmer.stem(word) for word in KEYWORDS_NAMES]
+    try:
+        # Init stemmer
+        stemmer = SnowballStemmer("english")
+        keywords_stem = [stemmer.stem(word) for word in KEYWORDS_NAMES]
 
-    # Parse words from user profile and init severities & user profile
-    word_list = timely_parser.parse_text(in_file)
-    _init_disorder_severities(DISORDERS, KEYWORDS)
-    user_profile = UserProfile(name=str.capitalize(profile_name))
+        # Parse words from user profile and init severities & user profile
+        word_list = timely_parser.parse_text(in_file)
+        _init_disorder_severities(DISORDERS, KEYWORDS)
+        user_profile = UserProfile(name=str.capitalize(profile_name))
 
-    # Filter by keywords only
-    user_keywords = {word[0]: word[1][0] for word in word_list if word[0] in keywords_stem}
-    sorted_user_words = OrderedDict(sorted(user_keywords.items(), key=lambda element: element[0]))
+        # Filter by keywords only
+        user_keywords = {word[0]: word[1][0] for word in word_list if word[0] in keywords_stem}
+        sorted_user_words = OrderedDict(sorted(user_keywords.items(), key=lambda element: element[0]))
 
-    # Fill in fields of user_profile
-    user_profile.uid = user_profile._generate_uid()
-    user_profile.keywords = sorted_user_words
-    user_profile.severity = _get_severity(user_profile, KEYWORDS)
-    user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
+        # Fill in fields of user_profile
+        user_profile.uid = user_profile._generate_uid()
+        user_profile.keywords = sorted_user_words
+        user_profile.severity = _get_severity(user_profile, KEYWORDS)
+        user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
 
-    in_file.close()
+        in_file.close()
 
-    return user_profile
+        return user_profile
+    except (TypeError, FileNotFoundError, IsADirectoryError):
+        raise
 
 ### User testing helpers ###
 
