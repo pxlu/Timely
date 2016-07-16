@@ -4,6 +4,7 @@
 ###### Requirements.txt ######
 #
 ###### Version-agnostic requirements ######
+ntlk
 #
 ###### Version-specific requirements ######
 #

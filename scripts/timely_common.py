@@ -40,9 +40,9 @@ def _get_keywords(keywords_list):
     :return a list of keyword names corresponding to the keywords in keywords_list
     """
 
-	keyword_names = [keyword.name for keyword in keywords_list]
-
-	return keyword_names
+    keyword_names = [keyword.name for keyword in keywords_list]
+    
+    return keyword_names
 
 def _init_disorder_list(path="/../json/disorders.json"):
 
