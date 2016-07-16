@@ -19,7 +19,10 @@ def _map_disorder_to_resources(disorder_name, resource_list):
 	:return: a list of resources from resource_list that treat disorder_name
 	"""
 
-	return [resource for resource in resource_list if disorder_name.lower() in resource.services]
+	try:
+		return [resource for resource in resource_list if disorder_name.lower() in resource.services]
+	except TypeError:
+		raise
 
 def _calculate_compatibility(resource, resource_list, user_profile):
 
@@ -31,15 +34,18 @@ def _calculate_compatibility(resource, resource_list, user_profile):
 	:return: the compatibility of the user with that resource, expressed as a percentage
 	"""
 
-	compatibility_value = 0
-	for disorder in user_profile.disorders:
-		treatment_places = _map_disorder_to_resources(disorder[0].name, resource_list)
-		if resource in treatment_places:
-			compatibility_value += 1
+	try:
+		compatibility_value = 0
+		for disorder in user_profile.disorders:
+			treatment_places = _map_disorder_to_resources(disorder[0].name, resource_list)
+			if resource in treatment_places:
+				compatibility_value += 1
 
-	compatibility_value = (compatibility_value / len(user_profile.disorders)) * 100
+		compatibility_value = (compatibility_value / len(user_profile.disorders)) * 100
 
-	return compatibility_value
+		return compatibility_value
+	except TypeError:
+		raise
 
 def _get_total_compatibility(resource_list, user_profile):
 
@@ -68,11 +74,14 @@ def _recommend_resource(resource, resource_list, user_profile):
 	:return: a tuple of (bool, value) indicating whether the resource is recommended or not and it's compatibility value with the user_profile
 	"""
 
-	# Currently, value is up in the air on what the threshold is to be recommended
-	comp_value = _calculate_compatibility(resource, resource_list, user_profile)
-	recommendation = True if comp_value > 0.33 else False
+	try:
+		# Currently, value is up in the air on what the threshold is to be recommended
+		comp_value = _calculate_compatibility(resource, resource_list, user_profile)
+		recommendation = True if comp_value > 0.33 else False
 
-	return (recommendation, comp_value)
+		return (recommendation, comp_value)
+	except TypeError:
+		raise
 
 def _generate_resource_list(user_profile, resource_list):
 
@@ -83,7 +92,13 @@ def _generate_resource_list(user_profile, resource_list):
 	:return: a list of tuples, with each element containing a resource, a list of disorders that resource treats for, and the compatibility value of that resource with the given user_profile
 	"""
 
-	return sorted([(resource, _check_resource_disorders(user_profile, resource), _recommend_resource(resource, resource_list, user_profile)[1]) for resource in resource_list if _recommend_resource(resource, resource_list, user_profile)[0] is True],  key=lambda l_value: l_value[2])
+	try:
+		return sorted([(resource, 
+			_check_resource_disorders(user_profile, resource), 
+			_recommend_resource(resource, resource_list, user_profile)[1]
+			) for resource in resource_list if _recommend_resource(resource, resource_list, user_profile)[0] is True],  key=lambda l_value: l_value[2])
+	except TypeError:
+		raise
 
 def _check_resource_disorders(user_profile, resource):
 
@@ -94,14 +109,20 @@ def _check_resource_disorders(user_profile, resource):
 	:return a list of disorder names that the given resource treats for
 	"""
 
-	return [disorder[0].name for disorder in user_profile.disorders if disorder[0].name.lower() in resource.services]
+	try:
+		return [disorder[0].name for disorder in user_profile.disorders if disorder[0].name.lower() in resource.services]
+	except TypeError:
+		raise
 
 def _get_resources(in_file):
 
-	user_profile = screen._get_profile(in_file, 'alexandra')
-	rr = _generate_resource_list(user_profile, RESOURCES)
-	for r in rr:
-		print(str(r[0]) + "\n", r[1:])
+	try:
+		user_profile = screen._get_profile(in_file, 'alexandra')
+		rr = _generate_resource_list(user_profile, RESOURCES)
+		for r in rr:
+			print(str(r[0]) + "\n", r[1:])
+	except (FileNotFoundError, IsADirectoryError):
+		raise
 
 if __name__ == '__main__':
 	in_file_name = sys.argv[1]
