@@ -9,5 +9,5 @@ flask-wtf
 #
 ###### Version-specific requirements ######
 #
-Flask >= 0.11.1
+flask >= 0.11.1
 #
