@@ -12,7 +12,7 @@ from timely_classes import *
 # Current working directory
 _cwd = os.path.dirname(os.path.realpath(__file__))
 
-def _init_keyword_list(path="/../json/keywords.json"):
+def _init_keyword_list(path="/../assets/json/keywords.json"):
 
     """
     Initialize a list of keyword objects from the given json file.
@@ -43,7 +43,7 @@ def _get_keywords(keywords_list):
     keyword_names = [keyword.name for keyword in keywords_list]
     return keyword_names
 
-def _init_disorder_list(path="/../json/disorders.json"):
+def _init_disorder_list(path="/../assets/json/disorders.json"):
 
     """
     Initialize a list of disorder objects from the given json file.
@@ -64,7 +64,7 @@ def _init_disorder_list(path="/../json/disorders.json"):
 
     return disorders
 
-def _init_resource_list(path="/../json/resources.json"):
+def _init_resource_list(path="/../assets/json/resources.json"):
 
     """
     Initialize a list of resource objects from the given json file.
