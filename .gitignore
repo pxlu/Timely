@@ -1,4 +1,3 @@
 .DS_Store
-__*__.*
 __pycache__/
 scripts/*.md
