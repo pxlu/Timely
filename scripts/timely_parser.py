@@ -22,7 +22,7 @@ END= "/END"
 KEYWORDS = timely_common._init_keyword_list()
 KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
 
-def _get_abbreviations(abbrev_path="/../assets/wordlists/abbrev.english"):
+def _get_abbreviations(abbrev_path="/../assets/parser/abbrev.english"):
 
     """
     Gets a list of abbreviations from a file.
