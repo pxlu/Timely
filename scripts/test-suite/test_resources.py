@@ -4,20 +4,12 @@ get_total_compatibility() do not test
 
 """
 import unittest
+import resources
 
 class TestResources(unittest.TestCase):
 
     def setUp(self):
         pass
 
-    def test_something(self):
-        pass
-
-    def test_pass(self):
-        self.assertTrue(0==0)
-
     def tearDown(self):
         pass
-
-if __name__ == '__main__':
-    unittest.main()
