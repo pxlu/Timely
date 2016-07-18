@@ -18,7 +18,11 @@ _calculate_adjustment()
 Assume confidence_weight_factor is always 1.0
 """
 
+# Some hack to get shit to work
+import os, sys
+sys.path.insert(0, os.path.abspath(".."))
 import unittest
+import screen
 
 class TestScreen(unittest.TestCase):
 
