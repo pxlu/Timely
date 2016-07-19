@@ -1,2 +1,2 @@
 WTF_CSRF_ENABLED = True
-SECRET_KEY = 'you-will-never-guess'
+SECRET_KEY = '2E+r4_=Cbyt{`#Wwtye87mo27uWI#G'
