@@ -147,6 +147,13 @@ header {
   @media (min-width: 768px) {
     header {
       min-height: 100%; }
+      header .header-content {
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        padding: 0 50px; }
         header .header-content .header-content-inner {
           max-width: 1000px;
           margin-left: auto;
@@ -215,19 +222,19 @@ header {
 .call-to-action h2 {
   margin: 0 auto 20px; }
 
-.advantage-title-text {
+.fact-title-text {
   font-family: 'Lato', sans-serif;
   font-size: 18px;
   font-weight: 700; }
   @media (min-width: 768px) {
-    .advantage-title-text {
+    .fact-title-text {
       font-size: 22px; } }
 
-.advantage-body-text {
+.fact-body-text {
   font-family: 'Lato', sans-serif;
   font-size: 15px; }
   @media (min-width: 768px) {
-    .advantage-body-text {
+    .fact-body-text {
       font-size: 17px; } }
 
 .img-banner {
@@ -352,3 +359,5 @@ body {
   .col-lg-offset-problem-2 {
     margin-left: 4.5%;
     margin-right: 4.5%; } }
+
+/*# sourceMappingURL=output.css.map */
