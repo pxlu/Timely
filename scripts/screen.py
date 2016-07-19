@@ -9,7 +9,6 @@ from collections import OrderedDict
 # Third Party Libraries
 from nltk.stem.snowball import SnowballStemmer
 # Local Libraries
-import JSONify
 from timely_classes import *
 import timely_parser
 import timely_common
