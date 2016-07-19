@@ -23,7 +23,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
 
-    <title>{% block title %}{% endblock %} - My Webpage</title>
+    <title>{% block title %}{% endblock %} — Timely</title>
     {% endblock %}
 
   </head>
@@ -46,21 +46,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href="#facts">Facts</a>
+                    <a class="page-scroll" href="#features">Features</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#approach">Our Approach</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#team">Team</a>
-                </li>
-                <!--
-                <li>
-                    <a class="page-scroll" href="#affiliates">Affiliations</a>
-                </li>
-                -->
-                <li>
-                    <a class="page-scroll" href="#contact">Contact Us</a>
+                    <a class="page-scroll" href="#login">Login Placeholder</a>
                 </li>
             </ul>
         </div>
@@ -68,6 +57,11 @@
     </div>
     <!-- /.container-fluid -->
     </nav>
+
+    <!-- Special block for index content -->
+    <!-- Not wrapped in a <div> due to styling issues -->
+    {% block index %}{% endblock %}
+
     <!-- Content, to be filled in children templates -->
     <div id="content">{% block content %}{% endblock %}</div>
 
