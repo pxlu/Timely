@@ -24,6 +24,20 @@ def providers():
 def render_login():
     return render_template('login-template.html')
 
+#### Screening elements
+
+#### Resource elements
+
+"""
+<!--
+<h1>Say something</h1>
+<form method="post" action="{{ url_for('signup') }}">
+    <p><label>Username:</label> <input type="text" name="username" required></p>
+    <p><label>Message:</label> <textarea name="message"></textarea></p>
+    <p><button type="submit">Send</button></p>
+</form>
+-->
+
 @app.route('/signup', methods=['POST'])
 def signup():
     session['username'] = request.form['username']
@@ -36,5 +50,6 @@ def message():
         return abort(403)
     return render_template('message-template.html', username=session['username'], 
                                            message=session['message'])
+"""
 
 app.run(debug=True) 

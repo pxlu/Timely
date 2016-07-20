@@ -7,6 +7,7 @@
     </style>
 {% endblock %}
 {% block index %}
+    <!-- Header image & tagline -->
 	<header>
 	    <div class="header-content">
 	        <div class="header-content-inner">
@@ -17,53 +18,156 @@
 	        </div>
 	    </div>
 	</header>
-	<!--
-	<h1>Say something</h1>
-    <form method="post" action="{{ url_for('signup') }}">
-        <p><label>Username:</label> <input type="text" name="username" required></p>
-        <p><label>Message:</label> <textarea name="message"></textarea></p>
-        <p><button type="submit">Send</button></p>
-    </form>
-	-->
-	<section class="bg-white" id="about" style="padding: 100px 0 30px">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center">
-                <h2 class="section-heading">About Us</h2>
-                <hr class="primary">
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-lg-offset-1 col-lg-offset-problem-1 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-university fa-5x" aria-hidden="true"></i>
-                    <h3 class="advantage-title-text">A Vulnerable Demographic</h3>
-                    <p class="text-muted advantage-body-text">University-aged individuals are a growing part of the demographic that is particularly vulnerable to mental health issues, with almost a third of undergraduates reporting symptoms of elevated distress. </p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-lg-offset-problem-2 text-center">
-                <div class="service-box">
-                    <i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
-                    <h3 class="advantage-title-text">Severe Consequences</h3>
-                    <p class="text-muted advantage-body-text">In large part due to mental illnesses, suicide is the 2nd leading cause of death among 15-24 year olds, accounting for 24% of all deaths in this age group. Over 80% of post-secondary students who commit suicide had never participated in counselling services on campus.</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 text-center">
-                <div class="service-box">
-                    <i class="fa fa-usd fa-5x" aria-hidden="true"></i>
-                    <h3 class="advantage-title-text">Economic Costs</h3>
-                    <p class="text-muted advantage-body-text">Mental illnesses can signal a life-long struggle for students with social and productivity costs as consequences, and in turn contribute to long-term burdens to the health care system. The current economic burden of mental illnesses in Canada is $51 billion per year.</p>
-                </div>
-            </div>
-        </div>
-    <hr class="long" style="margin-top: 100px; margin-bottom: 50px">
-    <h2 class="section-heading text-center">Find Out More</h2>
-    <hr>
-    <a href="{{ url_for('students') }}" class="btn btn-primary btn-xl index-btn index-btn-left">Students</a>
-	<a href="{{ url_for('providers') }}" class="btn btn-primary btn-xl index-btn index-btn-right">Care Providers</a>
-    </div>
+	<!-- Section for information -->
+	<section class="bg-white" id="about" style="padding-bottom: 0px">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-lg-8 col-lg-offset-2 text-center">
+	                <h2 class="section-heading">About Us</h2>
+	                <hr class="primary">
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-lg-3 col-lg-offset-1 col-lg-offset-problem-1 col-md-6 text-center">
+	                <div class="service-box">
+	                    <i class="fa fa-university fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text">A Vulnerable Demographic</h3>
+	                    <p class="text-muted advantage-body-text">University-aged individuals are a growing part of the demographic that is particularly vulnerable to mental health issues, with almost a third of undergraduates reporting symptoms of elevated distress. </p>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6 col-lg-offset-problem-2 text-center">
+	                <div class="service-box">
+	                    <i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text">Severe Consequences</h3>
+	                    <p class="text-muted advantage-body-text">In large part due to mental illnesses, suicide is the 2nd leading cause of death among 15-24 year olds, accounting for 24% of all deaths in this age group. Over 80% of post-secondary students who commit suicide had never participated in counselling services on campus.</p>
+	                </div>
+	            </div>
+	            <div class="col-lg-3 col-md-6 text-center">
+	                <div class="service-box">
+	                    <i class="fa fa-usd fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text">Economic Costs</h3>
+	                    <p class="text-muted advantage-body-text">Mental illnesses can signal a life-long struggle for students with social and productivity costs as consequences, and in turn contribute to long-term burdens to the health care system. The current economic burden of mental illnesses in Canada is $51 billion per year.</p>
+	                </div>
+	            </div>
+	        </div>
+
+		    <hr class="long" style="margin-top: 50px; margin-bottom: 100px">
+		    <h2 class="section-heading text-center">Find Out More</h2>
+		    <hr>
+	    </div>
+	</section>
+
+	<!-- Section for details -->
+	<section style="padding: 10px 0 30px 0">
+		<div class="board">
+			<div class="board-inner">
+				<ul class="nav nav-tabs" id="myTab">
+				<div class="liner"></div>
+					<li class="active">
+						<a href="#home" data-toggle="tab" title="Students">
+						<span class="round-tabs one">
+							<i class="glyphicon glyphicon-home"></i>
+						</span> 
+						</a>
+					</li>
+					<li>
+						<a href="#profile" data-toggle="tab" title="Care Providers">
+						<span class="round-tabs two">
+							<i class="glyphicon glyphicon-user"></i>
+						</span> 
+						</a>
+					</li>
+					<li>
+						<a href="#messages" data-toggle="tab" title="Timely">
+						<span class="round-tabs three">
+							<i class="glyphicon glyphicon-gift"></i>
+						</span> 
+						</a>
+					</li>
+					<li>
+						<a href="#settings" data-toggle="tab" title="Placeholder">
+						<span class="round-tabs four">
+							<i class="glyphicon glyphicon-comment"></i>
+						</span> 
+						</a>
+					</li>
+					<li>
+						<a href="#doner" data-toggle="tab" title="Placeholder">
+						<span class="round-tabs five">
+							<i class="glyphicon glyphicon-ok"></i>
+						</span> 
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="home">
+					<h3 class="head text-center">Welcome to Bootsnipp<sup>™</sup> <span style="color:#f48260;">♥</span></h3>
+					<p class="narrow text-center">
+						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+					</p>
+					<p class="text-center">
+						<a href="{{ url_for('students') }}" class="btn btn-success btn-outline-rounded green">Click For More Details<span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+					</p>
+				</div>
+
+				<div class="tab-pane fade" id="profile">
+					<h3 class="head text-center">Create a Bootsnipp<sup>™</sup> Profile</h3>
+					<p class="narrow text-center">
+						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+					</p>
+					<p class="text-center">
+						<a href="{{ url_for('providers') }}" class="btn btn-success btn-outline-rounded green">Click For More details<span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+					</p>
+				</div>
+
+				<div class="tab-pane fade" id="messages">
+					<h3 class="head text-center">Bootsnipp goodies</h3>
+					<p class="narrow text-center">
+						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+					</p>
+					<p class="text-center">
+						<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+					</p>
+				</div>
+
+				<div class="tab-pane fade" id="settings">
+					<h3 class="head text-center">Drop comments!</h3>
+					<p class="narrow text-center">
+						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+					</p>
+					<p class="text-center">
+						<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+					</p>
+				</div>
+
+				<div class="tab-pane fade" id="doner">
+					<div class="text-center">
+						<i class="img-intro icon-checkmark-circle"></i>
+					</div>
+					<h3 class="head text-center">thanks for staying tuned! <span style="color:#f48260;">♥</span> Bootstrap</h3>
+					<p class="narrow text-center">
+							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+					</p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</section>
+    
+	<!-- Section for button to FAQ -->
+	<section class="bg-dark" id="faq">
+		<div class="container">
+	        <div class="row">
+	            <div class="col-lg-8 col-lg-offset-2 text-center">
+	                <h2 class="section-heading">FAQ</h2>
+	                <hr class="primary">
+	            </div>
+	        </div>
+	    </div>
 	</section>
 {% endblock %}

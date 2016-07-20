@@ -50,6 +50,9 @@
                       <a class="page-scroll" href="#about">About Us</a>
                   </li>
                   <li>
+                      <a class="page-scroll" href="#login">FAQ</a>
+                  </li>                  
+                  <li>
                       <a method="POST" href="{{ url_for('render_login') }}">Sign In</a>
                   </li>
                   <li>
@@ -73,7 +76,7 @@
     <!-- Footer -->
     <footer>
       {% block footer %}
-      <hr style="max-width: 100%; border-width: thin; border-color: rgba(1, 1, 1, 0.2);"> 
+      <hr class="seperator"> 
       <p align="center">&copy; Copyright 2016 by <a href="http://www.timelyproject.com/">Timely</a>. All Rights Reserved.</p>
       {% endblock %}
     </footer>
@@ -88,6 +91,7 @@
     <script src="static/js/jquery.fittext.js"></script>
     <script src="static/js/wow.min.js"></script>
     <script src="static/js/login.js"></script>
+    <script src="static/js/circle-tabs.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="static/js/creative.js"></script>
