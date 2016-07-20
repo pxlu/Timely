@@ -1,5 +1,5 @@
 {% extends "base-template.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Providers{% endblock %}
 {% block head %}
     {{ super() }}
     <style type="text/css">
@@ -7,24 +7,19 @@
     </style>
 {% endblock %}
 {% block index %}
+    <!-- Header image & tagline -->
 	<header>
 	    <div class="header-content">
 	        <div class="header-content-inner">
-	            <h1 >Timely</h1>
+	            <h1>Timely for Students</h1>
 	            <hr class="primary">
 	            <p>Timely is a student-led project based at the University of Toronto St. George campus. Our mission is to reduce wait times to provide timely access to professional psychiatric and psychological intervention for post-secondary students in Canada.</p>
-	           	<a href="#about" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+	           	<a href="#about" class="btn btn-primary btn-xl">Learn More</a>
 	        </div>
 	    </div>
 	</header>
-	<!--
-	<h1>Say something</h1>
-    <form method="post" action="{{ url_for('signup') }}">
-        <p><label>Username:</label> <input type="text" name="username" required></p>
-        <p><label>Message:</label> <textarea name="message"></textarea></p>
-        <p><button type="submit">Send</button></p>
-    </form>
-	-->
+
+    <!-- Table for explainations -->
 	<section class="bg-white" id="about">
     <div class="container">
         <div class="row">
@@ -59,14 +54,7 @@
                 </div>
             </div>
         </div>
-    <hr class="long" style="margin-top: 100px; margin-bottom: 50px">
-    <h2 class="section-heading text-center">Find Out More</h2>
-    <hr>
-    <a href="{{ url_for('students') }}" class="btn btn-primary btn-xl index-btn index-btn-left">Students</a>
-	<a href="{{ url_for('providers') }}" class="btn btn-primary btn-xl index-btn index-btn-right">Care Providers</a>
     </div>
 
 	</section>
-
-	
 {% endblock %}
