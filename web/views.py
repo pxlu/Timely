@@ -26,6 +26,10 @@ def render_login():
 
 #### Screening elements
 
+@app.route('/screen')
+def screen():
+    return render_template('screening-template.html')
+
 #### Resource elements
 
 """
