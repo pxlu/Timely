@@ -20,12 +20,16 @@ Assume confidence_weight_factor is always 1.0
 
 import unittest
 import screen
+import timely_classes
 
 class TestScreen(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.disorder_list = []
+        self.test_user_profile1 = timely_classes.UserProfile()
+        self.test_user_profile2 = timely_classes.UserProfile()
 
+    # Test _calculate_adjustment() function
     def test_calculate_adjustment_failure_invalid_input_type(self):
         self.assertRaises(TypeError, screen._calculate_adjustment, "1", [2], {3})
 
@@ -34,6 +38,17 @@ class TestScreen(unittest.TestCase):
 
     def test_calculate_adjustment_success_adjust_down(self):
         self.assertEqual(screen._calculate_adjustment(0.5, 0.2, 0.2), 0.4)
+
+    # Test _disorder_confidence function
+    def test_disorder_confidence_failure_invalid_input_type1(self):
+        self.assertRaises(TypeError, screen._disorder_confidence, "1", self.disorder_list)
+
+    def test_disorder_confidence_failure_invalid_input_type2(self):
+        self.assertRaises(TypeError, screen._disorder_confidence, self.test_user_profile1, "1")
+
+    # Test _get_severity function
+
+    # Test _get_profile function
 
     def tearDown(self):
         pass
