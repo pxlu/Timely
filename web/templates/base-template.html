@@ -29,34 +29,39 @@
   </head>
 
   <body id="page-top">
+    {% block navbar %}
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
-        </div>
+      <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+          </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#about">About Us</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#login">Login Placeholder</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#about">About Us</a>
+                  </li>
+                  <li>
+                      <a method="POST" href="{{ url_for('render_login') }}">Sign In</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#login">Sign Up</a>
+                  </li>
+              </ul>
+          </div>
+          <!-- /.navbar-collapse -->
+      </div>
     <!-- /.container-fluid -->
     </nav>
+    {% endblock %}
 
     <!-- Special block for index content -->
     <!-- Not wrapped in a <div> due to styling issues -->
@@ -66,7 +71,7 @@
     <div id="content">{% block content %}{% endblock %}</div>
 
     <!-- Footer -->
-    <footer class="page-row">
+    <footer>
       {% block footer %}
       <hr style="max-width: 100%; border-width: thin; border-color: rgba(1, 1, 1, 0.2);"> 
       <p align="center">&copy; Copyright 2016 by <a href="http://www.timelyproject.com/">Timely</a>. All Rights Reserved.</p>
@@ -82,6 +87,7 @@
     <script src="static/js/jquery.easing.min.js"></script>
     <script src="static/js/jquery.fittext.js"></script>
     <script src="static/js/wow.min.js"></script>
+    <script src="static/js/login.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="static/js/creative.js"></script>
