@@ -320,6 +320,15 @@ header {
 .btn-xl {
   padding: 15px 30px; }
 
+.index-btn {
+  width: 200px; }
+  .index-btn-left {
+    float: left;
+    margin-left: 22%; }
+  .index-btn-right {
+    float: right;
+    margin-right: 22%; }
+
 #contact .fa {
   color: #222;
   font-size: 4em; }
