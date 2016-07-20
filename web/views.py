@@ -3,11 +3,22 @@ from web import app
 # Imports from Flask
 from flask import Flask, render_template, request, redirect, url_for, abort, session
 
-# Routing for the index
+#### Routing for the index elements
+
 @app.route('/')
-@app.route('/index')
-def index():
+@app.route('/home')
+def home():
 	return render_template('index-template.html')
+
+@app.route('/students')
+def students():
+	return render_template('students-template.html')
+
+@app.route('/providers')
+def providers():
+	return render_template('providers-template.html')
+
+####
 
 @app.route('/signup', methods=['POST'])
 def signup():
