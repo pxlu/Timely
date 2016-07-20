@@ -3,22 +3,26 @@ from web import app
 # Imports from Flask
 from flask import Flask, render_template, request, redirect, url_for, abort, session
 
-#### Routing for the index elements
+#### Index elements
 
 @app.route('/')
 @app.route('/home')
 def home():
-	return render_template('index-template.html')
+    return render_template('index-template.html')
 
 @app.route('/students')
 def students():
-	return render_template('students-template.html')
+    return render_template('students-template.html')
 
 @app.route('/providers')
 def providers():
-	return render_template('providers-template.html')
+    return render_template('providers-template.html')
 
-####
+#### Session + User Login elements
+
+@app.route('/login')
+def render_login():
+    return render_template('login-template.html')
 
 @app.route('/signup', methods=['POST'])
 def signup():
