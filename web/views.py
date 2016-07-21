@@ -18,11 +18,15 @@ def students():
 def providers():
     return render_template('providers-template.html')
 
-#### Session + User Login elements
+#### Session + User Login/Signup elements
 
 @app.route('/login')
 def render_login():
     return render_template('login-template.html')
+
+@app.route('/signup')
+def render_signup():
+    return render_template('signup-template.html')
 
 #### Screening elements
 
@@ -33,14 +37,21 @@ def screen():
 #### Resource elements
 
 """
-<!--
 <h1>Say something</h1>
 <form method="post" action="{{ url_for('signup') }}">
     <p><label>Username:</label> <input type="text" name="username" required></p>
     <p><label>Message:</label> <textarea name="message"></textarea></p>
     <p><button type="submit">Send</button></p>
 </form>
--->
+
+{% extends "base-template.html" %}
+{% block content %}
+    <h1>{{ username }} said:</h1>
+    <p>
+        {{ message }}
+    </p>
+    <a href="{{ url_for('index') }}">Say something else</a>
+{% endblock %}
 
 @app.route('/signup', methods=['POST'])
 def signup():
