@@ -18,17 +18,17 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+          <a class="navbar-brand" href="{{ url_for('home') }}">Timely</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">  
               <li>
-                  <a method="POST" href="{{ url_for('render_login') }}">Sign In</a>
+                  <a href="{{ url_for('render_login') }}">Sign In</a>
               </li>
               <li>
-                  <a class="page-scroll" href="#login">Sign Up</a>
+                  <a href="{{ url_for('render_signup') }}">Sign Up</a>
               </li>
           </ul>
       </div>
@@ -89,7 +89,7 @@
     </div>
 
     <hr class="dark" style="margin-top: 50px; margin-bottom: 30px">
-    <a href="{{ url_for('screen') }}" class="btn btn-primary btn-xl" style="display: block; margin: auto; width: 20%">Try A General Screening</a>
+    <a href="{{ url_for('screen') }}" class="btn btn-primary btn-xl" style="display: block; margin: auto; width: 20%">Get Started Today</a>
 
 	</section>
 {% endblock %}

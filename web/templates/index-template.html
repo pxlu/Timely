@@ -11,10 +11,10 @@
 	<header>
 	    <div class="header-content">
 	        <div class="header-content-inner">
-	            <h1 >Timely</h1>
+	            <h1>Achieve Mental Wellness</h1>
 	            <hr class="primary">
-	            <p>Timely is a student-led project based at the University of Toronto St. George campus. Our mission is to reduce wait times to provide timely access to professional psychiatric and psychological intervention for post-secondary students in Canada.</p>
-	           	<a href="#model" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+	            <p style="font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;">Online tools to connect patients and care providers, in order to build a complete care pathway for mental health.</p>
+	           	<a href="#model" class="btn btn-primary btn-xl page-scroll" style="min-width: 20%">Learn More</a>
 	        </div>
 	    </div>
 	</header>
@@ -34,23 +34,23 @@
 	        <div class="row">
 	            <div class="col-lg-3 col-lg-offset-1 col-lg-offset-problem-1 col-md-6 text-center">
 	                <div class="service-box">
-	                    <i class="fa fa-university fa-5x" aria-hidden="true"></i>
-	                    <h3 class="advantage-title-text">A Vulnerable Demographic</h3>
-	                    <p class="text-muted advantage-body-text">University-aged individuals are a growing part of the demographic that is particularly vulnerable to mental health issues, with almost a third of undergraduates reporting symptoms of elevated distress. </p>
+	                    <i class="fa fa-gears fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text" style="margin-top: 30px; margin-bottom: 25px">Comprehensive Tools</h3>
+	                    <p class="text-muted advantage-body-text">We offer comprehensive and up-to-date tools for screening, resource aggregation and treatment planning to help connect patients with care providers for mental health care. Our solution works to streamline and supplement professional treatment in every step along the way.</p>
 	                </div>
 	            </div>
 	            <div class="col-lg-3 col-md-6 col-lg-offset-problem-2 text-center">
 	                <div class="service-box">
-	                    <i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
-	                    <h3 class="advantage-title-text">Severe Consequences</h3>
-	                    <p class="text-muted advantage-body-text">In large part due to mental illnesses, suicide is the 2nd leading cause of death among 15-24 year olds, accounting for 24% of all deaths in this age group. Over 80% of post-secondary students who commit suicide had never participated in counselling services on campus.</p>
+	                    <i class="fa fa-user-md fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text">Professional Partnerships</h3>
+	                    <p class="text-muted advantage-body-text">We work closely with various mental health care providers, establishing a framework of partnerships to guide individuals towards the best treatment paths possible. We aim to give patients the flexibility and professionalism that they expect in their treatment journey.</p>
 	                </div>
 	            </div>
 	            <div class="col-lg-3 col-md-6 text-center">
 	                <div class="service-box">
-	                    <i class="fa fa-usd fa-5x" aria-hidden="true"></i>
-	                    <h3 class="advantage-title-text">Economic Costs</h3>
-	                    <p class="text-muted advantage-body-text">Mental illnesses can signal a life-long struggle for students with social and productivity costs as consequences, and in turn contribute to long-term burdens to the health care system. The current economic burden of mental illnesses in Canada is $51 billion per year.</p>
+	                    <i class="fa fa-comments fa-5x" aria-hidden="true"></i>
+	                    <h3 class="advantage-title-text" style="margin-top: 30px; margin-bottom: 25px">Responsive Feedback</h3>
+	                    <p class="text-muted advantage-body-text">Our solution provides immediate and detailed usage feedback for patients and care providers alike, allowing both parties to respond to changes and new information throughout the treatment path to better adapt to incoming situations.</p>
 	                </div>
 	            </div>
 	        </div>
@@ -67,24 +67,24 @@
 			<div class="board-inner">
 				<ul class="nav nav-tabs" id="myTab" style="border-bottom: none">
 				<div class="liner"></div>
-					<li>
-						<a href="#home" data-toggle="tab" title="Students">
+					<li class="active">
+						<a href="#home" data-toggle="tab" title="Patients">
 						<span class="round-tabs one">
-							<i class="glyphicon glyphicon-home"></i>
+							<i class="glyphicon glyphicon-user"></i>
 						</span> 
 						</a>
 					</li>
 					<li>
 						<a href="#profile" data-toggle="tab" title="Care Providers">
 						<span class="round-tabs two">
-							<i class="glyphicon glyphicon-user"></i>
+							<i class="fa fa-medkit" style="font-size: 1.5em"></i>
 						</span> 
 						</a>
 					</li>
-					<li class="active">
-						<a href="#messages" data-toggle="tab" title="Timely">
+					<li>
+						<a href="#messages" data-toggle="tab" title="Roadmap">
 						<span class="round-tabs three">
-							<i class="glyphicon glyphicon-gift"></i>
+							<i class="fa fa-road" style="font-size: 1.5em"></i>
 						</span> 
 						</a>
 					</li>
@@ -107,32 +107,32 @@
 
 			<div class="tab-content">
 				<div class="tab-pane fade in active" id="home">
-					<h3 class="head text-center">Welcome to Bootsnipp<sup>™</sup> <span style="color:#f48260;">♥</span></h3>
+					<h3 class="head text-center">Patient-Centered Model</h3>
 					<p class="narrow text-center">
-						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						Patients use our system free-of-charge to help kickstart and monitor their journey towards mental wellness, in collaboration with care professionals at every step.
 					</p>
 					<p class="text-center">
-						<a href="{{ url_for('students') }}" class="btn btn-success btn-outline-rounded green">Click For More Details<span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+						<a href="{{ url_for('students') }}" class="btn btn-success btn-outline-rounded green">Find Out How<span style="margin-left:10px;" class="glyphicon glyphicon-play"></span></a>
 					</p>
 				</div>
 
 				<div class="tab-pane fade" id="profile">
-					<h3 class="head text-center">Create a Bootsnipp<sup>™</sup> Profile</h3>
+					<h3 class="head text-center">Tight Professional Workflow</h3>
 					<p class="narrow text-center">
-						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						Care providers use our system to track, recommend, and guide patients along their journey, with a myriad amount of data to gain a better understanding on which direction to proceed next.
 					</p>
 					<p class="text-center">
-						<a href="{{ url_for('providers') }}" class="btn btn-success btn-outline-rounded green">Click For More details<span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+						<a href="{{ url_for('providers') }}" class="btn btn-success btn-outline-rounded yellow">Find Out How<span style="margin-left:10px;" class="glyphicon glyphicon-play"></span></a>
 					</p>
 				</div>
 
 				<div class="tab-pane fade" id="messages">
-					<h3 class="head text-center">Bootsnipp goodies</h3>
+					<h3 class="head text-center">Elastic Care Pathway</h3>
 					<p class="narrow text-center">
-						Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						Both patients and care providers alike can visualize the treatment path through our elastic care pathway generation tool.
 					</p>
 					<p class="text-center">
-						<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+						<a href="http://www.timelyproject.com/" class="btn btn-success btn-outline-rounded blue">Find Out How<span style="margin-left:10px;" class="glyphicon glyphicon-play"></span></a>
 					</p>
 				</div>
 
