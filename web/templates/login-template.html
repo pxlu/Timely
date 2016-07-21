@@ -19,17 +19,17 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
+          <a class="navbar-brand" href="{{ url_for('home') }}">Timely</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
               <li>
-                  <a method="POST" href="{{ url_for('render_login') }}">Sign In</a>
+                  <a href="{{ url_for('render_login') }}">Sign In</a>
               </li>
               <li>
-                  <a class="page-scroll" href="#login">Sign Up</a>
+                  <a href="#login">Sign Up</a>
               </li>
           </ul>
       </div>
@@ -75,6 +75,6 @@
 {% endblock %}
 
 {% block footer %}
-	<hr class="seperator" style="margin-top: 260px"> 
+	<hr class="seperator" style="margin-top: 270px"> 
 	<p align="center">&copy; Copyright 2016 by <a href="http://www.timelyproject.com/">Timely</a>. All Rights Reserved.</p>
 {% endblock %}
