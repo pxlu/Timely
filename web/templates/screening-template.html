@@ -40,14 +40,16 @@
 
 {% block index %}
     <!-- Header image & tagline -->
-	<header>
+	<header class="screen">
 	    <div class="header-content">
 	        <div class="header-content-inner">
-	            <h1>General Mental Health Screening</h1>
+	            <h1 style="color: black; font-weight: 300">Mental Health Screening</h1>
 	            <hr class="primary">
 	            <p>Timely is a student-led project based at the University of Toronto St. George campus. Our mission is to reduce wait times to provide timely access to professional psychiatric and psychological intervention for post-secondary students in Canada.</p>
-	           	<a href="#about" class="btn btn-primary btn-xl" style="min-width: 220px; margin-right: 4%"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px"></span>Submit A Written Bio</a>
+	           	<a href="{{ url_for('screening_form') }}" onclick="javascript:void window.open(href,'screening','width=700,height=700,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;" class="btn btn-primary btn-xl" style="min-width: 220px; margin-right: 4%"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px"></span>Submit A Written Bio</a>
+                <!--
                 <a href="#about" class="btn btn-primary btn-xl" style="min-width: 220px; margin-left: 4%"><span class="glyphicon glyphicon-headphones" aria-hidden="true" style="margin-right: 5px"></span>Submit A Spoken Bio</a>
+                -->
 	        </div>
 	    </div>
 	</header>

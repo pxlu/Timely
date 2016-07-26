@@ -1,5 +1,5 @@
 {% extends "base-template.html" %}
-{% block title %}Providers{% endblock %}
+{% block title %}Students{% endblock %}
 {% block head %}
     {{ super() }}
     <style type="text/css">
@@ -40,7 +40,7 @@
 
 {% block index %}
     <!-- Header image & tagline -->
-	<header>
+	  <header class="student">
 	    <div class="header-content">
 	        <div class="header-content-inner">
 	            <h1>Timely for Students</h1>
@@ -88,8 +88,8 @@
         </div>
     </div>
 
-    <hr class="dark" style="margin-top: 50px; margin-bottom: 30px">
-    <a href="{{ url_for('screen') }}" class="btn btn-primary btn-xl" style="display: block; margin: auto; width: 20%">Get Started Today</a>
+    <hr style="margin-top: 50px; margin-bottom: 30px">
+    <a href="{{ url_for('screen') }}" class="btn btn-primary btn-xl green" style="display: block; margin: auto; width: 20%">Get Started Today</a>
 
 	</section>
 {% endblock %}
