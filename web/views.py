@@ -30,8 +30,8 @@ def render_signup():
 
 #### Screening elements
 
-@app.route('/screen')
-def screen():
+@app.route('/screening')
+def screening():
     return render_template('screening-template.html')
 
 @app.route('/screening-form')
