@@ -12,30 +12,30 @@ def home():
 
 @app.route('/students')
 def students():
-    return render_template('students-template.html')
+    return render_template('/students/students-template.html')
 
 @app.route('/providers')
 def providers():
-    return render_template('providers-template.html')
+    return render_template('/providers/providers-template.html')
 
 #### Session + User Login/Signup elements
 
 @app.route('/login')
 def render_login():
-    return render_template('login-template.html')
+    return render_template('/uauth/login-template.html')
 
 @app.route('/signup')
 def render_signup():
-    return render_template('signup-template.html')
+    return render_template('/uauth/signup-template.html')
 
 #### Screening elements
 
 @app.route('/screening')
-def screening():
-    return render_template('screening-template.html')
+def screening_template():
+    return render_template('/students/screening-template.html')
 
 @app.route('/screening-form')
 def screening_form():
-    return render_template('screening-form.html')
+    return render_template('/students/screening-form.html')
 
 #### Resource elements
