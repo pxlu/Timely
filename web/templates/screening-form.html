@@ -10,21 +10,20 @@
 
 {% block index %}
 <div class="container">
-<div class="col-md-5">
-    <div class="form-area">  
-        <form role="form">
-        <br style="clear:both">
-                    <h3 style="margin-bottom: 25px; text-align: center;">Say A Little...</h3>
-    				<div class="form-group">
-						<input type="text" class="form-control" id="name" name="name" placeholder="My name is..." required>
-					</div>
-                    <div class="form-group">
-                    <textarea class="form-control" type="textarea" id="message" placeholder="Right now, I feel..." style="height: 150px !important"></textarea>
-                    </div>
-            
-        <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
-        </form>
+    <div class="col-md-5">
+        <div class="form-area">  
+            <form role="form">
+            <br style="clear:both">
+                <h3 style="margin-bottom: 25px; text-align: center;">Say A Little...</h3>
+    			<div class="form-group">
+					<input type="text" class="form-control" id="name" name="name" placeholder="My name is..." required>
+				</div>
+                <div class="form-group">
+                    <textarea class="form-control" type="textarea" id="bio" placeholder="Right now, I feel..." style="height: 150px !important" required></textarea>
+                </div>
+            <button type="button" onclick="javascript:void window.close()" id="submit" name="submit" class="btn btn-primary pull-right">Begin Screening</button>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
