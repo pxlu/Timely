@@ -1,0 +1,92 @@
+{% extends "base-template.html" %}
+{% block title %}Providers{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+
+{% block navbar %}
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('home') }}">Timely</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">  
+              <li>
+                  <a href="{{ url_for('render_login') }}">Sign In</a>
+              </li>
+              <li>
+                  <a href="{{ url_for('render_signup') }}">Sign Up</a>
+              </li>
+          </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+  </div>
+<!-- /.container-fluid -->
+</nav>
+{% endblock %}
+
+{% block index %}
+    <!-- Header image & tagline -->
+	<header>
+	    <div class="header-content">
+	        <div class="header-content-inner">
+	            <h1>Timely for Care Providers</h1>
+	            <hr class="primary">
+	            <p>Timely is a student-led project based at the University of Toronto St. George campus. Our mission is to reduce wait times to provide timely access to professional psychiatric and psychological intervention for post-secondary students in Canada.</p>
+	           	<a href="#about" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+	        </div>
+	    </div>
+	</header>
+
+    <!-- Table for explainations -->
+	<section class="bg-white" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <h2 class="section-heading">About Us</h2>
+                <hr class="primary">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-lg-offset-1 col-lg-offset-problem-1 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-university fa-5x" aria-hidden="true"></i>
+                    <h3 class="advantage-title-text">A Vulnerable Demographic</h3>
+                    <p class="text-muted advantage-body-text">University-aged individuals are a growing part of the demographic that is particularly vulnerable to mental health issues, with almost a third of undergraduates reporting symptoms of elevated distress. </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-lg-offset-problem-2 text-center">
+                <div class="service-box">
+                    <i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
+                    <h3 class="advantage-title-text">Severe Consequences</h3>
+                    <p class="text-muted advantage-body-text">In large part due to mental illnesses, suicide is the 2nd leading cause of death among 15-24 year olds, accounting for 24% of all deaths in this age group. Over 80% of post-secondary students who commit suicide had never participated in counselling services on campus.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-usd fa-5x" aria-hidden="true"></i>
+                    <h3 class="advantage-title-text">Economic Costs</h3>
+                    <p class="text-muted advantage-body-text">Mental illnesses can signal a life-long struggle for students with social and productivity costs as consequences, and in turn contribute to long-term burdens to the health care system. The current economic burden of mental illnesses in Canada is $51 billion per year.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	</section>
+{% endblock %}
