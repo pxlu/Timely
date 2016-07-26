@@ -1,5 +1,5 @@
 # Import the Flask app itself
-from web import app
+from web import app, _cwd
 # Imports from Flask
 from flask import Flask, render_template, request, redirect, url_for, abort, session
 
@@ -34,37 +34,8 @@ def render_signup():
 def screen():
     return render_template('screening-template.html')
 
+@app.route('/screening-form')
+def screening_form():
+    return render_template('screening-form.html')
+
 #### Resource elements
-
-"""
-<h1>Say something</h1>
-<form method="post" action="{{ url_for('signup') }}">
-    <p><label>Username:</label> <input type="text" name="username" required></p>
-    <p><label>Message:</label> <textarea name="message"></textarea></p>
-    <p><button type="submit">Send</button></p>
-</form>
-
-{% extends "base-template.html" %}
-{% block content %}
-    <h1>{{ username }} said:</h1>
-    <p>
-        {{ message }}
-    </p>
-    <a href="{{ url_for('index') }}">Say something else</a>
-{% endblock %}
-
-@app.route('/signup', methods=['POST'])
-def signup():
-    session['username'] = request.form['username']
-    session['message'] = request.form['message']
-    return redirect(url_for('message'))
-
-@app.route('/message')
-def message():
-    if not 'username' in session:
-        return abort(403)
-    return render_template('message-template.html', username=session['username'], 
-                                           message=session['message'])
-"""
-
-app.run(debug=True) 
