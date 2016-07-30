@@ -9,7 +9,7 @@ from collections import OrderedDict
 # Third Party Libraries
 from nltk.stem.snowball import SnowballStemmer
 # Local Libraries
-import timely_common
+import Timely.scripts.timely_common as timely_common
 
 # Current working directory
 _cwd = os.path.dirname(os.path.realpath(__file__))
@@ -200,7 +200,7 @@ def _stem_conjugations(parsed_words):
     except TypeError:
         raise
 
-def parse_text(in_file):
+def parse_text(in_file, no_file=False, text_input=""):
 
     """
     Parse and tokenize in_file, and return a OrderedDict of words with their keys being their number of occurences in in_file.
@@ -210,8 +210,12 @@ def parse_text(in_file):
     """
 
     try:
+        if no_file == True:
+            bio_text = text_input
+        else:
         # Clean the text and break it down into sentences
-        bio_text = in_file.read()
+            bio_text = in_file.read()
+            
         cleaned_text = _clean_text(bio_text)
         paragraph = _fix_sentences(cleaned_text)
 

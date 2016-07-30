@@ -4,8 +4,8 @@
 # Native Python Libraries
 import sys
 # Local Libraries
-import screen
-import timely_common
+import Timely.scripts.screen
+import Timely.scripts.timely_common
 
 RESOURCES = timely_common._init_resource_list()
 DISORDERS = timely_common._init_disorder_list()

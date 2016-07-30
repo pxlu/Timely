@@ -9,9 +9,9 @@ from collections import OrderedDict
 # Third Party Libraries
 from nltk.stem.snowball import SnowballStemmer
 # Local Libraries
-from timely_classes import *
-import timely_parser
-import timely_common
+from Timely.scripts.timely_classes import *
+import Timely.scripts.timely_parser as timely_parser
+import Timely.scripts.timely_common as timely_common
 
 KEYWORDS = timely_common._init_keyword_list()
 KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
@@ -71,7 +71,7 @@ def _disorder_confidence(user_profile, disorder_list):
 
             # Get the name of the disorder and append the confidence value and the name into the return list as a tuple
             disorder_name = next((list_disorder for list_disorder in disorder_list if list_disorder.name == disorder.name), None)
-            confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100))  + '%'))
+            confidence_list.append((disorder_name, str(math.ceil(confidence_value * 100)) + '%'))
 
         return sorted(confidence_list, key=lambda l_value: int((l_value[1])[:-1]), reverse=True)
     except TypeError:
@@ -117,7 +117,7 @@ def _get_severity(user_profile, keywords_list):
     except TypeError:
         raise
 
-def _get_profile(in_file, profile_name):
+def _get_profile(in_file, profile_name, no_file=False, text_input=""):
 
     '''
     Initilize and output a user profile for the given in_file, with user_profile.name represented by profile_name.
@@ -132,8 +132,12 @@ def _get_profile(in_file, profile_name):
         stemmer = SnowballStemmer("english")
         keywords_stem = [stemmer.stem(word) for word in KEYWORDS_NAMES]
 
+        if no_file == True:
+            word_list = timely_parser.parse_text(in_file="no_file", no_file=True, text_input=text_input)
+        else:
         # Parse words from user profile and init severities & user profile
-        word_list = timely_parser.parse_text(in_file)
+            word_list = timely_parser.parse_text(in_file)
+
         _init_disorder_severities(DISORDERS, KEYWORDS)
         user_profile = UserProfile(name=str.capitalize(profile_name))
 
@@ -147,7 +151,8 @@ def _get_profile(in_file, profile_name):
         user_profile.severity = _get_severity(user_profile, KEYWORDS)
         user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
 
-        in_file.close()
+        if no_file == False:
+            in_file.close()
 
         return user_profile
     except (TypeError, FileNotFoundError, IsADirectoryError):

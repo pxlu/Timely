@@ -7,7 +7,7 @@ import time
 import os
 # Third Party Libraries
 # Local Libraries
-from timely_classes import *
+from Timely.scripts.timely_classes import *
 
 # Current working directory
 _cwd = os.path.dirname(os.path.realpath(__file__))
