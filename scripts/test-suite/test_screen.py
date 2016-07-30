@@ -7,7 +7,7 @@ Keywords: List of symptoms/conditions. Each associated with rating
 
 If user_profile in get_severity is blank, then the function should return -1
 
-__init_disorder_severity()
+_init_disorder_severities()
 Double table computations, need to ensure the final table is correct.
 If one table is empty or if none match, then return default value
 
@@ -22,6 +22,7 @@ import unittest
 import screen
 import timely_classes
 
+
 class TestScreen(unittest.TestCase):
 
     def setUp(self):
@@ -31,7 +32,7 @@ class TestScreen(unittest.TestCase):
 
     # Test _calculate_adjustment() function
     def test_calculate_adjustment_failure_invalid_input_type(self):
-        self.assertRaises(TypeError, screen._calculate_adjustment, "1", [2], {3})
+        self.assertRaises(TypeError, screen._calculate_adjustment, "1", [2], {"Three": 4})
 
     def test_calculate_adjustment_success_adjust_up(self):
         self.assertEqual(screen._calculate_adjustment(0.5, 0.7, 0.3), 0.65)
@@ -46,9 +47,25 @@ class TestScreen(unittest.TestCase):
     def test_disorder_confidence_failure_invalid_input_type2(self):
         self.assertRaises(TypeError, screen._disorder_confidence, self.test_user_profile1, "1")
 
-    # Test _get_severity function
+    def test_disorder_confidence_success_1(self):
+        pass
 
-    # Test _get_profile function
+    def test_disorder_confidence_success_2(self):
+        pass
+
+    # Test _init_disorder_severities() function
+    def test_init_disorder_severities_failure_invalid_input_type1(self):
+        self.assertRaises(TypeError, screen._init_disorder_severities, "1", [])
+
+    def test_init_disorder_severities_failure_invalid_input_type2(self):
+        self.assertRaises(TypeError, screen._init_disorder_severities, {}, 2)
+
+    # Test _get_severity() function
+    def test_get_severity_failure_invalid_input_type1(self):
+        self.assertRaises(TypeError, screen._get_severity, self.test_user_profile1, "1")
+
+    def test_get_severity_failure_invalid_input_type2(self):
+        self.assertRaises(TypeError, screen._get_severity, 0, [1, 2, 3])
 
     def tearDown(self):
         pass
