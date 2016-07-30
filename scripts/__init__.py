@@ -1,4 +1,4 @@
-import timely_common
+from Timely.scripts import timely_common
 from nltk.stem.snowball import SnowballStemmer
 
 KEYWORDS = timely_common._init_keyword_list()

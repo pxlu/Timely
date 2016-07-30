@@ -8,6 +8,14 @@ from timely_classes import KeyWord, Disorder, Resource
 
 # Disorders => JSON <= CSV
 
+def _objects_to_json(object_name, object_list, out_file):
+
+	results = {}
+	results[object_name] = object_list
+	results['count'] = len(object_list)
+
+	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
 def _disorders_to_json(disorders_list, out_file):
 
 	# Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
