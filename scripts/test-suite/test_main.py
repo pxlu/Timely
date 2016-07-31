@@ -9,12 +9,13 @@ from test_screen import TestScreen
 from test_parser import TestParser
 from test_timely_common import TestCommon
 
+
 def run_all_tests():
     suite = unittest.TestSuite()
-    suite.addTest(TestResources())
-    suite.addTest(TestScreen())
     suite.addTest(TestParser())
     suite.addTest(TestCommon())
+    suite.addTest(TestResources())
+    suite.addTest(TestScreen())
 
     unittest.main(verbosity=2)
 
