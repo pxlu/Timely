@@ -3,7 +3,7 @@
 ### Development Deployment:
 
 1. `git clone` https://github.com/pxlu/Timely.git
-  a. `pip install -r requirements.txt`
+  *. `pip install -r requirements.txt`
 2. Check out the `front-end` branch
 3. `cd web`
 4. `export FLASK_APP=views.py`
