@@ -53,6 +53,16 @@ class UserProfile(object):
 
         return uuid.uuid4()
 
+    def serialize(self):
+
+        return {
+            'name': self.name,
+            'uid': self.uid,
+            'keywords': self.keywords,
+            'severity': self.severity,
+            'disorders': [(disorder[0].serialize(), disorder[1]) for disorder in self.disorders]
+        }
+
 class KeyWord(object):
 
     """
@@ -105,6 +115,16 @@ class Disorder(object):
         """
 
         return uuid.uuid4()
+
+    def serialize(self):
+        return {
+            'name': self.name,
+            'dID': self.dID,
+            'symptoms': self.symptoms,
+            'base_rate': self.base_rate,
+            'risk_factors': self.risk_factors,
+            'severity': self.severity,
+        }
 
 class Resource(object):
 
