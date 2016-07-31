@@ -1,7 +1,8 @@
 # Import the Flask app itself
-from web import app, _cwd
+from Timely.web import app, _cwd
 # Imports from Flask
 from flask import Flask, render_template, request, redirect, url_for, abort, session
+from Timely.scripts.screen import _get_profile
 
 #### Index elements
 
@@ -37,5 +38,11 @@ def screening_template():
 @app.route('/screening-form')
 def screening_form():
     return render_template('/students/screening-form.html')
+
+@app.route('/screening-results', methods=['POST', 'GET'])
+def screening_results():
+    if request.method == 'POST':
+        result = request.form
+        return render_template('/students/screening-results.html', result= _get_profile(in_file="no_file",profile_name=result['name'], no_file=True, text_input=result['bio']))
 
 #### Resource elements

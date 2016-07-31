@@ -3,6 +3,12 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/screening.css') }}">
+    <script language="Javascript">
+        function redirectParent(){
+            window.opener.location.href="{{ url_for('screening_results') }}";
+            self.close();
+        }
+    </script>
 {% endblock %}
 
 {% block navbar %}
@@ -12,16 +18,17 @@
 <div class="container">
     <div class="col-md-5">
         <div class="form-area">  
-            <form role="form">
+            <form role="form" method="POST" action="{{ url_for('screening_results') }}">
             <br style="clear:both">
                 <h3 style="margin-bottom: 25px; text-align: center;">Say A Little...</h3>
     			<div class="form-group">
 					<input type="text" class="form-control" id="name" name="name" placeholder="My name is..." required>
 				</div>
                 <div class="form-group">
-                    <textarea class="form-control" type="textarea" id="bio" placeholder="Right now, I feel..." style="height: 150px !important" required></textarea>
+                    <textarea class="form-control" type="textarea" id="bio" name='bio' placeholder="Right now, I feel..." style="height: 150px !important" required></textarea>
                 </div>
-            <button type="button" onclick="javascript:void window.close()" id="submit" name="submit" class="btn btn-primary pull-right">Begin Screening</button>
+                <input type = "submit" value = "submit" />
+            <!--<button type="button" onclick="redirectParent()" id="submit" name="submit" class="btn btn-primary pull-right">Begin Screening</button>-->
             </form>
         </div>
     </div>

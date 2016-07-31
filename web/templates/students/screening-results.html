@@ -8,4 +8,11 @@
 {% endblock %}
 
 {% block index %}
+	<p> Name: {{ result.name }} </p>
+	<p> UserID: {{ result.uid }} </p>
+	<p> User Keywords: {{ result.keywords }} </p>
+	<p> Severity Rating: {{ result.severity }} </p>
+	{% for disorder in result.disorders %}
+		<p> Disorder Name: {{ disorder[0].name }}: {{ disorder[1] }} </p>
+	{% endfor %}
 {% endblock %}
