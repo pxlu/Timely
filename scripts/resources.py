@@ -4,8 +4,8 @@
 # Native Python Libraries
 import sys
 # Local Libraries
-import Timely.scripts.screen
-import Timely.scripts.timely_common
+import Timely.scripts.screen as screen
+import Timely.scripts.timely_common as timely_common
 
 RESOURCES = timely_common._init_resource_list()
 DISORDERS = timely_common._init_disorder_list()
@@ -36,12 +36,12 @@ def _calculate_compatibility(resource, resource_list, user_profile):
 
 	try:
 		compatibility_value = 0
-		for disorder in user_profile.disorders:
-			treatment_places = _map_disorder_to_resources(disorder[0].name, resource_list)
+		for disorder in user_profile['disorders']:
+			treatment_places = _map_disorder_to_resources(disorder[0]['name'], resource_list)
 			if resource in treatment_places:
 				compatibility_value += 1
 
-		compatibility_value = (compatibility_value / len(user_profile.disorders)) * 100
+		compatibility_value = (compatibility_value / len(user_profile['disorders'])) * 100
 
 		return compatibility_value
 	except TypeError:
@@ -110,17 +110,20 @@ def _check_resource_disorders(user_profile, resource):
 	"""
 
 	try:
-		return [disorder[0].name for disorder in user_profile.disorders if disorder[0].name.lower() in resource.services]
+		return [disorder[0]['name'] for disorder in user_profile['disorders'] if disorder[0]['name'].lower() in resource.services]
 	except TypeError:
 		raise
 
-def _get_resources(in_file):
+def _get_resources(in_file, existing_profile=False, passed_profile=None):
 
 	try:
-		user_profile = screen._get_profile(in_file, 'alexandra')
-		rr = _generate_resource_list(user_profile, RESOURCES)
-		for r in rr:
-			print(str(r[0]) + "\n", r[1:])
+		if existing_profile == True:
+			user_profile = passed_profile
+		else:
+			user_profile = screen._get_profile(in_file, 'alexandra')
+		resource_list = _generate_resource_list(user_profile, RESOURCES)
+
+		return resource_list
 	except (FileNotFoundError, IsADirectoryError):
 		raise
 

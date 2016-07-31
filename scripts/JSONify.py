@@ -20,7 +20,7 @@ def _disorders_to_json(disorders_list, out_file):
 
 	# Taken from http://stackoverflow.com/questions/12309269/how-do-i-write-json-data-to-a-file-in-python
 	results = {}
-	results['disorders'] = disorders_list
+	results['disorders'] = disorders_list5
 	results['count'] = len(disorders_list)
 
 	json.dump(results, out_file, default=lambda o: o.__dict__, sort_keys=True, indent=4)
