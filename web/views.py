@@ -46,7 +46,7 @@ def screening_results():
     if request.method == 'POST':
         result = request.form
         session['user_profile'] = json.dumps(_get_profile(in_file="no_file",profile_name=result['name'], no_file=True, text_input=result['bio']).serialize())
-        print(session['user_profile'])
+        # print(session['user_profile'])
         return render_template('/students/screening-results.html', result=json.loads(session['user_profile']))
 
 #### Resource elements
@@ -55,5 +55,5 @@ def screening_results():
 def resources():
     user_profile = json.loads(session['user_profile'])
     resource_list = _get_resources(in_file='no_file', existing_profile=True, passed_profile=user_profile)
-    print(resource_list)
+    # print(resource_list)
     return render_template('/students/resources.html',resource_list=resource_list)
