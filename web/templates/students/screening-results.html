@@ -15,4 +15,7 @@
 	{% for disorder in result.disorders %}
 		<p> Disorder Name: {{ disorder[0].name }}: {{ disorder[1] }} </p>
 	{% endfor %}
+
+	<hr style="margin-top: 50px; margin-bottom: 30px">
+	<a href="{{ url_for('resources') }}" class="btn btn-primary btn-xl green">Check Available Resources</a>
 {% endblock %}

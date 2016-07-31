@@ -1,0 +1,15 @@
+{% extends "base-template.html" %}
+{% block title %}Resources{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block index %}
+    {% for resource in resource_list %}
+        <p> Resource Name: {{ resource[0].name }} </p>
+        <p> Resource Location: {{ resource[0].location }} </p>
+    {% endfor %}
+{% endblock %}
