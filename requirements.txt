@@ -4,7 +4,7 @@
 ###### Requirements.txt ######
 #
 ###### Version-agnostic requirements ######
-ntlk
+nltk
 flask-wtf
 #
 ###### Version-specific requirements ######
