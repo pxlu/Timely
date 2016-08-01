@@ -1,11 +1,11 @@
 {% extends "base-template.html" %}
-{% block title %}Resources{% endblock %}
+{% block title %}Resource_redirect{% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
 
 {% block navbar %}
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="background-color: black">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -36,10 +36,7 @@
 {% endblock %}
 
 {% block index %}
-    <div style="margin-top: 100px;">
-    {% for resource in resource_list %}
-        <p> Resource Name: {{ resource[0].name }} </p>
-        <p> Resource Location: {{ resource[0].location }} </p>
-    {% endfor %}
-    </div>
+    <script language="Javascript">
+    window.onload = window.opener.location.href="{{ url_for('resources') }}"; self.close();
+    </script>
 {% endblock %}
