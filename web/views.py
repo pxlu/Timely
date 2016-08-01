@@ -51,6 +51,10 @@ def screening_results():
 
 #### Resource elements
 
+@app.route('/resource-res')
+def resource_res():
+    return render_template('/students/resource_redirect.html')
+
 @app.route('/resources')
 def resources():
     user_profile = json.loads(session['user_profile'])
