@@ -5,10 +5,8 @@
 import sys
 # Local Libraries
 import Timely.scripts.screen as screen
-import Timely.scripts.timely_common as timely_common
-
-RESOURCES = timely_common._init_resource_list()
-DISORDERS = timely_common._init_disorder_list()
+# Globals from the package __init__.py
+from Timely.scripts import RESOURCES, DISORDERS
 
 def _map_disorder_to_resources(disorder_name, resource_list):
 

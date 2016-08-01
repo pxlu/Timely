@@ -7,9 +7,8 @@ import re
 import os
 from collections import OrderedDict
 # Third Party Libraries
-from nltk.stem.snowball import SnowballStemmer
 # Local Libraries
-import Timely.scripts.timely_common as timely_common
+from Timely.scripts import KEYWORDS, KEYWORDS_NAMES, stemmer
 
 # Current working directory
 _cwd = os.path.dirname(os.path.realpath(__file__))
@@ -18,9 +17,6 @@ CONTRACTIONS = {
     "'m", "'ll", "'d", "'ve", "'re"
 }
 END= "/END"
-
-KEYWORDS = timely_common._init_keyword_list()
-KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
 
 def _get_abbreviations(abbrev_path="/../assets/parser/abbrev.english"):
 
@@ -173,7 +169,7 @@ def _remove_nonwords(sentence_list):
     except TypeError:
         raise
 
-def _stem_conjugations(parsed_words):
+def _stem_conjugations(parsed_words, stemmer):
 
     """
     Conjugate and aggregate occurences of words based on their conjugations, and return a list of words with their aggregated occurence counts.
@@ -183,7 +179,6 @@ def _stem_conjugations(parsed_words):
     """
 
     try:
-        stemmer = SnowballStemmer("english")
         conjugations_list = [[stemmer.stem(word[0]), [word[1], "PRE;" + word[0]]] for word in parsed_words.items()]
         conjugated_words = [word[0] for word in conjugations_list]
 
@@ -200,7 +195,7 @@ def _stem_conjugations(parsed_words):
     except TypeError:
         raise
 
-def parse_text(in_file, no_file=False, text_input=""):
+def parse_text(in_file, stemmer=stemmer, no_file=False, text_input=""):
 
     """
     Parse and tokenize in_file, and return a OrderedDict of words with their keys being their number of occurences in in_file.
@@ -223,7 +218,7 @@ def parse_text(in_file, no_file=False, text_input=""):
         flat_list = [item.lower() for sublist in paragraph for item in sublist]
         # For each unique word in the paragraph, insert it into an OrderedDict with the key being the word and the value being the number of occurences of that word within the paragraph
         word_dict = {item: flat_list.count(item) for item in flat_list}
-        sorted_words = sorted(_stem_conjugations(word_dict), key=lambda item: item[0])
+        sorted_words = sorted(_stem_conjugations(word_dict, stemmer), key=lambda item: item[0])
 
         return sorted_words
     except (FileNotFoundError, IsADirectoryError):

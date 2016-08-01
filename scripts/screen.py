@@ -11,11 +11,8 @@ from nltk.stem.snowball import SnowballStemmer
 # Local Libraries
 from Timely.scripts.timely_classes import *
 import Timely.scripts.timely_parser as timely_parser
-import Timely.scripts.timely_common as timely_common
-
-KEYWORDS = timely_common._init_keyword_list()
-KEYWORDS_NAMES = timely_common._get_keywords(KEYWORDS)
-DISORDERS = timely_common._init_disorder_list()
+# Globals from the package __init__.py
+from Timely.scripts import KEYWORDS, KEYWORDS_NAMES, DISORDERS, stemmer
 
 def _calculate_adjustment(base_rate, disorder_confidence, rate_difference):
 
@@ -128,8 +125,6 @@ def _get_profile(in_file, profile_name, no_file=False, text_input=""):
     '''
 
     try:
-        # Init stemmer
-        stemmer = SnowballStemmer("english")
         keywords_stem = [stemmer.stem(word) for word in KEYWORDS_NAMES]
 
         if no_file == True:
@@ -138,6 +133,7 @@ def _get_profile(in_file, profile_name, no_file=False, text_input=""):
         # Parse words from user profile and init severities & user profile
             word_list = timely_parser.parse_text(in_file)
 
+        # Init disorder severities and create a blank user profile
         _init_disorder_severities(DISORDERS, KEYWORDS)
         user_profile = UserProfile(name=str.capitalize(profile_name))
 
@@ -149,7 +145,10 @@ def _get_profile(in_file, profile_name, no_file=False, text_input=""):
         user_profile.uid = user_profile._generate_uid()
         user_profile.keywords = sorted_user_words
         user_profile.severity = _get_severity(user_profile, KEYWORDS)
-        user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
+        if user_profile.severity == 0:
+            user_profile.disorders = []
+        else:    
+            user_profile.disorders = _disorder_confidence(user_profile, DISORDERS)
 
         if no_file == False:
             in_file.close()
