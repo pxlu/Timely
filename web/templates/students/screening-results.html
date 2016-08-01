@@ -2,19 +2,52 @@
 {% block title %}Results{% endblock %}
 {% block head %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/screening_profile.css') }}">
+    <script src="static/js/screening_profile.js"></script>
 {% endblock %}
 
 {% block navbar %}
 {% endblock %}
 
 {% block index %}
-	<p> Name: {{ result.name }} </p>
-	<p> UserID: {{ result.uid }} </p>
-	<p> User Keywords: {{ result.keywords }} </p>
-	<p> Severity Rating: {{ result.severity }} </p>
-	{% for disorder in result.disorders %}
-		<p> Disorder Name: {{ disorder[0].name }}: {{ disorder[1] }} </p>
-	{% endfor %}
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ result.name }}</h3>
+				</div>
+				<div class="panel-body">
+				<div class="row">
+					<!--<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>-->
+					<div class=" col-md-9 col-lg-9 "> 
+						<table class="table table-user-information">
+							<tbody>
+								<tr>
+								<td>Keywords:</td>
+								<td>{{ result.keywords }}</td>
+								</tr>
+
+								<tr>
+								<td>Calculated Severity Rating:</td>
+								<td>{{ result.severity }}</td>
+								</tr>
+
+								{% for disorder in result.disorders %}
+								<tr>
+								<td>Disorder Name: {{ disorder[0].name }}</td>
+								<td>Estimated Rate: {{ disorder[1] }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 	<hr style="margin-top: 50px; margin-bottom: 30px">
 	<a href="{{ url_for('resource_res') }}" class="btn btn-primary btn-xl green">Check Available Resources</a>
