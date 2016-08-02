@@ -10,7 +10,7 @@
 	        "address": "246 Bloor Street W, Toronto, Ontario",
 	        "contact": {
 	        	"phone": "4169786314",
-	        	"website": ""
+	        	"website": "N/A"
 	        },
 	        "services": [
 	        	"Generalized Anxiety Disorder",
@@ -32,7 +32,8 @@
 		        "Friday": "9:00-16:00",
 		        "Saturday": "",
 		        "Sunday": ""
-		    }
+		    },
+		    "priority": "1"
 		}],
 		"count": 1
 	}
