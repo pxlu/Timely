@@ -62,7 +62,7 @@ def _resources_to_json(resources_list, out_file):
 def _resources_csv_to_json(csv_file_name, out_file):
 
 	resources_reader = csv.DictReader(open(csv_file_name))
-	resources_list = [Resource(name=row['name'], rID=row['id'], type=row['type'],capacity=row['capacity'], location=row['location'], address=row['address'] if row['address'] != '' else None, contact=row['contact'], services=row['services'], cost=row['cost'] if row['cost'] != ''else None, availability=None) for row in resources_reader]
+	resources_list = [Resource(name=row['name'], rID=row['id'], resourcetype=row['type'],capacity=row['capacity'], location=row['location'], address=row['address'] if row['address'] != '' else None, contact=row['contact'], services=[service.strip() for service in row['services'].split(',')], cost=row['cost'] if row['cost'] != ''else None, priority=row['priority'] if 'priority' in row else 0, availability=row['availability']) for row in resources_reader]
 
 	_resources_to_json(resources_list, out_file)
 
@@ -70,4 +70,4 @@ if __name__ == '__main__':
 	csv_file_name = sys.argv[1]
 	out_file_name = sys.argv[2]
 	with open(out_file_name, 'w') as out_file:
-		_disorders_csv_to_json(csv_file_name, out_file)
+		_resources_csv_to_json(csv_file_name, out_file)

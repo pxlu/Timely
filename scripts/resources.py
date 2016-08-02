@@ -119,7 +119,7 @@ def _get_resources(in_file, existing_profile=False, passed_profile=None):
 			user_profile = passed_profile
 		else:
 			user_profile = screen._get_profile(in_file, 'alexandra')
-		resource_list = _generate_resource_list(user_profile, RESOURCES)
+		resource_list = sorted(_generate_resource_list(user_profile, RESOURCES), key=lambda resource_tuple: resource_tuple[0].priority)
 
 		return resource_list
 	except (FileNotFoundError, IsADirectoryError):

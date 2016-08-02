@@ -86,6 +86,7 @@ def _init_resource_list(path="/../assets/json/resources.json"):
         contact=resource["contact"],
         services=resource["services"],
         cost=resource["cost"] if resource["cost"] != "" else None,
+        priority=resource["priority"],
         availability=OperatingHours(oph_dict=_init_OperatingHours_dict(resource["availability"]))
         ) for resource in resources_list]
 

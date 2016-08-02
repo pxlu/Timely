@@ -81,6 +81,10 @@ class KeyWord(object):
     def __str__(self):
         return "{} is a keyword, described as {}, with a serverity rating of {}.".format(self.name, self.description, self.rating)
 
+    def serialize(self):
+
+        pass
+
 class Disorder(object):
 
     """
@@ -117,6 +121,7 @@ class Disorder(object):
         return uuid.uuid4()
 
     def serialize(self):
+
         return {
             'name': self.name,
             'dID': self.dID,
@@ -143,7 +148,7 @@ class Resource(object):
     :field availability:    type(`OperatingHours`) the availability of the resource
     """
 
-    def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availability=None):
+    def __init__(self, name="", rID=-1, resourcetype="", capacity="", location="", address=None, contact="", services=[], cost="", availability=None, priority=-1):
         # Availbility should be a datetime object
         # Type should be hotline, specialist, etc
         # Capacity should be whether the resource accepts new patients or not
@@ -158,6 +163,7 @@ class Resource(object):
         self.cost = cost
         # Custom object that tells operating hours of such a resource(clinic)
         self.availability = availability
+        self.priority = priority
 
     def __str__(self):
         return "============================================= \
@@ -170,8 +176,9 @@ class Resource(object):
         \nContact: {}\
         \nServices: {}\
         \nCost: {}\
+        \nPriority: {}\
         \nAvailibility: {}\
-        \n=============================================".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.availability)
+        \n=============================================".format(self.name, self.rID, self.resourcetype, self.capacity, self.location, self.address, self.contact, self.services, self.cost, self.priority, self.availability)
 
     def _generate_rID(self):
 
@@ -182,6 +189,10 @@ class Resource(object):
         """
 
         return uuid.uuid4()
+
+    def serialize(self):
+
+        pass
 
 class OperatingHours:
 
@@ -200,7 +211,7 @@ class OperatingHours:
 
     def __str__(self):
 
-        output = "\n==============================\n"
+        output = ""
 
         for day, hours in self.oph_dict.items():
 
@@ -216,3 +227,7 @@ class OperatingHours:
                 output += day + ": " + timestring
 
         return output[:-1]
+
+    def serialize(self):
+
+        pass
