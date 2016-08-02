@@ -6,6 +6,12 @@ from flask import Flask, render_template, request, redirect, url_for, abort, ses
 from Timely.scripts.screen import _get_profile
 from Timely.scripts.resources import _get_resources
 
+### Error Handling
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('/errors/page_not_found.html'), 404
+
 #### Index elements
 
 @app.route('/')
@@ -58,4 +64,5 @@ def resource_res():
 def resources():
     user_profile = json.loads(session['user_profile'])
     resource_list = _get_resources(in_file='no_file', existing_profile=True, passed_profile=user_profile)
+    print(resource_list[0][0])
     return render_template('/students/resources.html',resource_list=resource_list)

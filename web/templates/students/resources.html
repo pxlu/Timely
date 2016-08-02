@@ -3,6 +3,16 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/resource_box.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/screening_profile.css') }}">
+    <script src="static/js/screening_profile.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#toggle").click(function(){
+            $("#panel-toggle").toggle();
+        });
+    });
+    </script>
 {% endblock %}
 
 {% block navbar %}
@@ -16,7 +26,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('home') }}">Timely</a>
+          <a class="navbar-brand page-scroll" href="#page-top">Timely</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -37,50 +47,87 @@
 {% endblock %}
 
 {% block index %}
-    <div style="margin-top: 100px;">
-    {% for resource in resource_list %}
-        <p> Resource Name: {{ resource[0].name }} </p>
-        <p> Resource Location: {{ resource[0].location }} </p>
-    {% endfor %}
-    </div>
-
-    <div class="container" style="margin-bottom: 50px">
+    <div style="margin-top: 50px; margin-bottom: 50px">
+    <div class="container">
         <div class="row">
-            <h2 class="text-center">Services Blocks</h2>
+            <h2 class="text-center">Available Resources</h2>
                 <div class="row">
+                    {% for resource in resource_list %}
                     <div class="col-md-4 text-center">
                         <div class="box">
                             <div class="box-content">
-                                <h1 class="tag-title">Heading</h1>
-                                <hr />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra quam sollicitudin nibh aliquam finibus. Etiam efficitur felis vel imperdiet varius. Maecenas bibendum elementum molestie. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus finibus semper. Fusce molestie tincidunt leo vel varius. Nam scelerisque nulla feugiat leo consequat, id dignissim sem tincidunt. Proin elit mauris, hendrerit in varius sed, facilisis sit amet neque.</p>
-                                <br />
-                                <a href="ppc.html" class="btn btn-block btn-primary">Learn more</a>
+                                <h1 class="tag-title">{{ resource[0].name }}</h1>
+                                <hr/>                               
+                                <button id="toggle" class="btn btn-block btn-primary" style="margin-bottom: 10px">Toggle Information</button>
+                                <!-- Resource info content -->
+                                <div id="panel-toggle" class="panel panel-info" style="margin-bottom: 0px; display: none">
+                                    <div class="panel-body">
+                                    <div class="row">
+                                        <!--<div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>-->
+                                        <div class="col-md-9 col-lg-9" style="width: 100%"> 
+                                            <table class="table table-user-information">
+                                                <tbody>
+                                                    <tr>
+                                                    <td>Location:</td>
+                                                    <td>{{ resource[0].location }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Type:</td>
+                                                    <td>{{ resource[0].resourcetype.capitalize() }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Capacity:</td>
+                                                    <td>{{ resource[0].capacity.capitalize() }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Address:</td>
+                                                    <td>{{ resource[0].address }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Cost:</td>
+                                                    <td>{{ resource[0].cost.capitalize() }}</td>
+                                                    </tr>
+
+                                                    {% for key, value in resource[0].contact.items() %}
+                                                        <tr>
+                                                        <td>{{ key.capitalize() }}</td>
+                                                        <td>{{ value }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+
+                                                    <tr>
+                                                    <td>Services:</td>
+                                                    <td>
+                                                    {% for service in resource[0].services %}
+                                                        {{ '%s,' % service if not loop.last else  service }}
+                                                    {% endfor %}
+                                                    </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Priority:</td>
+                                                    <td>{{ resource[0].priority.capitalize() }}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                    <td>Availability:</td>
+                                                    <td style="text-align: left">{{ resource[0].availability }}</td>
+                                                    </tr>                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <a href="{{ resource[0].contact['website'] }}" class="btn btn-block btn-primary" style="margin-top: 10px">Learn more</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
-                        <div class="box">
-                            <div class="box-content">
-                                <h1 class="tag-title">Heading</h1>
-                                <hr />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra quam sollicitudin nibh aliquam finibus. Etiam efficitur felis vel imperdiet varius. Maecenas bibendum elementum molestie. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus finibus semper. Fusce molestie tincidunt leo vel varius. Nam scelerisque nulla feugiat leo consequat, id dignissim sem tincidunt. Proin elit mauris, hendrerit in varius sed, facilisis sit amet neque.</p>
-                                <br />
-                                <a href="ppc.html" class="btn btn-block btn-primary">Learn more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <div class="box">
-                            <div class="box-content">
-                                <h1 class="tag-title">Heading</h1>
-                                <hr />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pharetra quam sollicitudin nibh aliquam finibus. Etiam efficitur felis vel imperdiet varius. Maecenas bibendum elementum molestie. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris cursus finibus semper. Fusce molestie tincidunt leo vel varius. Nam scelerisque nulla feugiat leo consequat, id dignissim sem tincidunt. Proin elit mauris, hendrerit in varius sed, facilisis sit amet neque.</p>
-                                <br />
-                                <a href="ppc.html" class="btn btn-block btn-primary">Learn more</a>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>           
             </div>
         </div>
